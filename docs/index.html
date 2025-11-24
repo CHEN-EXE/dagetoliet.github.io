@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档阅读器</title>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- 引入Prism.js用于代码高亮 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 100vh;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background-color: #fff;
+            padding: 10px;
+          
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+        
+            font-size:20px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .error {
+            background-color: #fee;
+            color: #c33;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+        
+        /* Markdown样式 */
+        .markdown-content h1, .markdown-content h2, .markdown-content h3, 
+        .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+        
+        .markdown-content h1 {
+            font-size: 2em;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 10px;
+        }
+        
+        .markdown-content h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+        }
+        
+        .markdown-content h3 {
+            font-size: 1.25em;
+        }
+        
+        .markdown-content p {
+            margin-bottom: 16px;
+        }
+        
+        .markdown-content ul, .markdown-content ol {
+            margin-bottom: 16px;
+            padding-left: 2em;
+        }
+        
+        .markdown-content li {
+            margin-bottom: 4px;
+        }
+        
+        .markdown-content blockquote {
+            border-left: 4px solid #dfe2e5;
+            padding-left: 16px;
+            margin: 16px 0;
+            color: #6a737d;
+        }
+        
+        .markdown-content code {
+            background-color: #f6f8fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 85%;
+        }
+        
+        .markdown-content pre {
+            background-color: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .markdown-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-content table th,
+        .markdown-content table td {
+            border: 1px solid #dfe2e5;
+            padding: 8px 12px;
+        }
+        
+        .markdown-content table th {
+            background-color: #f6f8fa;
+            font-weight: 600;
+        }
+        
+        .markdown-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 16px 0;
+        }
+        
+        .markdown-content a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+        
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .doc-list {
+            background-color: rgba(255,255,255,0.883);
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .doc-list h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .doc-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .doc-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .doc-list li:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .doc-list li.active {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+   <div class="header">
+            <h1>大哥国际厕所公司  文档阅读器</h1>
+        </div>
+   
+    <div class="doc-list">
+            <ul id="docList">
+                <li data-file="doc.md">前言</li>
+                <li data-file="toliet_helper.md">厕所测试版教程</li>
+            </ul>
+        </div>
+           
+    <div class="container">
+        
+        
+        <div id="content" class="content">
+            <div class="loading">正在加载文档</div>
+        </div>
+  
+    </div>
+
+    <script>
+      // 由于是ai开发 这里就不加密了（
+        // 配置marked选项
+        marked.setOptions({
+            highlight: function(code, lang) {
+                if (Prism.languages[lang]) {
+                    return Prism.highlight(code, Prism.languages[lang], lang);
+                }
+                return code;
+            },
+            breaks: true,
+            gfm: true
+        });
+
+        // 文档加载函数
+        async function loadMarkdown(filePath) {
+            const contentDiv = document.getElementById('content');
+            
+            try {
+                contentDiv.innerHTML = '<div class="loading">正在加载文档...</div>';
+                
+                // 从服务器加载Markdown文件
+                const response = await fetch(`./${filePath}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const markdownText = await response.text();
+                
+                // 将Markdown转换为HTML
+                const htmlContent = marked.parse(markdownText);
+                
+                // 更新页面内容
+                contentDiv.innerHTML = `<div class="markdown-content">${htmlContent}</div>`;
+                
+                // 重新初始化代码高亮
+                Prism.highlightAll();
+                
+            } catch (error) {
+                contentDiv.innerHTML = `
+                    <div class="error">
+                        <h3>加载失败</h3>
+                        <p>无法加载文档: ${error.message}</p>
+                        <p>请确保:</p>
+                        <ul>
+                            <li>服务器正在运行</li>
+                            <li>文档文件存在于服务器的 /docs/ 目录下</li>
+                            <li>文件路径正确</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        // 文档列表点击事件
+        document.getElementById('docList').addEventListener('click', function(e) {
+            if (e.target.tagName === 'LI') {
+                // 更新活动状态
+                document.querySelectorAll('.doc-list li').forEach(li => {
+                    li.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                
+                // 加载对应的文档
+                const fileName = e.target.getAttribute('data-file');
+                loadMarkdown(fileName);
+            }
+        });
+
+        // 页面加载时自动加载第一个文档
+        window.addEventListener('DOMContentLoaded', function() {
+            // 默认加载第一个文档
+            const firstDoc = document.querySelector('.doc-list li');
+            if (firstDoc) {
+                firstDoc.click();
+            }
+        });
+
+        // 可选：添加键盘导航
+        document.addEventListener('keydown', function(e) {
+            const activeItem = document.querySelector('.doc-list li.active');
+            if (!activeItem) return;
+            
+            let nextItem = null;
+            
+            if (e.key === 'ArrowDown') {
+                nextItem = activeItem.nextElementSibling;
+            } else if (e.key === 'ArrowUp') {
+                nextItem = activeItem.previousElementSibling;
+            }
+            
+            if (nextItem && nextItem.tagName === 'LI') {
+                nextItem.click();
+            }
+        });
+    </script>
+</body>
+</html>
