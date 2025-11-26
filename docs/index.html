@@ -61,7 +61,7 @@
             background-color: #fee;
             color: #c33;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 0px;
             margin: 20px 0;
         }
         
@@ -216,6 +216,8 @@
                 <li data-file="doc.md">前言</li>
                 <li data-file="toliet_helper.md">教程</li>
                   <li data-file="howtolashi.md">如何拉屎（教学）</li>
+                    <li data-file="error.html">错误处理</li>
+                      <li data-file="666.md">持续加载</li>
             </ul>
         </div>
            
@@ -270,14 +272,9 @@
             } catch (error) {
                 contentDiv.innerHTML = `
                     <div class="error">
-                        <h3>加载失败</h3>
+                        <h3>出错了</h3>
                         <p>无法加载文档: ${error.message}</p>
-                        <p>请确保:</p>
-                        <ul>
-                            <li>服务器正在运行</li>
-                            <li>文档文件存在于服务器的 /docs/ 目录下</li>
-                            <li>文件路径正确</li>
-                        </ul>
+                        
                     </div>
                 `;
             }
