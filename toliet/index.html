@@ -26,6 +26,47 @@
   margin-bottom:8px;
  padding:10px;
     }
+    /* From Uiverse.io by andrew-demchenk0 */ 
+.info {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 320px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  background: #509AF8;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px -3px #111;
+}
+
+.info__icon {
+  width: 20px;
+  height: 20px;
+  transform: translateY(-2px);
+  margin-right: 8px;
+}
+
+.info__icon path {
+  fill: #fff;
+}
+
+.info__title {
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+}
+
+.info__close {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.info__close path {
+  fill: #fff;
+}
     .btn{width:160px;border:none;outline:none;background-color:rgb(52,143,232);color:#fff;height:40px;border-radius:100000px;font-size:15px
     }
     .btn:hover{
@@ -35,41 +76,162 @@
     .otto3_input:hover{
        border:1.5px solid rgba(52,143,232,0.899);
     }
+    /* From Uiverse.io by Yaya12085 */ 
+.card {
+  width: 100%;
+  border-width: 1px;
+  border-color: rgba(219, 234, 254, 1);
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 1);
+  padding:4px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  grid-gap: 1rem;
+  width:100%;
+  gap: 1rem;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgba(96, 165, 250, 1);
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 1);
+}
+
+.icon svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.alert {
+  font-weight: 600;
+  color: rgba(107, 114, 128, 1);
+}
+
+.message {
+  margin-top: 1rem;
+  color: rgba(107, 114, 128, 1);
+}
+
+.actions {
+  margin-top: 1.5rem;
+}
+
+.actions a {
+  text-decoration: none;
+}
+
+.mark-as-read, .read {
+  display: inline-block;
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+
+.read {
+  background-color: rgba(59, 130, 246, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.mark-as-read {
+  margin-top: 0.5rem;
+  background-color: rgba(249, 250, 251, 1);
+  color: rgba(107, 114, 128, 1);
+  transition: all .15s ease;
+}
+
+.mark-as-read:hover {
+  background-color: rgb(230, 231, 233);
+}
   </style>
   <body>
     <div class="login_content">
-      <p><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path fill="none" stroke="#333333" d="M5.5 8v7.5h.25s1.016-1.152 1.5-2c.62-1.087 1.125-2.5 1.125-2.5h.25s.505 1.413 1.125 2.5c.484.848 1.5 2 1.5 2h.25V8m7 2.5v-1a1 1 0 0 0-1-1H15a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-1m-6.5 10C5.649 23.5.5 18.351.5 12S5.649.5 12 .5S23.5 5.649 23.5 12S18.351 23.5 12 23.5Z"/></svg>欢迎登陆厕所平台</p>
-        <p id="content" style="margin-top:-30px;font-size:20px;">扫码登陆后自动开门</p>
+      <p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 24 24"><path fill="none" stroke="#333333" d="M5.5 8v7.5h.25s1.016-1.152 1.5-2c.62-1.087 1.125-2.5 1.125-2.5h.25s.505 1.413 1.125 2.5c.484.848 1.5 2 1.5 2h.25V8m7 2.5v-1a1 1 0 0 0-1-1H15a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-1m-6.5 10C5.649 23.5.5 18.351.5 12S5.649.5 12 .5S23.5 5.649 23.5 12S18.351 23.5 12 23.5Z"/></svg>商户10000的平台</p>
+        <p id="content" style="margin-top:-30px;font-size:20px;">扫码付费后开门</p>
 
 <!-- 扫码 -->
         <div id="otto1_c">
-      <img src="1" onerror="alert('二维码加载失败！\n请联络所在商户管理员远程修复！')" alt="Qrcode">加载失败</img>
-  <br>    <button class="btn" onclick="otto1()">以测试身份登录</button>
+      <img src="./author.png" onerror="alert('二维码加载失败！\n请联络所在商户管理员远程修复！')" alt="Qrcode"></img>
+  <br>  
+  <p style="margin-bottom:5px;font-size:17px; color:rgba(0,0,0,0.601)">更多方式</p><button class="btn" onclick="otto1()">TestAuth</button>
   </div>
   
 <!-- 支付 -->
         <div style="display:none;" id="otto2_c">
           <input id="otto3_input"  class="otto3_input" placeholder="输入占坑时间（分钟）"/>
           
-          <button class="btn" onclick="otto2()">支付</button>
+          <button class="btn" onclick="otto2()">结算</button>
   </div>
   <!-- 大哥牛逼 -->
   <div style="display:none;" id="otto3"><p id="dage6">大哥牛逼</p>
-   <button class="btn" onclick="otto3()">马桶币10 (还有114514)</button>
+  <p style="font-size:20px;margin-top:3px;color:rgba(0,0,0,0.473)">*如厕请注意时间限制</p>
+   <button class="btn" onclick="otto3()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#fff" d="M9.001 14.278a.73.73 0 0 1-.97-.296l-2.05-4.5a.367.367 0 0 1 .551-.448l2.363 1.683a1.1 1.1 0 0 0 .977.111l11.113-4.946C18.993 3.534 15.713 2 12 2C5.925 2 1 6.104 1 11.167c0 2.762 1.482 5.248 3.8 6.929a.73.73 0 0 1 .27.83l-.496 1.85c-.023.087-.059.177-.059.268c0 .202.164.367.367.367c.08 0 .144-.03.212-.069l2.408-1.39a1.15 1.15 0 0 1 .584-.17q.169.001.323.05a13 13 0 0 0 3.591.502c6.075 0 11-4.104 11-9.167c0-1.534-.454-2.978-1.253-4.248L9.081 14.232z"/></svg></button>
   </div>
   
   
   <!-- 马桶启动 -->
-  <div style="display:none;" id="otto4"><p><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 256 256"><path fill="#333333" d="M120 64a8 8 0 0 1-8 8H96a8 8 0 0 1 0-16h16a8 8 0 0 1 8 8m52.32 133.14l3.52 24.6A16 16 0 0 1 160 240H96a16 16 0 0 1-15.84-18.26l3.52-24.6A96.09 96.09 0 0 1 32 112a8 8 0 0 1 8-8h16V40a16 16 0 0 1 16-16h112a16 16 0 0 1 16 16v64h16a8 8 0 0 1 8 8a96.09 96.09 0 0 1-51.68 85.14M72 104h112V40H72Zm85.07 99.5a96.15 96.15 0 0 1-58.14 0L96 224h64ZM207.6 120H48.4a80 80 0 0 0 159.2 0"/></svg><br>马桶已开盖</p>
-   <button class="btn">10:00:00</button>
-  <button class="btn">延续使用时间</button><br><br>
-  <button class="btn">不拉了</button>
+  <div style="display:none;" id="otto4"><p style="color:red">
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><path fill="#333333" d="M22.072 6.66c.126 1.058-.063 1.734-.309 2.133c2.029.56 3.879 1.974 4.743 3.82c.625 1.532.66 3.359.192 5.027C29.18 18.847 31 21.547 31 24.429c0 3.722-2.723 6.399-6.574 6.624v.016H9.03v-.004C4.26 30.95 2 27.75 2 24.023c0-2.494 2.149-5.47 4.549-6.49c-.002-.22.02-.387.056-.512c-.929-1.88.021-3.78.618-4.5l.183-.237l.044-.057l.01-.013c.83-1.083 1.331-1.736 4.895-3.279c3.887-1.683 5.269-3.336 5.8-4.006c.146-.184.28-.424.42-.67v-.002c.366-.652.763-1.358 1.478-1.245c.987.156 1.761 1.465 2.02 3.647M11.1 24.103a4.485 4.485 0 1 0 0-8.97a4.485 4.485 0 0 0 0 8.97m15.384-4.485a4.485 4.485 0 1 0-8.97 0a4.485 4.485 0 0 0 8.97 0M12.015 22.13a2.483 2.483 0 1 0 0-4.967a2.483 2.483 0 0 0 0 4.967m9.011 0a2.483 2.483 0 1 0 0-4.967a2.483 2.483 0 0 0 0 4.967m-4.448 6.946c2.183 0 3.953-1.54 3.953-3.918h-7.906c0 2.442 1.77 3.918 3.953 3.918"/></svg><br>00:00:00</p>
+  <!-- From Uiverse.io by andrew-demchenk0 --> 
+
+<div class="info">
+    <div class="info__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none"><path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"></path></svg>
+    </div>
+    <div class="info__title">规定时间已到，请尽快关闭马桶。</div>
+</div>
+<div class="info">
+    <div class="info__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none"><path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"></path></svg>
+    </div>
+    <div class="info__title">请在规定时间内完成如厕</div>
+    <div class="info__close"><svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37"></path></svg></div>
+</div><br>
+  <button style="background-color:rgba(0,0,0,0.521)" class="btn">续费</button>
+  <button class="btn" onclick="a666.showModal()" >不拉了</button>
   
   </div>
   
   <p style="color:rgb(189,189,189);font-size:10px;">大哥国际厕所公司开发 仅供娱乐</p>
       </div>
-    <p style="color:rgb(189,189,189)">版本号：version1.00.114:Vp202511(Log)<br>联网状态：4G<br>绑定商户：yes<br>硬件系统：-(线上系统)<br>硬件中控：C114(y) A115(y) B126(离线)<br>远程协助密钥：Kb610A-301676-C114_1919</p>
+    <p style="color:rgb(189,189,189)">版本号：version1.00.125:dp202511(Log)</p>
+          
+<dialog class="card" id="a666">
+  <div class="header">
+    <span class="icon">
+      <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" fill-rule="evenodd"></path>
+      </svg>
+    </span>
+    <p class="alert">提示</p>
+  </div>
+
+  <p class="message">
+    确定不拉了？<br>此操作不会浪费一分钱，同时也不回退回到您的账户中。
+  </p>
+
+  <div class="actions">
+    <a class="read" href="">
+      不拉了
+    </a>
+
+    <a class="mark-as-read"  onclick="a666.close()">
+      还是继续吧
+    </a>
+</div>
+
+  </dialog>
   </body>
   <script>
  // 一站式如厕解决方案
