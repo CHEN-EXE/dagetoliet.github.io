@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大哥智慧厕所系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .login-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .qr-pattern {
+            width: 100%;
+            height: 100%;
+      
+            background-size: 5px 5px;
+            opacity: 0.3;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        
+        .toilet-selection {
+            display: none;
+        }
+        
+        .toilet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .toilet-item {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toilet-item:hover {
+            background: #e9ecef;
+            transform: scale(1.05);
+        }
+        
+        .toilet-item.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .time-input {
+            display: none;
+        }
+        
+        .time-input input {
+            width: 100px;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+        
+        .bill-info {
+            display: none;
+        }
+        
+        .bill-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .countdown {
+            font-size: 48px;
+            color: #667eea;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .success-message {
+            color: #28a745;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        
+        .warning-message {
+            color: #dc3545;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        
+        .price-display {
+            font-size: 36px;
+            color: #dc3545;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="container">
+        <!-- 登录页面 -->
+        <div id="loginPage" class="login-section">
+            <h1>大哥智慧厕所系统</h1>
+            <div class="qr-code">
+                <div class="qr-pattern">卡在这里了</div>
+            </div>
+            <p>请扫描二维码登录</p>
+            <p style="color: #666; font-size: 14px;">其他登录方式</p>
+            <button class="btn" onclick="showToiletSelection()">以大哥身份登录</button>
+        </div>
+        
+        <!-- 选择坑位页面 -->
+        <div id="toiletSelection" class="toilet-selection">
+            <h1>请选择如厕坑位</h1>
+            <div class="toilet-grid">
+                <div class="toilet-item" onclick="selectToilet(1)">9527</div>
+                <div class="toilet-item" onclick="selectToilet(2)">7881</div>
+                <div class="toilet-item" onclick="selectToilet(3)">9001</div>
+                <div class="toilet-item" onclick="selectToilet(4)">9691</div>
+                <div class="toilet-item" onclick="selectToilet(5)">7888</div>
+                <div class="toilet-item" onclick="selectToilet(6)">大哥专属</div>
+            </div>
+            <button class="btn" onclick="showTimeInput()" id="nextBtn" style="display: none;">下一步</button>
+        </div>
+        
+        <!-- 输入时间页面 -->
+        <div id="timeInput" class="time-input">
+            <h1>请输入如厕时间</h1>
+            <div style="margin: 30px 0;">
+                <input type="number" id="timeInputField" min="1" max="60" value="10">
+                <span style="font-size: 20px;">分钟</span>
+            </div>
+            <div class="price-display" id="priceDisplay">价格：¥1000</div>
+            <button class="btn" onclick="calculatePrice()">计算价格</button>
+            <button class="btn" onclick="showBill()">继续</button>
+        </div>
+        
+        <!-- 账单页面 -->
+        <div id="billPage" class="bill-info">
+            <h1>请检查您的账单信息</h1>
+            <div class="bill-details">
+                <div class="bill-item">
+                    <span>坑位费用：</span>
+                    <span>¥0</span>
+                </div>
+                <div class="bill-item">
+                    <span>服务费用：</span>
+                     <span id="toiletFee">¥0</span>
+                </div>
+                <div class="bill-item">
+                    <span><strong>总计：</strong></span>
+                    <span><strong id="totalPrice">¥0</strong></span>
+                </div>
+            </div>
+            <button class="btn" onclick="processPayment()">确认支付</button>
+        </div>
+        
+        <!-- 如厕中页面 -->
+        <div id="usingPage" style="display: none;">
+            <h1>坑位已开</h1>
+            <div class="countdown" id="countdown">10:00</div>
+            <button class="btn" onclick="confirmStop()">不拉了</button>
+        </div>
+        
+        <!-- 结束页面 -->
+        <div id="endPage" style="display: none;">
+            <div class="success-message" id="endMessage">如厕已结束，正在响应马桶合盖</div>
+        </div>
+    </div>
+    
+    <!-- 支付中弹窗 -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="loading-spinner"></div>
+            <h2>正在支付</h2>
+            <p>请稍候...</p>
+        </div>
+    </div>
+    
+    <!-- 确认停止弹窗 -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2>是否停止如厕？</h2>
+            <button class="btn" onclick="stopToilet()">是</button>
+            <button class="btn" onclick="closeConfirmModal()">否</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedToilet = null;
+        let toiletTime = 10;
+        let countdownInterval = null;
+        let remainingTime = 0;
+
+        function showToiletSelection() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('toiletSelection').style.display = 'block';
+        }
+
+        function selectToilet(toiletNumber) {
+            selectedToilet = toiletNumber;
+            document.querySelectorAll('.toilet-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        function showTimeInput() {
+            if (!selectedToilet) {
+                alert('请先选择坑位！');
+                return;
+            }
+            document.getElementById('toiletSelection').style.display = 'none';
+            document.getElementById('timeInput').style.display = 'block';
+            calculatePrice();
+        }
+
+        function calculatePrice() {
+            toiletTime = parseInt(document.getElementById('timeInputField').value) || 10;
+            const price = toiletTime * 100;
+            document.getElementById('priceDisplay').textContent = `价格：¥${price}`;
+        }
+
+        function showBill() {
+            toiletTime = parseInt(document.getElementById('timeInputField').value) || 10;
+            const totalPrice = toiletTime * 100;
+            
+            document.getElementById('timeInput').style.display = 'none';
+            document.getElementById('billPage').style.display = 'block';
+            document.getElementById('toiletFee').textContent = `¥${totalPrice}`;
+            document.getElementById('totalPrice').textContent = `¥${totalPrice}`;
+        }
+
+        function processPayment() {
+            document.getElementById('billPage').style.display = 'none';
+            document.getElementById('paymentModal').style.display = 'flex';
+            
+            setTimeout(() => {
+                document.getElementById('paymentModal').style.display = 'none';
+                showUsingPage();
+            }, 4000);
+        }
+
+        function showUsingPage() {
+            document.getElementById('usingPage').style.display = 'block';
+            remainingTime = toiletTime * 60; // 转换为秒
+            startCountdown();
+        }
+
+        function startCountdown() {
+            updateCountdownDisplay();
+            countdownInterval = setInterval(() => {
+                remainingTime--;
+                updateCountdownDisplay();
+                
+                if (remainingTime <= 0) {
+                    clearInterval(countdownInterval);
+                    endToiletSession();
+                }
+            }, 1000);
+        }
+
+        function updateCountdownDisplay() {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            document.getElementById('countdown').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function confirmStop() {
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function stopToilet() {
+            clearInterval(countdownInterval);
+            document.getElementById('confirmModal').style.display = 'none';
+            showEndMessage('本次如厕结束。');
+        }
+
+        function endToiletSession() {
+            document.getElementById('usingPage').style.display = 'none';
+            document.getElementById('endMessage').textContent = '如厕已结束，正在响应马桶合盖';
+            document.getElementById('endPage').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('endMessage').textContent = '谢谢光临，欢迎下次再拉';
+                setTimeout(() => {
+                    resetToLogin();
+                }, 3000);
+            }, 3000);
+        }
+
+        function showEndMessage(message) {
+            document.getElementById('usingPage').style.display = 'none';
+            document.getElementById('endMessage').textContent = message;
+            document.getElementById('endPage').style.display = 'block';
+            
+            setTimeout(() => {
+                resetToLogin();
+            }, 3000);
+        }
+
+        function resetToLogin() {
+            clearInterval(countdownInterval);
+            selectedToilet = null;
+            toiletTime = 10;
+            remainingTime = 0;
+            
+            // 隐藏所有页面
+            document.querySelectorAll('.container > div').forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            // 重置选择状态
+            document.querySelectorAll('.toilet-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // 重置输入
+            document.getElementById('timeInputField').value = '10';
+            document.getElementById('nextBtn').style.display = 'none';
+            
+            // 显示登录页
+            document.getElementById('loginPage').style.display = 'block';
+            document.getElementById('endPage').style.display = 'none';
+        }
+
+        // 监听时间输入变化
+        document.getElementById('timeInputField').addEventListener('input', calculatePrice);
+    </script>
+</body>
+</html>
