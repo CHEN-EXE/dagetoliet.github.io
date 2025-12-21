@@ -1,0 +1,360 @@
+<! ️，                    😭😭                                           🙏🙏          ，             ，              ，                                 🙏🙏                                       。                  ——                            ，                        ，                             ，             。🙏🙏-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大哥国际酒店 | DAGE International Hotel</title>
+    <style>
+        /* 核心样式设置 */
+        :root {
+            --gold: #c5a059;
+            --dark-blue: #1a2a3a;
+            --light-gray: #f8f9fa;
+            --text-gray: #555;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* 导航栏 */
+        header {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        /* 英雄海报区 */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        /* 酒店详细介绍 */
+        .section {
+            padding: 4rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark-blue);
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+            margin: 10px auto;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 8px;
+            border-bottom: 4px solid transparent;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-bottom: 4px solid var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--gold);
+            margin-top: 0;
+        }
+
+        /* 设施列表 */
+        .amenities {
+            background-color: var(--dark-blue);
+            color: white;
+        }
+
+        .amenities-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .amenity-item {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        /* 页脚标注 */
+        footer {
+            background-color: #111;
+            color: #888;
+            padding: 2rem 5%;
+            text-align: center;
+            font-size: 0.85rem;
+            border-top: 1px solid #333;
+        }
+
+        .footer-nav {
+            margin-bottom: 15px;
+        }
+
+        .footer-nav a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-label {
+            color: var(--gold);
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            header { flex-direction: column; gap: 10px; }
+            nav a { margin: 0 10px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">大哥国际酒店</div>
+        <nav>
+            <a href="#about">关于我们</a>
+            <a href="#rooms">尊享客房</a>
+            <a href="#dining">美食餐厅</a>
+            <a href="#services">配套设施</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>大哥国际 超过全城</h1>
+        <p>在大哥国际酒店，体验无与伦比的奢华与舒适</p>
+    </div>
+
+    <section id="about" class="section">
+        <div class="section-title">
+            <h2>酒店概览</h2>
+        </div>
+        <div class="intro-grid">
+            <div class="card">
+                <h3>地理位置</h3>
+                <p>坐落于城区位置，地处学校（附近）</p>
+            </div>
+            <div class="card">
+                <h3>尊贵客房</h3>
+                <p>酒店拥有300余间精心设计的套房与客房。每间客房均配备大哥国际厕所服务付费系统。</p>
+            </div>
+            <div class="card">
+                <h3>客房服务</h3>
+                <p>随时随地</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section amenities">
+        <div class="section-title">
+            <h2 style="color:white">配套设施</h2>
+            <p>点按查看详情</p>
+        </div>
+        <div class="amenities-list">
+            <div onclick="hotel('vip贵族厕所')" class="amenity-item">VIP贵族厕所</div>
+            <div onclick="hotel('专业大哥会议室')" class="amenity-item">专业大哥会议室</div>
+            <div 
+            onclick="hotel('多功能厕所')"class="amenity-item">多功能厕所</div>
+            <div onclick="hotel('高端前台')" class="amenity-item">高端前台</div>
+            <div 
+            onclick="hotel('高端客房')" class="amenity-item">高端客房</div>
+            <div 
+            onclick="hotel('豪华厕所')" class="amenity-item">豪华厕所</div>
+        </div>
+    </section>
+
+    <section id="dining" class="section">
+        <div class="section-title">
+            <h2>国际美食</h2>
+        </div>
+        <p style="text-align:center; max-width: 800px; margin: 0 auto;">
+            <h4>老板亲自下厨炒菜，让您吃的放心</h4>
+            <a onclick="toliet()">
+              • 厨房一览</a>
+        </p>
+    </section>
+
+    <footer>
+        <div class="footer-nav">
+            <a onclick="main()">隐私策</a> | 
+            <a onclick="call()">联我们</a> | 
+            <a href="#">我们</a> | 
+            <a href="#">地理</a>
+        </div>
+        <p>&copy; 2024-2026 大哥国际酒店 (DAGE International Hotel) 版权所有</p>
+        <p>客房服务电话:打不通</p>
+        <div class="footer-label">
+          DageGuojiToliet.CoLtd.
+            </div>
+    </footer>
+
+</body>
+<script>
+  function toliet(){
+    alert(`好的，以下是一篇关于厨房的介绍示例，你可以根据具体场景和需求进行调整和补充：
+
+# 厨房：烹饪与温暖的港湾
+
+厨房，是家中充满烟火气与爱意的空间，它不仅是制作美食的场所，更是承载着家庭温暖与回忆的角落。
+
+## 一、厨房的布局与设计
+
+合理的布局是厨房高效运作的关键。常见的厨房布局有直线型、L型、U型等。直线型厨房将操作台和橱柜沿着一面墙排列，简洁实用，适合空间较窄的厨房；L型厨房则利用两面墙形成90度转角，操作空间更宽敞，便于合理安排烹饪、洗涤和储存等功能区域；U型厨房三面环绕，提供充足的操作台面和储物空间，让烹饪过程更加流畅，但需要较大的空间来实现。
+
+在设计上，厨房的色彩搭配也很重要。通常会选择明亮、清新的色调，如白色、米色等，这些颜色不仅能让厨房看起来更加干净整洁，还能在视觉上扩大空间感。同时，适当的装饰元素，如瓷砖拼花、吊灯等，也能为厨房增添一份温馨与个性。
+
+## 二、厨房的设备与工具
+
+现代厨房中，各种先进的设备和工具为烹饪提供了极大的便利。燃气灶或电磁炉是烹饪的核心设备，它们能够快速加热食材，满足不同的烹饪需求。抽油烟机则能有效排除烹饪过程中产生的油烟，保持厨房空气清新，保护家人的健康。冰箱用于储存食材，确保食物的新鲜度，其容量和保鲜功能是选择时的重要考量因素。
+
+此外，烤箱、微波炉、电饭煲、榨汁机等小家电也丰富了厨房的功能。这些设备能够帮助我们制作出更多种类的美食，满足不同口味的需求。而各种刀具、砧板、锅具、勺子等烹饪工具则是烹饪过程中不可或缺的助手，它们的质量和使用便利性直接影响到烹饪的效率和效果。
+
+## 三、厨房的收纳与整理
+
+一个整洁有序的厨房可以让烹饪过程更加愉悦。厨房的收纳设计至关重要，橱柜和抽屉是主要的收纳空间。橱柜通常分为地柜和吊柜，地柜用于存放较重的物品，如锅具、餐具等；吊柜则可以放置一些轻便的物品，如调料、干货等。在橱柜内部，可以使用分隔架、挂钩等收纳工具，将物品分类存放，方便取用。
+
+此外，厨房台面的整洁也很重要。尽量将常用的物品放在容易拿到的地方，而其他物品则可以收纳起来，保持台面的整洁。定期清理和整理厨房，扔掉过期的食材和不再使用的物品，可以让厨房始终保持良好的状态。
+
+## 四、厨房的安全与卫生
+
+厨房的安全和卫生是至关重要的。在安全方面，要确保燃气设备的正确安装和使用，定期检查燃气管道和阀门，防止燃气泄漏。同时，厨房中的电器设备也要注意安全使用，避免过载和短路。在烹饪过程中，要注意火候控制，避免火灾的发生。此外，厨房中的刀具等尖锐物品要妥善放置，防止意外伤害。
+
+卫生方面，要保持厨房的清洁，及时清理台面、橱柜、设备等表面的油污和灰尘。定期清洗餐具和厨具，确保食品的安全和卫生。垃圾要及时清理，避免滋生细菌和异味。同时，要注意食材的储存和处理，避免交叉污染，确保食品安全。
+
+厨房，这个充满烟火气的地方，不仅能够满足我们对美食的追求，更是一个充满爱与温暖的家的象征。在这里，我们用心烹饪每一顿饭，为家人带来幸福和满足。无论外面的世界多么喧嚣，回到厨房，就能找到那份属于自己的宁静和温暖。
+
+希望这篇介绍能够满足你的需求，如果你还有其他具体的要求或想要添加的内容，欢迎随时告诉我。`);
+  }
+   function hotel(value){
+    alert(value+"厕所");
+  }
+function call(){
+  alert("大哥国际电话\n客房服务：打不通\n订房服务：打不通");
+}
+  function main(){
+    alert(`以下是一份关于“大哥国际酒店官方网站”的隐私政策示例，你可以根据实际情况进行调整和补充：
+
+### 大哥国际酒店官方网站隐私政策
+
+#### 一、引言
+大哥国际酒店（以下简称“我们”）致力于保护您的隐私。本隐私政策旨在向您说明我们在您使用我们的官方网站时，如何收集、使用、存储、共享和保护您的个人信息。
+
+#### 二、信息收集
+1. **个人信息**：当您在我们的网站上预订房间、注册会员、参与促销活动或联系我们时，我们可能会收集您的姓名、性别、出生日期、国籍、联系方式（如电话号码、电子邮箱地址）、身份证件信息、支付信息等。
+2. **浏览信息**：我们会通过网站日志、Cookie等技术收集您的浏览信息，包括IP地址、访问时间、访问页面、设备信息等，以便为您提供更好的用户体验和进行网站分析。
+3. **其他信息**：如果您使用我们的在线服务或通过社交媒体与我们互动，我们可能会收集您提供的其他信息，如评论、反馈等。
+
+#### 三、信息使用
+1. **预订与服务**：我们将使用您的个人信息来处理您的预订请求、为您提供酒店相关服务（如住宿、餐饮、健身等）以及发送预订确认和入住提醒等信息。
+2. **会员管理**：如果您是我们的会员，我们会使用您的信息来管理您的会员账户，为您提供会员专属服务和优惠，以及发送会员通讯和活动邀请。
+3. **数据分析**：我们会对收集的信息进行分析，以了解您的偏好和行为模式，从而改进我们的服务、优化网站内容和提升用户体验。
+4. **市场营销**：我们可能会使用您的信息向您发送关于酒店的促销活动、优惠信息和相关产品或服务的广告。您可以随时选择退出这些营销活动。
+5. **法律与合规**：在必要时，我们会使用您的信息来遵守适用的法律法规、执行我们的服务条款、保护我们的合法权益或应对法律诉讼。
+
+#### 四、信息共享
+1. **服务提供商**：我们会将您的信息共享给我们的服务提供商，如支付处理机构、预订平台、数据分析公司等，以便他们为我们提供相关的服务。
+2. **关联公司**：在必要时，我们可能会与我们的关联公司共享您的信息，以便为您提供更全面的服务。
+3. **法律要求**：如果法律要求或为了保护我们的合法权益，我们可能会向政府机构、执法部门或其他第三方披露您的信息。
+4. **业务转让**：如果发生业务转让、合并、重组或资产出售等情况，我们可能会将您的信息转让给相关的第三方。
+
+#### 五、信息存储与保护
+1. **存储**：我们会将您的信息存储在安全的服务器上，并采取合理的安全措施来保护您的信息免受未经授权的访问、泄露、篡改或破坏。
+2. **数据保留期限**：我们会在法律允许的范围内，根据业务需要和合理期限保留您的信息。当您的信息不再被需要时，我们会采取适当的方式进行删除或匿名化处理。
+
+#### 六、您的权利
+1. **访问与更正**：您有权要求我们提供我们所持有的关于您的个人信息，并在必要时要求更正或更新这些信息。
+2. **删除**：在某些情况下，您有权要求我们删除您的个人信息。
+3. **反对与限制处理**：如果我们的信息处理是基于合法利益，您有权基于您的特定情况提出反对。此外，您也可以要求限制对您的个人信息的处理。
+4. **数据可携性**：在特定情况下，您有权要求我们以结构化、常用且机器可读的格式提供您的个人信息副本。
+5. **撤回同意**：如果您曾同意我们处理您的个人信息，您有权随时撤回您的同意。
+6. **投诉**：如果您认为我们对您的个人信息的处理违反了相关法律法规或本隐私政策，您有权向相关的数据保护监管机构投诉。
+
+#### 七、未成年人信息保护
+我们的网站不面向未成年人，我们不会有意收集、使用或披露18岁以下未成年人的个人信息。如果发现我们无意中收集了未成年人的信息，我们会立即从记录中删除。
+
+#### 八、Cookie政策
+我们使用Cookie和其他类似技术来收集和存储您的浏览信息。Cookie可以帮助我们记住您的偏好设置、分析网站流量和优化用户体验。您可以通过浏览器设置管理或删除Cookie，但请注意，这可能会影响您对网站部分功能的使用。
+
+#### 九、隐私政策的更新
+我们可能会根据法律法规的变化或业务发展的需要对本隐私政策进行更新。我们会通过在网站上发布更新版本的方式通知您，并在必要时征求您的同意。
+
+#### 十、联系我们
+如果您对本隐私政策有任何疑问或需要行使您的权利，请通过以下方式联系我们：
+- 电子邮箱：[隐私政策邮箱]
+- 联系电话：[隐私政策电话]
+- 邮寄地址：[隐私政策邮寄地址]
+
+我们将在合理时间内回复您的请求或问题。
+
+请注意，本隐私政策仅适用于大哥国际`);
+  }
+ 
+  </script>
+</html>
