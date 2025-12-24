@@ -6,3 +6,7 @@
 
 https://chen-exe.github.io/dagetoliet.github.io/
 
+## pull_request 规范
+Fork仓库后需按时进行Update branch。（您对克隆仓库的修改会被保存）<br>
+合并仓库操作需要请求Vercel审查。请等待我们审查完成。审查完成后将会合并。
+> 如果审查过程中发现代码有语法问题导致网页无法运行，将退回请求，修改代码后再试。
