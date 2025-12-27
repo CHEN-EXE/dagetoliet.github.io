@@ -5,25 +5,41 @@
   <title>系统登录</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 layui.css -->
-<link href="//unpkg.com/layui@2.13.2/dist/css/layui.css" rel="stylesheet">
-<!-- 引入 layui.js -->
-<script src="//unpkg.com/layui@2.13.2/dist/layui.js"></script>
+  <link href="//unpkg.com/layui@2.13.2/dist/css/layui.css" rel="stylesheet">
+  <!-- 引入 layui.js -->
+  <script src="//unpkg.com/layui@2.13.2/dist/layui.js"></script>
 </head>
 <body>
 <style>
-.demo-login-container{width: 320px; margin: 21px auto 0;}
-.demo-login-other .layui-icon{position: relative; display: inline-block; margin: 0 2px; top: 2px; font-size: 26px;}
+  .demo-login-container{width: 320px; margin: 21px auto 0;}
+  .demo-login-other .layui-icon{position: relative; display: inline-block; margin: 0 2px; top: 2px; font-size: 26px;}
 </style>
-<form class="layui-form">
+
+<ul class="layui-nav layui-bg-gray">
+  <li class="layui-nav-item"><a href="">大哥国际 统一身份登录服务</a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">身份</a>
+    <dl class="layui-nav-child">
+      <dd><a href="?mod=DGGJCSJT">大哥国际厕所集团员工登录</a></dd>
+      <dd><a href="?mod=DGKJ">大哥科技公司员工登录</a></dd>
+      <dd><a href="?mod=DGGJCM">大哥国际传媒公司员工登录</a></dd>
+      <dd><a href="?mod=DGJBG">大哥国际餐馆/宾馆统一登录</a></dd>
+      <dd><a href="?mod=DGBANK">大哥银行员工登录</a></dd>
+    </dl>
+  </li>
+</ul>
+
+<form id="forms" class="layui-form">
   <div class="demo-login-container">
     <div class="layui-form-item">
-      <h1 style="text-align:center">大哥国际厕所公司</h1>
- 
+      <h1 style="text-align:center"><img style="height:30px;" src="./大哥科技.png"/></h1>
+      <p id="coltd">{{goout}}</p>
+      <br>
       <div class="layui-input-wrap">
         <div class="layui-input-prefix">
           <i class="layui-icon layui-icon-username"></i>
         </div>
-        <input type="text" name="username" value="" lay-verify="required" placeholder="成员ID" lay-reqtext="请填写成员ID" autocomplete="off" class="layui-input" lay-affix="clear">
+        <input type="text" name="username" value="" lay-verify="required" placeholder="ID" lay-reqtext="请填写ID" autocomplete="off" class="layui-input" lay-affix="clear">
       </div>
     </div>
     <div class="layui-form-item">
@@ -55,35 +71,81 @@
       <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
     </div>
     <div class="layui-form-item">
-      <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-login">登录</button>
+      <button class=" layui-btn-radius layui-btn layui-btn-fluid" lay-submit lay-filter="demo-login">登录</button>
     </div>
     <div class="layui-form-item demo-login-other">
       <label>其他方式</label>
       <span style="padding: 0 21px 0 6px;">
-        <a href="javascript:;"><i class="layui-icon layui-icon-login-qq" style="color: #3492ed;"></i></a>
-        <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat" style="color: #4daf29;"></i></a>
-        <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo" style="color: #cf1900;"></i></a>
+        <a class="dingtalk-login">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" style="color: #3492ed;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m4.49 9.04l-.006.014c-.42.898-1.516 2.66-1.516 2.66l-.005-.012l-.32.558h1.543l-2.948 3.919l.67-2.666h-1.215l.422-1.763a17 17 0 0 0-1.223.349s-.646.378-1.862-.729c0 0-.82-.722-.344-.902c.202-.077.981-.175 1.595-.257a80 80 0 0 1 1.338-.172s-2.555.039-3.161-.057c-.606-.095-1.375-1.107-1.539-1.996c0 0-.253-.488.545-.257s4.101.9 4.101.9S8.27 9.312 7.983 8.99c-.286-.32-.841-1.754-.769-2.634c0 0 .031-.22.257-.16c0 0 3.176 1.45 5.347 2.245s4.06 1.199 3.816 2.228c-.02.087-.072.216-.144.37"/></svg></a>
       </span>
-      注册账户需申请
     </div>
   </div>
 </form>
-  </body>
+</body>
 <script>
-layui.use(function(){
-  var form = layui.form;
-  var layer = layui.layer;
-  // 提交
-  form.on('submit(demo-login)', function(data){
-    var field = data.field;
-    layer.alert(JSON.stringify(field), {
-      title: '登录失败',
-      content:'系统检测到您并非我司成员，无权进入系统。'
+  const params = new URLSearchParams(window.location.search);
+  const mods = params.get('mod');
+  document.getElementById("coltd").textContent = "本次登录将重定向至" + mods + "员工OA平台。";
+
+  layui.use(['form', 'layer'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+
+    if (mods === null) {
+      layer.msg('附属级未选择！', { icon: 2 });
+      document.getElementById("forms").innerHTML = `
+        <div class="layui-bg-gray" style="padding: 16px;">
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+              <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-tips-fill" style="font-size: 13px; color: red;"></i>出错了</div>
+                <div class="layui-card-body">
+                  抱歉您未选择身份
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+    }
+
+    // 提交
+    form.on('submit(demo-login)', function (data) {
+      var field = data.field;
+      var username = field.username;
+      var password = field.password;
+
+      // 从外部 user.json 文件中查询用户信息
+      fetch('./userData/user.json')
+        .then(response => response.json())
+        .then(users => {
+          var user = users.find(u => u.username === username && u.password === password);
+          if (user) {
+            // 存储用户名到 localStorage 并重定向
+            localStorage.setItem('userdata', username);
+            window.location.href = './dashboard/index.html';
+          } else {
+            // 提示错误信息
+            layer.msg('账户或密码错误', { icon: 2 });
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+          layer.msg('登录失败，请稍后重试', { icon: 2 });
+        });
+
+      return false;
     });
-    // 此处可执行 Ajax 等操作
-    // …
-    return false;
+
+    // 绑定钉钉登录按钮的点击事件
+    document.querySelector('.dingtalk-login').addEventListener('click', function () {
+      layer.open({
+        type: 1,
+        title: "钉钉 登录",
+        area: ['200px', '240px'], // 宽高
+        content: '<div style="padding: 11px;">使用钉钉登录<br><img src="./dl.png"/></div>'
+      });
+    });
   });
-});
 </script>
 </html>
