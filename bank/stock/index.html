@@ -7,215 +7,245 @@
     <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script src="https://unpkg.com/element-plus"></script>
+    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
     <style>
         :root {
             --gold-color: #d4af37;
-            --gold-light: #f4e4bc;
+            --gold-hover: #b8952d;
+            --bg-dark: #1a1a1a;
         }
         body {
             margin: 0;
-            background-color: #1a1a1a; /* 深色背景衬托金色 */
-            font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+            background-color: #f0f2f5;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
         }
         #app {
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
             background-color: #fff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
-        /* 顶部导航 */
+        /* 头部样式 */
         .header {
             background-color: var(--gold-color);
             color: white;
-            padding: 15px;
+            padding: 20px 15px;
             text-align: center;
             font-size: 18px;
             font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        /* 股票实时数据 */
-        .stock-info {
-            padding: 20px;
+        /* 股票概览 */
+        .stock-header {
+            padding: 25px 15px;
             text-align: center;
-            border-bottom: 1px solid #eee;
+            background: linear-gradient(to bottom, #fff, #fafafa);
         }
-        .price {
-            font-size: 36px;
+        .current-price {
+            font-size: 48px;
             font-weight: bold;
-            color: #e63946; /* 涨幅颜色 */
+            color: #f56c6c; /* 默认涨颜色 */
+            line-height: 1;
         }
-        .trend {
-            font-size: 14px;
-            margin-top: 5px;
+        .stock-status {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 500;
         }
-        /* 伪股票图占位 */
-        .chart-container {
+        /* K线图容器 */
+        .chart-box {
             flex: 1;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .fake-chart {
             width: 100%;
-            height: 250px;
-            background: linear-gradient(180deg, var(--gold-light) 0%, #ffffff 100%);
-            border: 1px dashed var(--gold-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--gold-color);
-            border-radius: 8px;
+            min-height: 350px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #kline-container {
+            width: 100%;
+            height: 400px;
         }
         /* 底部按钮 */
-        .footer {
+        .footer-action {
             padding: 20px;
-            text-align: center;
+            background: #fff;
+            border-top: 1px solid #eee;
         }
-        .buy-btn {
+        .btn-gold {
             width: 100%;
             height: 50px;
             font-size: 18px;
+            font-weight: bold;
             background-color: var(--gold-color) !important;
             border-color: var(--gold-color) !important;
-            color: #fff !important;
+            color: white !important;
         }
-        /* 修改Element弹窗金色主题 */
-        .el-button--primary {
-            --el-button-bg-color: var(--gold-color);
-            --el-button-border-color: var(--gold-color);
-            --el-button-hover-bg-color: #b8952d;
+        .btn-gold:hover {
+            background-color: var(--gold-hover) !important;
+        }
+        /* 弹窗及加载样式自定义 */
+        .el-loading-mask {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .el-v-loading-spinner .path {
+            stroke: var(--gold-color);
         }
     </style>
 </head>
 <body>
     <div id="app">
         <div class="header">
-          大哥国际银行<br>
-            股票明细 {{ stockData.stockName }}({{ stockData.symbol }})
+          <p style=" margin:0;font-size:24px;font-weight:300;">大哥国际银行</p>
+            {{ stockInfo.stockName || '加载中...' }}({{ stockInfo.symbol || '----' }})
         </div>
 
-        <div class="stock-info" v-if="stockData.currentPrice">
-            <div class="price">¥ {{ stockData.currentPrice }}</div>
-            <div class="trend" :style="{ color: stockData.status === '上涨' ? '#e63946' : '#2a9d8f' }">
-                <span>{{ stockData.changeAmount }}</span> 
-                <span style="margin-left: 10px;">{{ stockData.changePercent }}</span>
-                <span style="margin-left: 10px;">{{ stockData.status }}</span>
+        <div class="stock-header">
+            <div class="current-price">¥ {{ stockInfo.currentPrice || '0.00' }}</div>
+            <div class="stock-status" :style="{ color: stockInfo.status === '上涨' ? '#f56c6c' : '#67c23a' }">
+                <span>{{ stockInfo.changeAmount }}</span>
+                <span style="margin-left: 10px;">{{ stockInfo.changePercent }}</span>
+                <span style="margin-left: 10px;">{{ stockInfo.status }}</span>
+                   <span style="margin-left: 10px;">{{ stockInfo.text }}</span>
+            
             </div>
         </div>
 
-        <div class="chart-container">
-            <div v-loading="loading" class="fake-chart">
-                    </div>
+        <div class="chart-box" v-loading="loading" element-loading-text="正在获取实时行情...">
+            <div id="kline-container"></div>
         </div>
 
-        <div class="footer">
-            <el-button class="buy-btn" @click="dialogVisible = true">投股</el-button>
+        <div class="footer-action">
+            <el-button class="btn-gold" @click="dialogVisible = true">投股</el-button>
+     <p style="text-align:center;color:#dcdcdcf3;font-size:15px;">站点练习 仅供娱乐 请勿当真
+     <br>本站投资无风险因为不要钱</p>
         </div>
 
-        <el-dialog
-            v-model="dialogVisible"
-            title="股票买入"
-            width="80%"
-            align-center
-        >
+        <el-dialog v-model="dialogVisible" title="买入股票" width="90%" align-center>
             <el-form label-position="top">
-                <el-form-item label="请输入买入金额">
-                    <el-input 
-                        v-model="buyAmount" 
-                        placeholder="请输入金额" 
-                        clearable
-                        type="text"
-                    ></el-input>
+                <el-form-item label="请输入买入金额 (CNY)">
+                    <el-input v-model="buyAmount" placeholder="请输入数字" type="text" clearable></el-input>
                 </el-form-item>
             </el-form>
             <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="handleBuy">
-                        提交
-                    </el-button>
-                </span>
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" color="#d4af37" @click="handleConfirmBuy">提交</el-button>
             </template>
         </el-dialog>
     </div>
 
     <script>
-        const { createApp, ref, onMounted } = Vue;
+        const { createApp, ref, onMounted, nextTick } = Vue;
         const { ElMessage } = ElementPlus;
 
-        const app = createApp({
+        createApp({
             setup() {
-              const loading = ref(true)
-                const stockData = ref({});
+                const loading = ref(true);
+                const stockInfo = ref({});
                 const dialogVisible = ref(false);
                 const buyAmount = ref('');
+                let chartInstance = null;
 
-                // 模拟从外部 gp.json 获取数据
-                const fetchStockData = async () => {
-                    try {
-                        const response = await fetch('./gp.json');
-                        if (!response.ok) throw new Error('网络请求失败');
+                // 初始化ECharts K线图
+                const initChart = (rawData) => {
+                    const chartDom = document.getElementById('kline-container');
+                    chartInstance = echarts.init(chartDom);
                     
-                        stockData.ref = await response.json();
-                        stockData.value = stockData.ref;
-                 loading.value = false;
+                    // 数据转换 [日期, 开盘, 收盘, 最低, 最高]
+                    const categoryData = rawData.map(item => item[0]);
+                    const values = rawData.map(item => [item[1], item[2], item[3], item[4]]);
+
+                    const option = {
+                        tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                        grid: { left: '10%', right: '5%', bottom: '15%' },
+                        xAxis: { 
+                            type: 'category', 
+                            data: categoryData, 
+                            scale: true, 
+                            boundaryGap: false,
+                            axisLine: { lineStyle: { color: '#999' } }
+                        },
+                        yAxis: { 
+                            scale: true, 
+                            splitArea: { show: true },
+                            axisLine: { lineStyle: { color: '#999' } }
+                        },
+                        series: [
+                            {
+                                type: 'candlestick',
+                                data: values,
+                                itemStyle: {
+                                    color: '#f56c6c',    // 阳线颜色
+                                    color0: '#67c23a',   // 阴线颜色
+                                    borderColor: '#f56c6c',
+                                    borderColor0: '#67c23a'
+                                }
+                            }
+                        ]
+                    };
+                    chartInstance.setOption(option);
+                };
+
+                // 获取数据
+                const loadData = async () => {
+                    loading.value = true;
+                    try {
+                        // 模拟请求延迟，更真实地看到 v-loading 效果
+                        const response = await fetch('gp.json');
+                        if (!response.ok) throw new Error();
+                        const data = await response.json();
+                        
+                        stockInfo.value = data;
+                        
+                        // 等待DOM渲染后初始化图表
+                        nextTick(() => {
+                            initChart(data.klineData);
+                            loading.value = false;
+                        });
                     } catch (error) {
-                        console.error('获取数据失败:', error);
-                                 ElMessage.error('数据获取失败');
-               
-                        // 兜底数据
-                        stockData.value = {
-                            stockName: "大哥国际集团",
-                            symbol: "dage666666",
-                            currentPrice: "188.88",
-                            changeAmount: "+12.50",
-                            changePercent: "+7.08%",
-                            status: "上涨"
-                        };
+                        loading.value = false;
+                        ElMessage.error('加载K线图失败');
                     }
                 };
 
-                // 处理买入逻辑
-                const handleBuy = () => {
-                    const val = buyAmount.value.trim();
-                    
-                    // 校验：不能为空且必须是数字
-                    if (val === '') {
-                        ElMessage.error('金额不能为空');
+                // 买入逻辑
+                const handleConfirmBuy = () => {
+                    const amount = buyAmount.value.trim();
+                    const reg = /^[0-9]+(.[0-9]{1,2})?$/; // 数字正则
+
+                    if (!amount) {
+                        ElMessage.warning('请输入买入金额');
                         return;
                     }
-                    if (isNaN(val) || parseFloat(val) <= 0) {
-                        ElMessage.error('请输入有效的数字金额');
+                    if (!reg.test(amount)) {
+                        ElMessage.warning('金额格式不正确，请输入有效的数字');
                         return;
                     }
 
-                    // 验证通过
-                    ElMessage({
+                    ElMessage.success({
                         message: '买入成功！',
-                        type: 'success',
+                        offset: 100
                     });
                     dialogVisible.value = false;
-                    buyAmount.value = ''; // 清空输入
+                    buyAmount.value = '';
                 };
 
                 onMounted(() => {
-                    fetchStockData();
+                    loadData();
+                    // 窗口缩放自适应
+                    window.addEventListener('resize', () => chartInstance && chartInstance.resize());
                 });
 
                 return {
-                    stockData,
+                    loading,
+                    stockInfo,
                     dialogVisible,
                     buyAmount,
-                    handleBuy,
-                    loading
+                    handleConfirmBuy
                 };
             }
-        });
-
-        app.use(ElementPlus);
-        app.mount('#app');
+        }).use(ElementPlus).mount('#app');
     </script>
 </body>
 </html>
