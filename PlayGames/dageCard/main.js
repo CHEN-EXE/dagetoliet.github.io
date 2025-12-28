@@ -852,7 +852,7 @@ class DouDiZhuGame {
         this.checkOrientation();
         this.bindEvents();
     }
-
+**/
     checkOrientation() {
         const isLandscape = window.innerWidth > window.innerHeight;
         if (!isLandscape) {
@@ -879,7 +879,7 @@ class DouDiZhuGame {
         });
     }
 }
-**/
+
 // 初始化游戏
 document.addEventListener('DOMContentLoaded', () => {
     new ScreenOrientation();
