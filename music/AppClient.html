@@ -16,6 +16,7 @@
             --dialog-bg: rgba(240, 240, 240, 0.9);
             --input-bg: #ffffff;
             --search-bg: rgba(118, 118, 128, 0.12);
+            --card-bg: rgba(255, 255, 255, 0.6);
         }
         :root[data-theme="dark"] {
             --bg-color: #000000;
@@ -28,6 +29,7 @@
             --dialog-bg: rgba(30, 30, 30, 0.85);
             --input-bg: #1c1c1e;
             --search-bg: rgba(118, 118, 128, 0.24);
+            --card-bg: rgba(44, 44, 46, 0.6);
         }
         
         body {
@@ -48,64 +50,61 @@
             padding: 15px 0;
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 20px;
-            position: relative; /* 为定位返回按钮 */
+            position: relative; 
+            z-index: 100;
         }
         
-        /* 修改 Logo 布局以支持左侧按钮 */
         .header-left { display: flex; align-items: center; gap: 10px;}
         .logo { font-size: 22px; font-weight: 700; color: #fa243c; display: flex; align-items: center; gap:5px; transition: transform 0.3s ease;}
         .logo svg { font-size: 24px; }
         
-        /* 返回按钮样式 */
         #header-back-btn {
             font-size: 24px; color: #fa243c; border: none; background: none; padding: 0;
             margin-bottom:-5px;
             cursor: pointer; opacity: 0; visibility: hidden; transform: translateX(10px);
-            transition: all 0.3s ease; display: none; /* 默认不显示 */
+            transition: all 0.3s ease; display: none; 
         }
         #header-back-btn.show { opacity: 1; visibility: visible; transform: translateX(0); display: block; }
 
         .header-controls { display: flex; align-items: center; gap: 15px; }
-        .icon-btn:hover{
-          background: var(--search-bg);
-            border: none; border-radius: 10px;
-        }
+        .icon-btn:hover { background: var(--search-bg); border: none; border-radius: 10px; }
         .icon-btn { 
             background: none; border: none; color: #fa243c; font-size: 24px;
             padding: 5px; cursor: pointer; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
         }
         
-        /* 用户区域组合 */
-        .user-area:hover{
-                 background: var(--search-bg);
-            border: none; border-radius: 10px;
-     
-        }
         .user-area {
-            display: flex; align-items: center; gap: 8px; cursor: pointer;
+            display: flex; align-items: center; gap: 8px; cursor: pointer; position: relative;
+            padding: 4px 8px; border-radius: 20px; transition: background 0.2s;
         }
-        .user-name-text {
-            font-size: 15px; font-weight: 500; color: #fa243c;
-        }
-        .user-avatar {
-            width: 34px; height: 34px;
-            border-radius: 50%;
-            background-color: #fa243c;
-            color: white;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 30px;
+        .user-area:hover { background: var(--search-bg); }
+        
+        .user-area:hover::after {
+            content: "用户";
+            position: absolute; bottom: -30px; right: 0;
+            background: var(--player-bg); color: var(--text-main);
+            padding: 4px 8px; border-radius: 6px; font-size: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            white-space: nowrap; pointer-events: none;
+            backdrop-filter: blur(10px); z-index: 10;
         }
 
-        /* --- 视图切换容器 --- */
-        #browse-view, #search-view {
+        .user-name-text { font-size: 15px; font-weight: 500; color: #fa243c; }
+        .user-avatar {
+            width: 34px; height: 34px; border-radius: 50%;
+            background-color: #fa243c; color: white;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 30px; overflow: hidden;
+        }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- 视图切换 --- */
+        #browse-view, #search-view, #user-view {
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        /* 隐藏状态类 */
-        .view-hidden { opacity: 0; display: none; pointer-events: none; }
-        .fade-out-left { opacity: 0; transform: translateX(-20px); }
-        .fade-in-right { opacity: 0; transform: translateX(20px); }
-
+        .view-hidden { opacity: 0; display: none !important; pointer-events: none; }
+        
         h1 { font-size: 34px; margin: 10px 0; font-weight: 800; }
 
         .featured-banner {
@@ -119,7 +118,6 @@
             font-size: 22px; font-weight: 700; margin: 25px 0 15px 0;
             display: flex; justify-content: space-between; align-items: center;
         }
-        /* 修改箭头样式，使其可点击 */
         .title-more-btn { color: var(--text-sub); font-size: 24px; font-weight: 400; cursor: pointer; padding: 0 10px; }
         
         .song-list { display: flex; flex-direction: column; }
@@ -129,7 +127,6 @@
         }
         .song-item:last-child { border-bottom: none; }
         .song-item:active { background-color: var(--border-color); }
-
         .song-cover {
             width: 50px; height: 50px; border-radius: 6px; margin-right: 15px;
             object-fit: cover; background: #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -137,34 +134,89 @@
         .song-info { flex: 1; overflow: hidden; }
         .song-name { font-size: 16px; font-weight: 500; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .song-artist { font-size: 14px; color: var(--text-sub); }
-        .more-btn { 
-          font-size: 20px; padding: 0 10px; }
+        .more-btn { font-size: 20px; padding: 0 10px; }
 
-        /* --- 搜索界面样式 (iOS Style) --- */
+        /* --- 搜索界面 --- */
         #search-view h1 { margin-bottom: 15px; }
-        .search-bar-wrapper {
-            position: relative; margin-bottom: 20px;
-        }
+        .search-bar-wrapper { position: relative; margin-bottom: 20px; }
         .ios-search-bar {
-            width: 100%; box-sizing: border-box;
-            background: var(--search-bg);
-            border: none; border-radius: 10px;
-            padding: 10px 35px;
-            font-size: 17px; color: var(--text-main);
-            outline: none; height: 40px;
+            width: 100%; box-sizing: border-box; background: var(--search-bg);
+            border: none; border-radius: 10px; padding: 10px 35px;
+            font-size: 17px; color: var(--text-main); outline: none; height: 40px;
         }
         .search-icon {
             position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
             color: var(--text-sub); font-size: 16px; pointer-events: none;
         }
 
-        /* --- 悬浮播放器 --- */
+        /* --- 用户信息界面 --- */
+        #user-view { padding-top: 10px; }
+        
+        .ios-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-header { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .profile-avatar-large {
+            width: 100px; height: 100px; border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            object-fit: cover; cursor: pointer; transition: transform 0.2s;
+        }
+        .profile-avatar-large:active { transform: scale(0.95); opacity: 0.8; }
+        
+        .profile-input-group { text-align: center; width: 100%; }
+        .profile-name-input {
+            font-size: 24px; font-weight: 800; text-align: center;
+            background: transparent; border: none; color: var(--text-main);
+            width: 100%; outline: none; margin-bottom: 5px;
+        }
+        .profile-identity-wrapper {
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            color: var(--text-sub); font-size: 15px;
+        }
+        .profile-id-input {
+            background: var(--search-bg); border: none; border-radius: 8px;
+            padding: 4px 8px; color: #007aff; font-weight: 600; font-size: 14px;
+            width: 100px; text-align: center; outline: none;
+        }
+
+        .submit-area h3 { font-size: 20px; font-weight: 700; margin-bottom: 15px; margin-left: 10px;}
+        .submit-card {
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .submit-card:active { transform: scale(0.98); background: var(--search-bg); }
+        .submit-info h4 { margin: 0 0 5px 0; font-size: 17px; }
+        .submit-info p { margin: 0; font-size: 13px; color: var(--text-sub); }
+        .submit-icon { 
+            width: 40px; height: 40px; background: #fa243c; border-radius: 12px;
+            color: white; display: flex; align-items: center; justify-content: center; font-size: 20px;
+            box-shadow: 0 4px 10px rgba(250, 36, 60, 0.3);
+        }
+
+        /* --- 播放器样式 --- */
         .floating-player {
             position: fixed; bottom: 20px; left: 15px; right: 15px; height: 64px;
             background: var(--player-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 14px; display: flex; align-items: center; padding: 0 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15); z-index: 1000;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer;
+        }
+        /** pribtn **/
+        .pri_btn{
+          border:0;
+          padding:5px;
+          border-radius:10px;
+        }
+        .pri_btn:active{
+          background-color: #fa243c;
+    color:#fff;
         }
         .floating-player:active { transform: scale(0.97); }
 
@@ -173,7 +225,6 @@
         .controls { display: flex; align-items: center; gap: 18px; margin-left: 10px; }
         .play-btn { font-size: 26px; cursor: pointer; color: var(--text-main); display: flex; align-items: center;}
 
-        /* --- 全屏播放器 --- */
         #full-player {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--full-player-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
@@ -188,7 +239,7 @@
         .fp-vinyl-area { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; margin: 20px 0; }
         .vinyl-disc {
             width: 75vw; height: 75vw; max-width: 320px; max-height: 320px;
-            border-radius: 12px; border-radius: 50%; background: #111; position: relative;
+            border-radius: 50%; background: #111; position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center;
             animation: rotate 20s linear infinite; animation-play-state: paused; 
         }
@@ -208,55 +259,52 @@
         .fp-artist { font-size: 18px; color:  #5d5d5d92; font-weight: 500; } 
         .fp-lyrics { margin-top: 8px; color: var(--text-sub); font-size: 14px; height: 20px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-        /* --- 进度条 --- */
         .fp-progress-container {
             width: 100%; height: 5px; background: rgba(128,128,128,0.2); border-radius: 3px;
             margin-bottom: 40px; position: relative; cursor: pointer; 
         }
         .fp-progress-bar { width: 0%; height: 100%; 
-            background: linear-gradient(to right, #ff7e5f, #feb47b);/* 红色背景 */
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
           border-radius: 3px; position: relative; }
         .time-labels {
             display: flex; justify-content: space-between; font-size: 12px; color: var(--text-sub); margin-top: 10px; font-weight: 500;
         }
 
         .fp-controls { display: flex; justify-content: center; align-items: center; margin-bottom: 40px; gap: 30px; }
-        
-        /* 全屏播放按钮 - 红色 */
         .fp-play-btn {
             width: 70px; height: 50px;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);/* 红色背景 */
-            color: #ffffff; /* 白色图标 */
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: #ffffff; 
             border-radius: 90px; display: flex; justify-content: center; align-items: center;
             font-size: 32px; box-shadow: 0 8px 20px rgba(250, 36, 60, 0.4);
         }
         .fp-play-btn:active { transform: scale(0.9); opacity: 0.9; }
 
-        /* 新增：侧边控制按钮样式 (循环/倍速) */
         .control-btn-side {
             width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
             color: var(--text-sub); font-size: 22px; cursor: pointer; transition: color 0.2s;
         }
-        .control-btn-side.active { color: #fa243c; } /* 激活态 */
+        .control-btn-side.active { color: #fa243c; } 
         .speed-text { font-size: 15px; font-weight: 700; width: 46px; border: 1px solid currentColor; border-radius: 4px; height: 24px; }
 
         #main-audio { display: none; }
 
-        /* --- iOS 16 Style Dialog --- */
-        #user-dialog-overlay {
+        /* --- Dialog Styles (Shared & New Avatar) --- */
+        #user-dialog-overlay, #avatar-dialog-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(2px);
             z-index: 5000; display: flex; align-items: center; justify-content: center;
             opacity: 0; visibility: hidden; transition: all 0.2s ease;
         }
-        #user-dialog-overlay.active { opacity: 1; visibility: visible; }
+        #user-dialog-overlay.active, #avatar-dialog-overlay.active { opacity: 1; visibility: visible; }
         
         .ios-dialog-box {
-            width: 270px; background: var(--dialog-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            width: 280px; background: var(--dialog-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 20px; text-align: center; transform: scale(1.1);
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            overflow: hidden;
         }
-        #user-dialog-overlay.active .ios-dialog-box { transform: scale(1); }
+        .active .ios-dialog-box { transform: scale(1); }
 
         .ios-dialog-title { padding: 20px 16px 5px; font-size: 17px; font-weight: 600; color: var(--text-main); }
         .ios-dialog-desc { padding: 0 16px 15px; font-size: 13px; color: var(--text-main); }
@@ -266,13 +314,43 @@
             border-radius: 10px; font-size: 14px; background: var(--input-bg); color: var(--text-main); outline: none;
         }
         .ios-dialog-btns {
-            border-top: 0.5px solid var(--text-sub); border-top-color: rgba(128,128,128,0.3); display: flex;
+            border-top: 0.5px solid rgba(128,128,128,0.3); display: flex;
         }
         .ios-dialog-btn {
             flex: 1; padding: 12px 0; font-size: 17px; font-weight: 600; color: #007aff;
-            background: none; border: none; cursor: pointer;
+            background: none; border: none; cursor: pointer; border-right: 0.5px solid rgba(128,128,128,0.3);
         }
+        .ios-dialog-btn:last-child { border-right: none; }
         .ios-dialog-btn:active { background: rgba(128,128,128,0.1); }
+
+        /* Avatar Dialog Specific Styles */
+        .avatar-options {
+            text-align: left;
+            padding: 0 16px 16px;
+        }
+        .avatar-option {
+            margin-bottom: 12px;
+        }
+        .avatar-option-label {
+            display: flex; align-items: center; gap: 8px; font-size: 15px;
+            color: var(--text-main); cursor: pointer;
+        }
+        .avatar-radio {
+            accent-color: #007aff; transform: scale(1.2);
+        }
+        .avatar-sub-input {
+            margin-top: 8px;
+            width: 100%; box-sizing: border-box; padding: 8px;
+            border: none; background: var(--search-bg);
+            border-radius: 8px; font-size: 14px; color: var(--text-main); outline: none;
+            display: none; /* 默认隐藏 */
+        }
+        .avatar-sub-input.active { display: block; animation: slideDown 0.2s ease; }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* --- Toast --- */
         #toast-box {
@@ -290,7 +368,7 @@
 
 <header>
     <div class="header-left">
-        <button id="header-back-btn" onclick="exitSearch()">
+        <button id="header-back-btn" onclick="handleBack()">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8l8 8l1.41-1.41L7.83 13H20v-2z"/></svg>
         </button>
         <div class="logo">
@@ -303,10 +381,10 @@
         <button class="icon-btn theme-btn" onclick="toggleTheme()">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m3.975 19.8l-.85-.35q-.775-.325-1.037-1.125t.087-1.575l1.8-3.9zm4 2.2q-.825 0-1.412-.587T5.975 20v-6l2.65 7.35q.075.175.15.338t.2.312zm5.15-.1q-.8.3-1.55-.075t-1.05-1.175l-4.45-12.2q-.3-.8.05-1.562t1.15-1.038l7.55-2.75q.8-.3 1.55.075t1.05 1.175l4.45 12.2q.3.8-.05 1.563t-1.15 1.037zM10.975 10q.425 0 .713-.288T11.975 9t-.287-.712T10.975 8t-.712.288T9.975 9t.288.713t.712.287"/></svg>
         </button>
-        <div class="user-area" onclick="openUserDialog()">
-            <span class="user-name-text" id="display-username">用户名</span>
-            <div class="user-avatar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+        <div class="user-area" onclick="enterUserView()">
+            <span class="user-name-text" id="header-username">用户名</span>
+            <div class="user-avatar" id="header-avatar">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
             </div>
         </div>
     </div>
@@ -314,11 +392,9 @@
 
 <div id="browse-view">
     <h1>浏览</h1>
-
     <div class="featured-banner">
         <img id="dagepic" src="./img/p1.png" alt="Featured" onerror="this.src='https://via.placeholder.com/600x250?text=Apple+Music+Style'">
     </div>
-
     <div class="section-title">新歌推荐 <span class="title-more-btn" onclick="enterSearch()">›</span></div>
     <div class="song-list" id="song-container"></div>
 </div>
@@ -330,6 +406,51 @@
         <input type="text" class="ios-search-bar" id="search-input" placeholder="艺人、歌曲" oninput="handleSearch()">
     </div>
     <div class="song-list" id="search-results"></div>
+</div>
+
+<div id="user-view" class="view-hidden">
+    <h1 style="margin-top:-10px;">用户</h1>
+    <div class="ios-card">
+      
+        <div class="profile-header">
+            <img class="profile-avatar-large" id="profile-avatar-edit" src="https://via.placeholder.com/150" onclick="changeAvatar()" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNjY2MiIGQ9Ik0xMiA0YTQgNCAwIDAgMSA0IDRhNCA0IDAgMCAxLTQgNGE0IDQgMCAwIDEtNC00YTQgNCAwIDAgMSA0LTRtMCAxMGM0LjQyIDAgOCAxLjc5IDggNHYySDR2LTJjMC0yLjIxIDMuNTgtNCA4LTRIi8+PC9zdmc+'">
+            <div class="profile-input-group">
+                <input type="text" class="profile-name-input" id="profile-name-edit" value="用户名" onblur="syncUser()">
+                <div class="profile-identity-wrapper">
+                    <span id="display-name-ref">用户名</span>
+                    <span>|</span>
+                    <input type="text" class="profile-id-input" id="profile-id-edit" value="音乐人" onblur="syncUser()">
+                </div>
+            </div>
+        </div>
+    </div>
+      <span style="font-size:14px; ">头像，用户名，头衔皆为可改内容，点击它们即可修改。由于软件问题，暂不支持本地保存，因此您下次还需要改。</span>
+  
+    <div class="submit-area">
+        <h3>投稿</h3>
+        <div class="ios-card submit-card" onclick="openSubmission()">
+            <div class="submit-info">
+                <h4>提交资源到 Github</h4>
+                <p>上传音频文件，加入全成唱片库联盟。(进入仓库可能需要一些其他的网络环境,如果你进不去的话.）</p>
+            </div>
+        </div>
+    </div>
+    
+       <div class="submit-area">
+        <h3>关于全成唱片</h3>
+        <div class="ios-card submit-card">
+            <div class="submit-info">
+                <h4>全成唱片 1.2.0</h4>
+                <p>制作者：<br>NaOH.<br>鸣谢:<br>SPACEDLS 图标设计，音频创作
+                <br><strong>更新日志:</strong><br>本次更新优化了界面状态，以及用户模块修改功能多样性。支持头像修改，头衔修改。增强设备兼容能力，判定设备版本。<strong>新版本推送后请退出重进软件，如未更新，请卸载重新安装。如果界面无法正常加载，请检查你的 WebView 版本是否太低。</strong><br><br>如果还没解决，可尝试硬刷新。点击下方按钮即可。
+              <br>  <button onclick="mload()" class="pri_btn">软件内硬刷新</button></p>
+            </div>
+        </div>
+    </div>
+    
+    
+<p id="settings" style="font-size:12px;color:var(--text-sub); text-align:center; margin-top:50px; opacity: 0.7;">数据获取失败！</p>
+
 </div>
 
 <div class="floating-player" id="player-bar" style="display: none;" onclick="openFullPlayer()">
@@ -347,23 +468,18 @@
 
 <div id="full-player">
     <div class="fp-header">
-        <div class="fp-close-btn" onclick="closeFullPlayer()">
-        
-        </div>
+        <div class="fp-close-btn" onclick="closeFullPlayer()"></div>
     </div>
-
     <div class="fp-vinyl-area">
         <div class="vinyl-disc" id="fp-disc">
             <img class="vinyl-cover" id="fp-cover" src="" onerror="this.src='https://via.placeholder.com/300'">
         </div>
     </div>
-
     <div class="fp-info-area">
         <div class="fp-title" id="fp-title">歌曲标题</div>
         <div class="fp-artist" id="fp-artist">歌手名</div>
         <div class="fp-lyrics">暂无歌词~</div>
     </div>
-
     <div class="fp-progress-container" id="progress-container">
         <div class="fp-progress-bar" id="progress-bar"></div>
         <div class="time-labels">
@@ -371,40 +487,62 @@
             <span id="total-duration">00:00</span>
         </div>
     </div>
-    
     <div class="fp-controls">
         <div class="control-btn-side" id="loop-btn" onclick="toggleLoopMode()">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M17 17H7v-3l-4 4l4 4v-3h12v-6h-2M7 7h10v3l4-4l-4-4v3H5v6h2z"/></svg>
         </div>
-
          <div class="fp-play-btn" id="fp-play-trigger" onclick="togglePlay(event)">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M6 4v16a1 1 0 0 0 1.524.852l13-8a1 1 0 0 0 0-1.704l-13-8A1 1 0 0 0 6 4"/></svg>
         </div>
-
         <div class="control-btn-side speed-text" id="speed-btn" onclick="changeSpeed()">1.0x</div>
-    </div>
-</div>
-
-<div id="user-dialog-overlay" onclick="closeUserDialog(event)">
-    <div class="ios-dialog-box" onclick="event.stopPropagation()">
-        <div class="ios-dialog-title">请输入用户名</div>
-        <div class="ios-dialog-desc">自定义身份</div>
-        <div class="ios-dialog-input-wrapper">
-            <input type="text" class="ios-dialog-input" id="user-input" placeholder="用户名">
-        </div>
-        <div class="ios-dialog-btns">
-            <button class="ios-dialog-btn" onclick="submitUser()">提交</button>
-        </div>
     </div>
 </div>
 
 <audio id="main-audio"></audio>
 
+<div id="avatar-dialog-overlay" onclick="closeAvatarDialog(event)">
+    <div class="ios-dialog-box" onclick="event.stopPropagation()">
+        <div class="ios-dialog-title">更换头像</div>
+        <div class="ios-dialog-desc">请选择一种方式设置头像</div>
+        
+        <div class="avatar-options">
+            <div class="avatar-option">
+                <label class="avatar-option-label">
+                    <input type="radio" name="avatar-type" value="url" checked onchange="toggleAvatarInputs()" class="avatar-radio">
+                    图片地址
+                </label>
+                <input type="text" id="avatar-input-url" class="avatar-sub-input active" placeholder="输入图片 URL">
+            </div>
+            
+            <div class="avatar-option">
+                <label class="avatar-option-label">
+                    <input type="radio" name="avatar-type" value="qq" onchange="toggleAvatarInputs()" class="avatar-radio">
+                   你的/ta的 QQ 头像
+                </label>
+                <input type="number" id="avatar-input-qq" class="avatar-sub-input" placeholder="输入 QQ 号码">
+            </div>
+            
+            <div class="avatar-option">
+                <label class="avatar-option-label">
+                    <input type="radio" name="avatar-type" value="text" onchange="toggleAvatarInputs()" class="avatar-radio">
+                    文字头像
+                </label>
+                <input type="text" id="avatar-input-text" class="avatar-sub-input" placeholder="输入文字 (1-2字最佳)" maxlength="4">
+            </div>
+        </div>
+
+        <div class="ios-dialog-btns">
+            <button class="ios-dialog-btn" style="color:var(--text-sub); font-weight:400;" onclick="closeAvatarDialog()">取消</button>
+            <button class="ios-dialog-btn" onclick="confirmAvatar()">确定</button>
+        </div>
+    </div>
+</div>
+
 <div id="toast-box">
     <div class="toast-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m0 19c4.97 0 9-4.03 9-9s-4.03-9-9-9s-9 4.03-9 9s4.03 9 9 9m-1-5h2v2h-2zm0-8h2v6h-2z"/></svg>
     </div>
-    <div class="toast-text">播放失败</div>
+    <div class="toast-text">操作失败</div>
 </div>
 
 <p id="consoles" style="font-size:12px;color:var(--text-sub); text-align:center; margin-top:50px; opacity: 0.7;">Copyright © 2026 全成唱片<br>本站仅供娱乐 音频来源自用户手动提交 如侵权请联络应用程序管理者删除<br>AppClient1.2.0.android</p>
@@ -417,22 +555,18 @@
     const vinylDisc = document.getElementById('fp-disc');
     const toastBox = document.getElementById('toast-box'); 
     
-    // 视图元素
     const browseView = document.getElementById('browse-view');
     const searchView = document.getElementById('search-view');
+    const userView = document.getElementById('user-view'); 
     const backBtn = document.getElementById('header-back-btn');
     
-    // 新增：倍速与循环
     const speedBtn = document.getElementById('speed-btn');
     const loopBtn = document.getElementById('loop-btn');
-    let loopMode = 0; // 0: 顺序(默认), 1: 单曲
+    let loopMode = 0; 
     const speeds = [0.1,0.5,0.8,1.0, 1.25, 1.5, 2.0];
     let speedIndex = 3;
-
-    // 全局数据存储
     let allSongs = [];
 
-    // --- Toast 核心
     let toastTimer;
     function showToast(message) {
         if (toastTimer) clearTimeout(toastTimer);
@@ -441,15 +575,6 @@
         toastTimer = setTimeout(() => { toastBox.classList.remove('show'); }, 3000);
     }
     
-    function sc(){
-       showToast("调试模式已激活"); 
-       document.getElementById("consoles").innerHTML=`Appclient(WebViews.)<br><button>重新开启软件</button><button onclick="post()">数据输出</button>`;
-    }
-    function post(){
-      console.log("Pwd:dagenb\nU2FsdGVkX19sHuCf2r7fzkV2h2qH/h1i6wziNDFpioNz3E2h3dZj5ksHN38qdLFcxStnD7pFv13YiDZ6oDiUtw==")
-      showToast("不支持在app查看");
-    }
-
     const ICON_PLAY = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M6 4v16a1 1 0 0 0 1.524.852l13-8a1 1 0 0 0 0-1.704l-13-8A1 1 0 0 0 6 4"/></svg>`;
     const ICON_PAUSE = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m8 0h-2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2"/></svg>`;
 
@@ -457,17 +582,15 @@
         try {
             const res = await fetch('https://chen-exe.github.io/dagetoliet.github.io/music/mus.json');
             const data = await res.json();
-            allSongs = data; // 保存全部数据供搜索
+            allSongs = data;
             render(data);
         } catch (e) { 
             console.error("加载列表失败");
             showToast("加载列表失败");
-      
             document.getElementById('song-container').innerHTML="<div style='text-align:center; color:var(--text-sub); padding:20px;'>暂无音乐</div>";
         }
     }
 
-    // 渲染函数通用化，支持指定容器
     function render(songs, containerId = 'song-container') {
         const container = document.getElementById(containerId);
         if(!songs || songs.length === 0) {
@@ -476,7 +599,7 @@
         }
         container.innerHTML = songs.map((s, i) => `
             <div class="song-item" onclick="selectSong(${JSON.stringify(s).replace(/"/g, '&quot;')})">
-                <img class="song-cover" src="${s.cover}" onerror='showToast("加载封面中断，请重新打开软件等待图片加载完成，以免播放出错")'>
+                <img class="song-cover" src="${s.cover}" onerror='showToast("图片加载失败")'>
                 <div class="song-info">
                     <div class="song-name">${s.title}</div>
                     <div class="song-artist">${s.artist}</div>
@@ -487,46 +610,74 @@
     }
 
     function enterSearch() {
-        // 浏览反向淡出，搜索淡入
         browseView.style.opacity = '0';
         browseView.style.transform = 'scale(0.95)';
-        
         setTimeout(() => {
             browseView.classList.add('view-hidden');
             searchView.classList.remove('view-hidden');
-            
-            // 搜索界面动画进入
             requestAnimationFrame(() => {
                 searchView.style.opacity = '1';
                 searchView.style.transform = 'scale(1)';
             });
         }, 300);
-
-        // 按钮动画
-        backBtn.style.display = 'block';
-        setTimeout(() => backBtn.classList.add('show'), 50);
+        showBackButton();
         document.getElementById('search-input').value = '';
         document.getElementById('search-results').innerHTML = '';
         document.getElementById('search-input').focus();
     }
 
-    function exitSearch() {
-        // 搜索反向淡出
-        searchView.style.opacity = '0';
-        searchView.style.transform = 'scale(0.95)';
-        backBtn.classList.remove('show');
+    function enterUserView() {
+        if(!searchView.classList.contains('view-hidden')) {
+             searchView.style.opacity = '0';
+             setTimeout(() => searchView.classList.add('view-hidden'), 300);
+        } else {
+             browseView.style.opacity = '0';
+             browseView.style.transform = 'scale(0.95)';
+             setTimeout(() => browseView.classList.add('view-hidden'), 300);
+        }
+
+        setTimeout(() => {
+            userView.classList.remove('view-hidden');
+            requestAnimationFrame(() => {
+                userView.style.opacity = '1';
+                userView.style.transform = 'scale(1)';
+            });
+        }, 300);
+        
+        showBackButton();
+    }
+
+    function handleBack() {
+        if(!searchView.classList.contains('view-hidden')) {
+            exitView(searchView);
+        }
+        else if(!userView.classList.contains('view-hidden')) {
+            exitView(userView);
+        }
+    }
+
+    function exitView(currentViewElement) {
+        currentViewElement.style.opacity = '0';
+        currentViewElement.style.transform = 'scale(0.95)';
+        hideBackButton();
         
         setTimeout(() => {
-            searchView.classList.add('view-hidden');
+            currentViewElement.classList.add('view-hidden');
             browseView.classList.remove('view-hidden');
-            backBtn.style.display = 'none';
-
-            // 浏览界面恢复
             requestAnimationFrame(() => {
                 browseView.style.opacity = '1';
                 browseView.style.transform = 'scale(1)';
             });
         }, 300);
+    }
+    
+    function showBackButton() {
+        backBtn.style.display = 'block';
+        setTimeout(() => backBtn.classList.add('show'), 50);
+    }
+    function hideBackButton() {
+        backBtn.classList.remove('show');
+        setTimeout(() => backBtn.style.display = 'none', 300);
     }
 
     function handleSearch() {
@@ -541,7 +692,69 @@
         );
         render(results, 'search-results');
     }
-    /* --- End Search Logic --- */
+
+    function syncUser() {
+        const nameVal = document.getElementById('profile-name-edit').value;
+        if(nameVal) {
+            document.getElementById('header-username').innerText = nameVal;
+            document.getElementById('display-name-ref').innerText = nameVal;
+        }
+    }
+
+    // --- Avatar Dialog Logic ---
+    function changeAvatar() {
+        document.getElementById('avatar-dialog-overlay').classList.add('active');
+    }
+    
+    function closeAvatarDialog(e) {
+        if(e && e.target.id !== 'avatar-dialog-overlay' && !e.target.classList.contains('ios-dialog-btn')) return;
+        document.getElementById('avatar-dialog-overlay').classList.remove('active');
+    }
+
+    function toggleAvatarInputs() {
+        const type = document.querySelector('input[name="avatar-type"]:checked').value;
+        document.getElementById('avatar-input-url').classList.remove('active');
+        document.getElementById('avatar-input-qq').classList.remove('active');
+        document.getElementById('avatar-input-text').classList.remove('active');
+        
+        if (type === 'url') document.getElementById('avatar-input-url').classList.add('active');
+        if (type === 'qq') document.getElementById('avatar-input-qq').classList.add('active');
+        if (type === 'text') document.getElementById('avatar-input-text').classList.add('active');
+    }
+
+    function confirmAvatar() {
+        const type = document.querySelector('input[name="avatar-type"]:checked').value;
+        let finalUrl = '';
+        
+        if (type === 'url') {
+            finalUrl = document.getElementById('avatar-input-url').value;
+        } else if (type === 'qq') {
+            const qq = document.getElementById('avatar-input-qq').value;
+            if (qq) finalUrl = `https://q.qlogo.cn/headimg_dl?dst_uin=${qq}&spec=640&img_type=jpg`;
+        } else if (type === 'text') {
+            const text = document.getElementById('avatar-input-text').value || "USER";
+            const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+              <rect width="100" height="100" fill="#fa243c"/>
+              <text x="50" y="50" dy=".35em" font-size="40" text-anchor="middle" fill="white" font-family="sans-serif" font-weight="bold">${text}</text>
+            </svg>`;
+            finalUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+        }
+
+        if(finalUrl) {
+            document.getElementById('profile-avatar-edit').src = finalUrl;
+            document.getElementById('header-avatar').innerHTML = `<img src="${finalUrl}" style="width:100%;height:100%;object-fit:cover;">`;
+            showToast("头像已更新");
+            document.getElementById('avatar-dialog-overlay').classList.remove('active');
+        } else {
+            showToast("请输入内容");
+        }
+    }
+
+    function openSubmission() {
+        showToast("正在调用浏览器");
+        window.open("https://github.com/CHEN-EXE/dagetoliet.github.io/tree/main/music/Upload.md");
+    }
 
     function selectSong(song) {
         document.getElementById('player-bar').style.display = 'flex';
@@ -553,7 +766,7 @@
         document.getElementById('fp-artist').innerText = song.artist;
         
         audio.src = song.url;
-        audio.playbackRate = speeds[speedIndex]; // 保持倍速
+        audio.playbackRate = speeds[speedIndex]; 
         audio.play().then(() => updatePlayState(true))
             .catch(e => { console.log("Fail", e); updatePlayState(false); showToast("音乐播放失败"); });
     }
@@ -574,9 +787,7 @@
             miniPlayBtn.innerHTML = ICON_PLAY; fullPlayBtn.innerHTML = ICON_PLAY; vinylDisc.classList.remove('playing');
         }
     }
-
     function nextSong(e) { if(e) e.stopPropagation(); showToast("暂无下一首"); }
-
     function openFullPlayer() { fullPlayer.classList.add('active'); }
     function closeFullPlayer() { fullPlayer.classList.remove('active'); }
 
@@ -587,17 +798,16 @@
         html.setAttribute('data-theme', theme);
     }
     
-    // --- New Features Logic ---
     function toggleLoopMode() {
         loopMode = loopMode === 0 ? 1 : 0;
         audio.loop = (loopMode === 1);
         if(loopMode === 1) {
             loopBtn.classList.add('active');
-            loopBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M7 7h10v3l4-4l-4-4v3H5v6h2V7m10 10H7v-3l-4 4l4 4v-3h12v-6h-2v4m-4-2V9h-1l-2 1v1h1.5v4H13z"/></svg>`; // 单曲
+            loopBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M7 7h10v3l4-4l-4-4v3H5v6h2V7m10 10H7v-3l-4 4l4 4v-3h12v-6h-2v4m-4-2V9h-1l-2 1v1h1.5v4H13z"/></svg>`;
             showToast("单曲循环");
         } else {
             loopBtn.classList.remove('active');
-            loopBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M17 17H7v-3l-4 4l4 4v-3h12v-6h-2M7 7h10v3l4-4l-4-4v3H5v6h2z"/></svg>`; // 顺序
+            loopBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M17 17H7v-3l-4 4l4 4v-3h12v-6h-2M7 7h10v3l4-4l-4-4v3H5v6h2z"/></svg>`;
             showToast("顺序播放");
         }
     }
@@ -610,32 +820,8 @@
         showToast("倍速: " + s);
     }
 
-    // --- Dialog Logic Updated ---
-    function openUserDialog() {
-        document.getElementById('user-dialog-overlay').classList.add('active');
-        setTimeout(() => document.getElementById('user-input').focus(), 100);
-    }
-    
-    function closeUserDialog(e) {
-        if(e && e.target.id !== 'user-dialog-overlay') return;
-        document.getElementById('user-dialog-overlay').classList.remove('active');
-    }
-    
-    function submitUser() {
-        const val = document.getElementById('user-input').value;
-        if(val) {
-            document.getElementById('display-username').innerText = val; // 更新显示
-            document.getElementById('user-dialog-overlay').classList.remove('active');
-            showToast("已更新用户名");
-            document.getElementById('user-input').value = "";
-        } else {
-            showToast("请输入内容");
-        }
-    }
-
     init();
     
-    // --- Progress Bar ---
     const progressContainer = document.getElementById('progress-container');
     const progressBar = document.getElementById('progress-bar');
     const currTimeEl = document.getElementById('current-time');
@@ -649,7 +835,6 @@
     progressContainer.addEventListener('mousedown', (e) => { isDragging = true; setProgress(e); });
     document.addEventListener('mousemove', (e) => { if (isDragging) setProgress(e); });
     document.addEventListener('mouseup', () => { isDragging = false; });
-
     progressContainer.addEventListener('touchstart', (e) => { isDragging = true; setTouchProgress(e); }, {passive: false});
     document.addEventListener('touchmove', (e) => { if (isDragging) { e.preventDefault(); setTouchProgress(e); } }, {passive: false});
     document.addEventListener('touchend', () => { isDragging = false; });
@@ -662,7 +847,6 @@
         currTimeEl.innerText = formatTime(currentTime);
         if(audio.duration) durTimeEl.innerText = formatTime(audio.duration);
     }
-
     function setProgress(e) {
         const width = progressContainer.clientWidth;
         const duration = audio.duration;
@@ -671,7 +855,6 @@
         audio.currentTime = (clickX / width) * duration;
         progressBar.style.width = `${(clickX / width) * 100}%`;
     }
-
     function setTouchProgress(e) {
         const width = progressContainer.clientWidth;
         const duration = audio.duration;
@@ -682,12 +865,87 @@
         audio.currentTime = newTime;
         progressBar.style.width = `${(newTime / duration) * 100}%`;
     }
-
     function formatTime(s) {
         if (isNaN(s)) return "00:00";
         const min = Math.floor(s / 60), sec = Math.floor(s % 60);
         return `${min < 10 ? '0' + min : min}:${sec < 10 ? '0' + sec : sec}`;
     }
+    
+    // 浏览器
+    
+    function getBrowserInfo() {
+    // 获取浏览器名称
+    let browserName;
+    if (navigator.userAgent.indexOf("Firefox") > -1) {
+        browserName = "Firefox";
+    } else if (navigator.userAgent.indexOf("Safari") > -1) {
+        browserName = "Safari/Chrome";
+    } else if (navigator.userAgent.indexOf("Chrome") > -1) {
+        browserName = "Chrome";
+    } else if (navigator.userAgent.indexOf("Opera") > -1) {
+        browserName = "Opera";
+    } else if (navigator.userAgent.indexOf("Trident") > -1) {
+        browserName = "Internet Explorer";
+    } else {
+        browserName = "Unknown";
+    }
+
+    // 获取浏览器版本
+    let browserVersion = navigator.userAgent.match(/(?:Firefox|Safari|Chrome|Opera|Trident)\/?([\d.]+)/);
+    browserVersion = browserVersion ? browserVersion[1] : "Unknown";
+
+    return {
+        browserName: browserName,
+        browserVersion: browserVersion
+    };
+}
+
+function getOSInfo() {
+    // 获取操作系统信息
+    let osName;
+    if (navigator.userAgent.indexOf("Windows") > -1) {
+        osName = "Windows";
+    } else if (navigator.userAgent.indexOf("Mac") > -1) {
+        osName = "MacOS";
+    } else if (navigator.userAgent.indexOf("Linux") > -1) {
+        osName = "Linux/Android";
+    } else if (navigator.userAgent.indexOf("Android") > -1) {
+        osName = "Android";
+    } else if (navigator.userAgent.indexOf("iOS") > -1) {
+        osName = "iOS";
+    } else {
+        osName = "Unknown";
+    }
+
+    // 获取操作系统版本（对于某些系统可能无法准确获取）
+    let osVersion = navigator.userAgent.match(/(?:Windows|Mac OS X|Linux|Android|iOS)\s?(\d+(\.\d+)*)/);
+    osVersion = osVersion ? osVersion[1] : "Unknown";
+
+    return {
+        osName: osName,
+        osVersion: osVersion
+    };
+}
+
+// 测试代码
+const browserInfo = getBrowserInfo();
+const osInfo = getOSInfo();document.getElementById("settings").innerText = `
+    Browser Name: ${browserInfo.browserName}
+    Browser Version: ${browserInfo.browserVersion}
+    OS Name: ${osInfo.osName}
+    OS Version: ${osInfo.osVersion}
+`;
+
+console.log("Browser Name:", browserInfo.browserName);
+console.log("Browser Version:", browserInfo.browserVersion);
+console.log("OS Name:", osInfo.osName);
+console.log("OS Version:", osInfo.osVersion);
+
+function mload(){
+  if (confirm("是否硬刷新软件？请注意保存资源。")) {
+    location.reload(true);
+}
+}
 </script>
 </body>
 </html>
