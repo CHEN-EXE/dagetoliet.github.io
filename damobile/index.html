@@ -1,0 +1,311 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>全成網路</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <style>
+    :root {
+      --primary-blue:rgb(116,160,253);
+      --border-color: #e0e0e0;
+      --transition-speed: 0.3s;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      font-family: 'Inter', 'PingFang SC', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      z-index: 2000;
+      padding: 0 15px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      border-bottom: 1px solid #333;
+      box-sizing: border-box;
+    }
+
+    .header-content {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .menu-toggle {
+      cursor: pointer;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* 移动端菜单层 */
+    .mobile-nav {
+      position: fixed;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      background: #000;
+      padding: 80px 20px 30px;
+      box-sizing: border-box;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1500;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .mobile-nav.active {
+      top: 0;
+    }
+
+    .mobile-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px;
+      border-bottom: 1px solid #222;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .baike-background {
+      margin-top: 60px;
+      background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://cdn.pixabay.com/photo/2013/08/09/05/58/kuala-lumpur-170985_1280.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 250px;
+      position: relative;
+    }
+
+    .play_btn {
+      outline: none;
+      border: 1px solid rgba(255,255,255,0.5);
+      width: 50px;
+      height: 50px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(5px);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition-speed);
+    }
+
+    .play_btn:hover {
+      background-color: var(--primary-blue);
+      transform: scale(1.1);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 20px 0 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .grid-menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 12px;
+    }
+
+    .regeng-cards {
+      padding: 15px 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background: #fff;
+      text-align: center;
+      transition: all var(--transition-speed);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .regeng-cards:hover {
+      background-color: var(--primary-blue);
+      color: #fff;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(1, 126, 184, 0.3);
+    }
+
+    .regeng-cards svg {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 10px;
+      fill: currentColor;
+    }
+
+    .member-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: var(--primary-blue);
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+
+    .otto1dialog {
+      border: none;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 90vw;
+      width: 400px;
+    }
+
+    @media (min-width: 768px) {
+      .baike-background { height: 350px; }
+      .grid-menu { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+  <body>
+
+    <header>
+      <div class="header-content">
+    
+        <img style="height:30px;" alt="全成网络" src="./logo.png"/>
+
+      
+       <div class="menu-toggle" id="menuToggle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
+            <path fill="#ffffff" fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="./get.html">辦理入網</a>
+    
+    </nav>
+
+<br><br><br>
+   <img src="./Img1.png" style="width:100%;"/>
+   
+    <div class="container">
+      <div class="section-title">
+        <span id="otto4">全成網路（大哥國際）</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M10 19h3v3h-3zm2-17c5.35.22 7.68 5.62 4.5 9.67c-.83 1-2.17 1.66-2.83 2.5C13 15 13 16 13 17h-3c0-1.67 0-3.08.67-4.08c.66-1 2-1.59 2.83-2.25C15.92 8.43 15.32 5.26 12 5a3 3 0 0 0-3 3H6a6 6 0 0 1 6-6"/></svg>
+      </div>
+
+      <div id="otto6" style="line-height:1.8; padding:15px; background:#fff; border-radius:12px; margin-bottom:20px;">
+   負責營銷移動手機，智能設備，網絡線路   </div>
+
+      <div class="grid-menu">
+        <a class="regeng-cards" href="./get.html" target="_blank">
+     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4a2 2 0 0 0-2-2h-8L4 8v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM9 19H7v-2h2zm8 0h-2v-2h2zm-8-4H7v-4h2zm4 4h-2v-4h2zm0-6h-2v-2h2zm4 2h-2v-4h2z"/></svg>
+     <span>辦理入網業務</span>
+    
+        </a>
+      
+        <a class="regeng-cards" href="./close.html" target="_blank">
+     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4a2 2 0 0 0-2-2h-8L4 8v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM9 19H7v-2h2zm8 0h-2v-2h2zm-8-4H7v-4h2zm4 4h-2v-4h2zm0-6h-2v-2h2zm4 2h-2v-4h2z"/></svg>
+     <span>退網業務</span>
+    
+        </a>
+        
+        
+    </div>
+    <section>
+      <div class="section-title">成员</div>
+      
+      <div class="member-card">
+        <img src="大哥牛逼.png" alt="头象" style="width:60px; height:60px; border-radius:50%;">
+        <div>
+          <div style="font-weight:700">大哥</div>
+          <div style="font-size:12px; color:#666;">全成移動创始人</div>
+          <a style="    color: var(--primary-blue);
+    
+      text-decoration: none;
+  " href="././dage/1.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.832 3.367L8.668.108a3.15 3.15 0 0 0-3.856 2.226L.943 16.777a3.15 3.15 0 0 0 2.226 3.856l12.163 3.259a3.15 3.15 0 0 0 3.855-2.226l3.87-14.443a3.15 3.15 0 0 0-2.226-3.856M6.332 2.741A1.574 1.574 0 0 1 8.26 1.628l12.163 3.26a1.574 1.574 0 0 1 1.113 1.927l-3.87 14.444a1.574 1.574 0 0 1-1.928 1.113l-12.163-3.26a1.574 1.574 0 0 1-1.113-1.927zm2.634 2.336a.787.787 0 1 0-.407 1.52l9.122 2.444a.787.787 0 1 0 .407-1.52zM6.985 9.434a.787.787 0 0 1 .963-.557l9.123 2.445a.787.787 0 0 1-.408 1.52l-9.122-2.444a.787.787 0 0 1-.556-.964m-.055 3.244a.787.787 0 0 0-.407 1.52l5.32 1.427a.787.787 0 0 0 .408-1.52z"/></svg>
+            简历</a>
+        </div>
+      </div>
+  <br>
+    </section>
+    
+<section>
+      <div class="section-title">新闻</div>
+      
+       <div class="member-card">
+        <div>
+          <div style="font-weight:700">全成移動上線</div>
+          <div style="font-size:12px; color:#666;">提供最新的入網業務寬帶。</div>
+</div>
+      </div>
+
+    <div class="member-card">
+        <div>
+          <div style="font-weight:700">全成網路掛牌</div>
+          <div style="font-size:12px; color:#666;">今日全成網絡科技成功在公共廁所掛牌。大哥國際走向全成，這是新的一步</div>
+</div>
+      </div>
+    </section>
+    </div>
+
+    <div class="footer">
+      <p>
+      </p>
+      <p style="margin-top:15px;">股票代码: Dage66666666
+      <br>网页及其內容仅供娱乐 请勿当真</p>
+    </div>
+
+    <dialog class="otto1dialog" id="otto1">
+      <h3>大哥国际，走向全城。</h3>
+      <video style="width:100%; border-radius:12px;" controls><source src="video.mp4" type="video/mp4"></video>
+      <button style="width:100%; margin-top:15px; padding:10px; border:none; border-radius:8px;" onclick="otto1.close()">关闭</button>
+    </dialog>
+
+    <dialog class="otto1dialog" id="otto2">
+      <p style="font-family:monospace; font-size:12px; background:#f4f4f4; padding:15px;">[Error]: Fetch Failed</p>
+      <button style="width:100%; margin-top:15px; padding:10px; background:var(--primary-blue); color:#fff; border:none; border-radius:8px;" onclick="otto2.close()">上报</button>
+    </dialog>
+
+    <script>
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileNav = document.getElementById('mobileNav');
+
+      function toggleMenu() {
+        mobileNav.classList.toggle('active');
+      }
+
+      menuToggle.addEventListener('click', toggleMenu);
+
+    </script>
+  </body>
+</html>
