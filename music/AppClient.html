@@ -386,7 +386,7 @@
         <h1 style="margin-top:10px;">用户</h1>
         <div class="ios-card">
             <div class="profile-header">
-                <img class="profile-avatar-large" id="profile-avatar-edit" alt="点击修改" src="https://via.placeholder.com/150" onclick="changeAvatar()" >
+                <img class="profile-avatar-large" id="profile-avatar-edit" alt="点击修改" src="./img/DefaultProfilePicture.jpg" onclick="changeAvatar()" >
                 <div class="profile-input-group">
                     <input type="text" class="profile-name-input" id="profile-name-edit" value="用户名" onblur="syncUser()">
                     <div class="profile-identity-wrapper">
@@ -431,8 +431,12 @@
                 <div class="submit-info">
                     <h4>全成唱片 1.3.0</h4>
                     <p>制作者：NaOH.<br>鸣谢: SPACEDLS<br><strong>本次更新:</strong> 底部Tab导航、本地存储支持。<br>如需硬刷新功能点击该卡片即可显示。<br>
-            <div  style="display:none;" id="loader">     
-                    <button onclick="mload()" class="pri_btn" style="margin-top:10px;">软件内硬刷新</button>
+            <div  style="display:none;" id="loader"> 
+            
+               
+                    <button onclick="cluser()" class="pri_btn" style="margin-top:10px;">删除用户本地数据</button>
+                    
+                    <button onclick="mload()" class="pri_btn" style="margin-top:10px;">软件内硬刷新</button><br>
                     <label>硬件加速:</label>
     <input type="radio"  name="gender" value="open" checked>
     <label for="o">开</label>   
@@ -630,7 +634,10 @@ function loadmus(){
     async function init() {
         loadUserData(); // 加载本地数据
         try {
-            const res = await fetch('https://chen-exe.github.io/dagetoliet.github.io/music/mus.json');
+               document.getElementById('song-container').innerHTML=`<div style='text-align:center; color:var(--text-sub); padding:20px;'>
+               <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="3.5" r="1.5"><animateTransform attributeName="transform" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="0 12 12;90 12 12;180 12 12;270 12 12"/><animate attributeName="opacity" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle><circle cx="12" cy="3.5" r="1.5" transform="rotate(30 12 12)"><animateTransform attributeName="transform" begin="0.2s" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="30 12 12;120 12 12;210 12 12;300 12 12"/><animate attributeName="opacity" begin="0.2s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle><circle cx="12" cy="3.5" r="1.5" transform="rotate(60 12 12)"><animateTransform attributeName="transform" begin="0.4s" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="60 12 12;150 12 12;240 12 12;330 12 12"/><animate attributeName="opacity" begin="0.4s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle></g></svg>
+               加载中</div>`;
+        const res = await fetch('https://chen-exe.github.io/dagetoliet.github.io/music/mus.json');
             const data = await res.json();
             allSongs = data;
             render(data);
@@ -952,11 +959,11 @@ function loadmus(){
     function tools(){
     
       if (  document.getElementById("loader") .style.display==="none"){
-      showToast("调试模式");
+      showToast("Tool V1.3.0");
      document.getElementById("loader") .style.display="block"; 
      } else{
     
-          showToast("调试关闭");
+      console.log("调试关闭");
      document.getElementById("loader") .style.display="none"; 
    
      }
@@ -1000,6 +1007,13 @@ function loadmus(){
     function mload(){
         if (confirm("是否硬刷新软件？请注意保存资源。")) { 
 window.location.reload(true);
+ }
+    }
+    
+     function cluser(){
+        if (confirm("此操作将删除\n• 本地用户数据\n• 用户设定（主题）\n确定执行？")) { 
+localStorage.clear();
+showToast("清除完成 重启软件生效");
  }
     }
 </script>
