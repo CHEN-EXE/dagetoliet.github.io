@@ -1,790 +1,430 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>全成唱片创作者Banner生成器</title>
+    <title>氢氧化钠。Banner/图片生成器。</title>
     <style>
         :root {
             --primary: #FA243C;
-            /* 主色调 */
-            --primary-hover: #d11a30;
             --bg: #f2f4f7;
-            --panel-bg: #ffffff;
-            --text-main: #333;
-            --border: #e1e4e8;
-            --radius: 8px;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --border: #eee;
         }
-
-        * {
-            box-sizing: border-box;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            margin: 0;
-            height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text-main);
-            overflow: hidden;
-            /* 防止整体滚动 */
-        }
-
-        /* 布局容器 */
-        .app {
-            display: flex;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        /* 左侧预览区 */
+        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); }
+        
+        .app { display: flex; height: 100%; width: 100%; overflow: hidden; }
+        
         .preview-area {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #e9ecef;
+            background: #e0e0e0;
             padding: 20px;
             position: relative;
             overflow: hidden;
         }
-
-        /* 画布容器 */
-        .canvas-container {
+        
+        .canvas-box {
             position: relative;
-            box-shadow: var(--shadow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             background: #fff;
-            font-size: 0;
-            /* 消除图片间隙 */
             user-select: none;
             max-width: 100%;
             max-height: 100%;
         }
-
-        .bg-img {
-            display: block;
-            max-width: 100%;
-            max-height: 80vh;
-            /* 限制最大高度 */
-            height: auto;
-            width: auto;
-            pointer-events: none;
-        }
-
-        /* 文本元素 */
-        .txt-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-        }
-
+        
+        .bg-img { display: block; max-width: 100%; max-height: 80vh; pointer-events: none; }
+        
+        .txt-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+        
         .txt-node {
             position: absolute;
             cursor: move;
             white-space: pre;
-            transform-origin: left top;
-            padding: 4px;
-            /* 增加点击区域 */
+            padding: 2px;
             border: 1px dashed transparent;
-            transition: border-color 0.2s;
             line-height: 1.2;
+            transform-origin: 0 0;
         }
-
-        .txt-node:hover {
-            border-color: rgba(250, 36, 60, 0.3);
-        }
-
-        .txt-node.active {
-            border-color: var(--primary);
-            z-index: 100;
-        }
-
-        /* 右侧控制栏 */
-        .controls-panel {
-            width: 360px;
-            background: var(--panel-bg);
+        .txt-node.active { border-color: var(--primary); z-index: 100; }
+        
+        .controls {
+            width: 350px;
+            background: #fff;
             display: flex;
             flex-direction: column;
             border-left: 1px solid var(--border);
             z-index: 20;
+            height: 100%;
         }
-
-        .panel-header {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-            font-weight: 700;
-            font-size: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .scroll-content {
+        
+        .c-head { padding: 15px; border-bottom: 1px solid var(--border); font-weight: bold; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        
+        .c-body {
             flex: 1;
-            overflow-y: auto;
+            overflow-y: auto; 
             padding: 15px;
+            -webkit-overflow-scrolling: touch;
         }
-
-        .panel-footer {
-            padding: 15px;
-            border-top: 1px solid var(--border);
-            background: #fff;
+        
+        .c-foot { padding: 15px; border-top: 1px solid var(--border); background: #fff; flex-shrink: 0; }
+        
+        .form-group { margin-bottom: 15px; }
+        .label { display: block; font-size: 12px; color: #888; margin-bottom: 5px; }
+        
+        input[type="text"], textarea, select {
+            width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;
+            background: #f9f9f9; font-size: 14px;
         }
-
-        /* 表单组件 */
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 6px;
-            font-weight: 500;
-        }
-
-        input[type="text"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 13px;
-            transition: border 0.2s;
-            background: #f9f9f9;
-        }
-
-        input[type="text"]:focus,
-        textarea:focus,
-        select:focus {
-            border-color: var(--primary);
-            background: #fff;
-        }
-
-        .row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .col {
-            flex: 1;
-        }
-
-        /* 滑块美化 */
-        input[type="range"] {
-            width: 100%;
-            accent-color: var(--primary);
-            height: 4px;
-            background: #ddd;
-            border-radius: 2px;
-        }
-
-        /* 颜色选择器 */
-        .color-picker-wrap {
-            position: relative;
-            display: flex;
-            align-items: center;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 4px;
-            background: #f9f9f9;
-        }
-
-        input[type="color"] {
-            border: none;
-            width: 24px;
-            height: 24px;
-            padding: 0;
-            background: none;
-            cursor: pointer;
-        }
-
-        /* 按钮 */
+        input:focus, textarea:focus, select:focus { border-color: var(--primary); background: #fff; }
+        
+        .row { display: flex; gap: 10px; }
+        .col { flex: 1; }
+        
+        input[type="range"] { width: 100%; accent-color: var(--primary); }
+        
+        .color-wrap { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 4px; padding: 4px; background: #f9f9f9; }
+        input[type="color"] { border: none; width: 25px; height: 25px; background: none; padding: 0; }
+        
         .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: var(--radius);
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            font-size: 14px;
-            transition: background 0.2s;
+            width: 100%; padding: 10px; border: none; border-radius: 6px;
+            background: var(--primary); color: #fff; font-weight: bold; cursor: pointer;
         }
+        .btn:active { opacity: 0.8; }
+        .btn-sm { padding: 5px 10px; font-size: 12px; width: auto; background: #eee; color: #333; }
+        .btn-del { color: var(--primary); background: rgba(250,36,60,0.1); }
+        
+        .layer-list { border: 1px solid #eee; border-radius: 4px; max-height: 100px; overflow-y: auto; }
+        .l-item { padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; cursor: pointer; display: flex; justify-content: space-between; }
+        .l-item.active { background: #fff0f2; color: var(--primary); }
+        
+        #editor { transition: opacity 0.2s; }
+        .disabled { opacity: 0.5; pointer-events: none; }
 
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .btn-ghost {
-            background: #f0f0f0;
-            color: #333;
-        }
-
-        .btn-ghost:hover {
-            background: #e0e0e0;
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 12px;
-            width: auto;
-        }
-
-        /* 列表项 */
-        .item-list {
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            max-height: 120px;
-            overflow-y: auto;
-            background: #f9f9f9;
-        }
-
-        .layer-item {
-            padding: 8px 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        .layer-item:last-child {
-            border-bottom: none;
-        }
-
-        .layer-item.active {
-            background: #ffeced;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .layer-item:hover:not(.active) {
-            background: #eee;
-        }
-
-        /* 响应式适配 */
         @media (max-width: 768px) {
-            .app {
-                flex-direction: column;
-            }
-
-            .preview-area {
-                flex: none;
-                height: 45vh;
-                padding: 10px;
-                background: #333;
-            }
-
-            .controls-panel {
-                width: 100%;
-                flex: 1;
-                border-left: none;
-                border-top: 1px solid var(--border);
-            }
-
-            .bg-img {
-                max-height: 100%;
-                object-fit: contain;
-            }
-
-            .scroll-content {
-                padding: 12px;
-            }
+            .app { flex-direction: column; }
+            .preview-area { flex: none; height: 40vh; background: #333; padding: 10px; }
+            .bg-img { max-height: 100%; object-fit: contain; }
+            .controls { width: 100%; flex: 1; border-left: none; border-top: 1px solid var(--border); overflow: hidden; }
         }
     </style>
 </head>
-
 <body>
     <div class="app">
-        <div class="preview-area" id="previewArea">
-            <div class="canvas-container" id="canvasFrame">
-                <img id="bgImg" class="bg-img" src="./cover.png" alt="背景" />
-                <div id="txtLayer" class="txt-layer"></div>
+        <div class="preview-area" id="frame">
+            <div class="canvas-box">
+                <img id="bg" class="bg-img" src="./cover.png" alt="BG">
+                <div id="layer" class="txt-layer"></div>
             </div>
         </div>
 
-        <div class="controls-panel">
-            <div class="panel-header">
-                <span>编辑面板</span>
-                <div class="row">
-                    <label class="btn btn-sm btn-ghost" for="fileInput" style="cursor:pointer">换图</label>
-                    <input type="file" id="fileInput" accept="image/*" hidden />
-                    <button id="addBtn" class="btn btn-sm">新建文本</button>
+        <div class="controls">
+            <div class="c-head">
+                <span>编辑</span>
+                <div style="display:flex; gap:8px;">
+                    <label class="btn btn-sm" for="upImg">换图</label>
+                    <input type="file" id="upImg" accept="image/*" hidden>
+                    <button class="btn btn-sm" onclick="addTxt()">+ 文本</button>
                 </div>
             </div>
 
-            <div class="scroll-content">
+            <div class="c-body">
                 <div class="form-group">
-                    <div class="row" style="justify-content:space-between; margin-bottom:6px;">
-                        <span class="form-label" style="margin:0">图层列表</span>
-                        <button id="delBtn" class="btn btn-sm btn-ghost"
-                            style="padding:2px 8px; height:auto; color:#f00;">删除选中</button>
+                    <div class="row" style="justify-content:space-between; margin-bottom:5px;">
+                        <span class="label">图层</span>
+                        <button class="btn btn-sm btn-del" onclick="delTxt()">删除</button>
                     </div>
-                    <div id="layerList" class="item-list"></div>
+                    <div id="list" class="layer-list"></div>
                 </div>
 
-                <div id="editorControls" style="opacity: 0.5; pointer-events: none; transition: opacity 0.2s;">
+                <div id="editor" class="disabled">
                     <div class="form-group">
-                        <label class="form-label">内容</label>
-                        <textarea id="iptContent" rows="2"></textarea>
+                        <span class="label">内容</span>
+                        <textarea id="i_txt" rows="2"></textarea>
                     </div>
-
                     <div class="row form-group">
                         <div class="col">
-                            <label class="form-label">字体</label>
-                            <select id="iptFont">
+                            <span class="label">字体</span>
+                            <select id="i_font">
                                 <option value="Arial">Arial</option>
                                 <option value="Microsoft YaHei">微软雅黑</option>
-                                <option value="Segoe UI">Segoe UI</option>
-                                <option value="Times New Roman">Times New Roman</option>
                                 <option value="SimSun">宋体</option>
-                                <option value="Courier New">Courier New</option>
+                                <option value="Times New Roman">Times</option>
+                                <option value="Segoe UI">Segoe UI</option>
                             </select>
                         </div>
                         <div class="col">
-                            <label class="form-label">字号 <span id="valSize">40</span></label>
-                            <input id="iptSize" type="range" min="10" max="200" value="40" />
+                            <span class="label">字号 <span id="v_size"></span></span>
+                            <input id="i_size" type="range" min="10" max="200">
                         </div>
                     </div>
-
                     <div class="row form-group">
                         <div class="col">
-                            <label class="form-label">颜色</label>
-                            <div class="color-picker-wrap">
-                                <input id="iptColor" type="color" value="#ffffff" />
-                                <span style="font-size:12px; margin-left:6px; color:#666;">填充</span>
+                            <span class="label">颜色</span>
+                            <div class="color-wrap">
+                                <input id="i_col" type="color">
                             </div>
                         </div>
                         <div class="col">
-                            <label class="form-label">描边</label>
-                            <div class="color-picker-wrap">
-                                <input id="iptStroke" type="color" value="#000000" />
-                                <span style="font-size:12px; margin-left:6px; color:#666;">边框</span>
+                            <span class="label">描边</span>
+                            <div class="color-wrap">
+                                <input id="i_str" type="color">
                             </div>
                         </div>
                     </div>
-
                     <div class="row form-group">
                         <div class="col">
-                            <label class="form-label">样式</label>
-                            <select id="iptWeight">
+                            <span class="label">粗细</span>
+                            <select id="i_w">
                                 <option value="400">常规</option>
                                 <option value="700">加粗</option>
                                 <option value="900">极粗</option>
                             </select>
                         </div>
                         <div class="col">
-                            <label class="form-label">对齐</label>
-                            <select id="iptAlign">
-                                <option value="left">左对齐</option>
-                                <option value="center">居中</option>
-                                <option value="right">右对齐</option>
+                            <span class="label">对齐</span>
+                            <select id="i_a">
+                                <option value="left">左</option>
+                                <option value="center">中</option>
+                                <option value="right">右</option>
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label class="form-label">行高 (<span id="valLH">1.2</span>)</label>
-                        <input id="iptLH" type="range" min="0.8" max="3.0" step="0.1" value="1.2" />
+                        <span class="label">行高 <span id="v_lh"></span></span>
+                        <input id="i_lh" type="range" min="0.8" max="3" step="0.1">
                     </div>
                 </div>
             </div>
 
-            <div class="panel-footer">
-                <button id="downloadBtn" class="btn">生成并保存图片</button>
+            <div class="c-foot">
+                <button class="btn" onclick="saveImg()">生成图片</button>
             </div>
         </div>
     </div>
 
     <script>
-        // 状态管理
-        const state = {
-            texts: [],
-            selectedId: null,
-            imgScale: 1 // 预览与实际尺寸比例
-        };
-
-        // DOM 元素引用
-        const UI = {
-            frame: document.getElementById('canvasFrame'),
-            bg: document.getElementById('bgImg'),
-            txtLayer: document.getElementById('txtLayer'),
-            list: document.getElementById('layerList'),
-            file: document.getElementById('fileInput'),
-            controls: document.getElementById('editorControls'),
-            inputs: {
-                content: document.getElementById('iptContent'),
-                font: document.getElementById('iptFont'),
-                size: document.getElementById('iptSize'),
-                color: document.getElementById('iptColor'),
-                stroke: document.getElementById('iptStroke'),
-                weight: document.getElementById('iptWeight'),
-                align: document.getElementById('iptAlign'),
-                lh: document.getElementById('iptLH')
-            },
-            displays: {
-                size: document.getElementById('valSize'),
-                lh: document.getElementById('valLH')
+        const D = {
+            ts: [],
+            sel: null,
+            el: {
+                bg: document.getElementById('bg'),
+                lay: document.getElementById('layer'),
+                lst: document.getElementById('list'),
+                ed: document.getElementById('editor'),
+                inputs: {
+                    t: document.getElementById('i_txt'),
+                    f: document.getElementById('i_font'),
+                    s: document.getElementById('i_size'),
+                    c: document.getElementById('i_col'),
+                    st: document.getElementById('i_str'),
+                    w: document.getElementById('i_w'),
+                    a: document.getElementById('i_a'),
+                    l: document.getElementById('i_lh')
+                }
             }
         };
 
-        // 初始化
         function init() {
-            // 默认添加一个文本
-            addText({ content: "全成唱片\nCover Art", fontSize: 60, y: 50 });
-
-            // 绑定事件
-            setupEvents();
-
-            // 图片加载后自适应
-            UI.bg.onload = adjustCanvasSize;
-            window.addEventListener('resize', adjustCanvasSize);
+            addTxt({ t: "点击无法输入文本。", s: 60, y: 50 });
+            bind();
         }
 
-        // 调整画布尺寸 (响应式)
-        function adjustCanvasSize() {
-            // 这里不做强制尺寸限制，依靠 CSS max-width 缩放
-            // 记录当前实际显示比例用于拖拽计算
-            // 实际上拖拽直接用 offsetLeft 即可，无需复杂计算
-        }
+        function bind() {
+            const i = D.el.inputs;
+            i.t.oninput = e => up('t', e.target.value);
+            i.f.onchange = e => up('f', e.target.value);
+            i.s.oninput = e => { document.getElementById('v_size').innerText = e.target.value; up('s', +e.target.value); };
+            i.c.oninput = e => up('c', e.target.value);
+            i.st.oninput = e => up('str', e.target.value);
+            i.w.onchange = e => up('w', e.target.value);
+            i.a.onchange = e => up('a', e.target.value);
+            i.l.oninput = e => { document.getElementById('v_lh').innerText = e.target.value; up('l', e.target.value); };
 
-        // 新增文本
-        function addText(opts = {}) {
-            const id = 'txt_' + Date.now();
-            const t = {
-                id,
-                content: opts.content || "双击编辑文本",
-                x: opts.x || 20,
-                y: opts.y || 20,
-                fontSize: opts.fontSize || 40,
-                fontFamily: "Arial",
-                color: "#ffffff",
-                stroke: "#000000",
-                weight: "700",
-                align: "left",
-                lineHeight: 1.2,
-                ...opts
+            document.getElementById('upImg').onchange = e => {
+                if(e.target.files[0]) D.el.bg.src = URL.createObjectURL(e.target.files[0]);
             };
-            state.texts.push(t);
-
-            // 创建 DOM
-            createDOMNode(t);
-            renderList();
-            selectText(id);
-        }
-
-        // 创建文本的 DOM 节点 (增量更新)
-        function createDOMNode(t) {
-            const el = document.createElement('div');
-            el.className = 'txt-node';
-            el.id = t.id;
-            el.dataset.id = t.id; // 用于查找
-
-            // 绑定交互事件
-            el.addEventListener('mousedown', onDragStart);
-            el.addEventListener('touchstart', onDragStart, { passive: false });
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                selectText(t.id);
+            
+            document.getElementById('frame').addEventListener('click', e => {
+                if(e.target.id === 'layer' || e.target.classList.contains('canvas-box')) sel(null);
             });
-
-            UI.txtLayer.appendChild(el);
-            updateDOMStyle(t);
         }
 
-        // 仅更新样式而不重绘 (修复输入闪烁问题)
-        function updateDOMStyle(t) {
-            const el = document.getElementById(t.id);
-            if (!el) return;
+        function addTxt(o={}) {
+            const id = 't'+Date.now();
+            const d = { id, t: "文本", x: 20, y: 20, s: 40, f: "Arial", c: "#ffffff", str: "#000000", w: "700", a: "left", l: 1.2, ...o };
+            D.ts.push(d);
+            
+            const el = document.createElement('div');
+            el.id = id;
+            el.className = 'txt-node';
+            el.dataset.id = id;
+            el.addEventListener('mousedown', drag);
+            el.addEventListener('touchstart', drag, {passive: false});
+            el.addEventListener('click', e => { e.stopPropagation(); sel(id); });
+            
+            D.el.lay.appendChild(el);
+            syncDOM(d);
+            renderList();
+            sel(id);
+        }
 
-            el.textContent = t.content;
-            el.style.left = t.x + 'px';
-            el.style.top = t.y + 'px';
-            el.style.fontSize = t.fontSize + 'px';
-            el.style.fontFamily = t.fontFamily;
-            el.style.color = t.color;
-            el.style.fontWeight = t.weight;
-            el.style.textAlign = t.align;
-            el.style.lineHeight = t.lineHeight;
-            el.style.webkitTextStroke = `1px ${t.stroke}`;
+        function delTxt() {
+            if(!D.sel) return;
+            document.getElementById(D.sel).remove();
+            D.ts = D.ts.filter(x => x.id !== D.sel);
+            sel(null);
+            renderList();
+        }
 
-            // 特殊处理对齐时的基点
-            if (t.align === 'center') el.style.transform = 'translateX(-50%)';
-            else if (t.align === 'right') el.style.transform = 'translateX(-100%)';
+        function sel(id) {
+            D.sel = id;
+            document.querySelectorAll('.txt-node').forEach(e => e.classList.toggle('active', e.id === id));
+            renderList();
+
+            if(!id) {
+                D.el.ed.classList.add('disabled');
+                return;
+            }
+            D.el.ed.classList.remove('disabled');
+            
+            const d = D.ts.find(x => x.id === id);
+            const i = D.el.inputs;
+            i.t.value = d.t;
+            i.f.value = d.f;
+            i.s.value = d.s; document.getElementById('v_size').innerText = d.s;
+            i.c.value = d.c;
+            i.st.value = d.str;
+            i.w.value = d.w;
+            i.a.value = d.a;
+            i.l.value = d.l; document.getElementById('v_lh').innerText = d.l;
+        }
+
+        function up(k, v) {
+            if(!D.sel) return;
+            const d = D.ts.find(x => x.id === D.sel);
+            d[k] = v;
+            syncDOM(d);
+            if(k === 't') renderList();
+        }
+
+        function syncDOM(d) {
+            const el = document.getElementById(d.id);
+            el.innerText = d.t;
+            el.style.left = d.x + 'px';
+            el.style.top = d.y + 'px';
+            el.style.fontSize = d.s + 'px';
+            el.style.fontFamily = d.f;
+            el.style.color = d.c;
+            el.style.webkitTextStroke = `1px ${d.str}`;
+            el.style.fontWeight = d.w;
+            el.style.textAlign = d.a;
+            el.style.lineHeight = d.l;
+            
+            if(d.a === 'center') el.style.transform = 'translateX(-50%)';
+            else if(d.a === 'right') el.style.transform = 'translateX(-100%)';
             else el.style.transform = 'none';
         }
 
-        // 渲染图层列表
         function renderList() {
-            UI.list.innerHTML = '';
-            state.texts.forEach(t => {
-                const item = document.createElement('div');
-                item.className = `layer-item ${t.id === state.selectedId ? 'active' : ''}`;
-                item.textContent = t.content.split('\n')[0] || '(空)';
-                item.onclick = (e) => { e.stopPropagation(); selectText(t.id); };
-                UI.list.appendChild(item);
-            });
+            D.el.lst.innerHTML = D.ts.map(d => 
+                `<div class="l-item ${d.id===D.sel?'active':''}" onclick="event.stopPropagation();sel('${d.id}')">
+                    <span>${d.t.slice(0,10)}</span>
+                </div>`
+            ).join('');
         }
 
-        // 选中逻辑
-        function selectText(id) {
-            state.selectedId = id;
-
-            // 更新 DOM 选中态
-            document.querySelectorAll('.txt-node').forEach(el => {
-                if (el.id === id) el.classList.add('active');
-                else el.classList.remove('active');
-            });
-
-            renderList(); // 更新列表高亮
-
-            // 同步数据到控制台
-            const t = state.texts.find(x => x.id === id);
-            if (t) {
-                UI.controls.style.opacity = '1';
-                UI.controls.style.pointerEvents = 'auto';
-
-                UI.inputs.content.value = t.content;
-                UI.inputs.font.value = t.fontFamily;
-                UI.inputs.size.value = t.fontSize;
-                UI.displays.size.textContent = t.fontSize;
-                UI.inputs.color.value = t.color;
-                UI.inputs.stroke.value = t.stroke;
-                UI.inputs.weight.value = t.weight;
-                UI.inputs.align.value = t.align;
-                UI.inputs.lh.value = t.lineHeight;
-                UI.displays.lh.textContent = t.lineHeight;
-            } else {
-                UI.controls.style.opacity = '0.5';
-                UI.controls.style.pointerEvents = 'none';
-            }
-        }
-
-        // 修改属性
-        function updateCurrent(key, val) {
-            if (!state.selectedId) return;
-            const t = state.texts.find(x => x.id === state.selectedId);
-            if (t) {
-                t[key] = val;
-                updateDOMStyle(t); // 实时更新 DOM
-                if (key === 'content') renderList(); // 内容改变需要更新列表
-            }
-        }
-
-        // 事件监听绑定
-        function setupEvents() {
-            // 输入控件
-            UI.inputs.content.addEventListener('input', e => updateCurrent('content', e.target.value));
-            UI.inputs.font.addEventListener('change', e => updateCurrent('fontFamily', e.target.value));
-            UI.inputs.size.addEventListener('input', e => {
-                UI.displays.size.textContent = e.target.value;
-                updateCurrent('fontSize', parseInt(e.target.value));
-            });
-            UI.inputs.color.addEventListener('input', e => updateCurrent('color', e.target.value));
-            UI.inputs.stroke.addEventListener('input', e => updateCurrent('stroke', e.target.value));
-            UI.inputs.weight.addEventListener('change', e => updateCurrent('weight', e.target.value));
-            UI.inputs.align.addEventListener('change', e => updateCurrent('align', e.target.value));
-            UI.inputs.lh.addEventListener('input', e => {
-                UI.displays.lh.textContent = e.target.value;
-                updateCurrent('lineHeight', e.target.value);
-            });
-
-            // 按钮
-            document.getElementById('addBtn').onclick = () => addText();
-            document.getElementById('delBtn').onclick = () => {
-                if (!state.selectedId) return;
-                const el = document.getElementById(state.selectedId);
-                if (el) el.remove();
-                state.texts = state.texts.filter(t => t.id !== state.selectedId);
-                state.selectedId = null;
-                renderList();
-                UI.controls.style.opacity = '0.5';
-                UI.controls.style.pointerEvents = 'none';
-            };
-            document.getElementById('downloadBtn').onclick = generateImage;
-
-            // 背景图片上传
-            UI.file.addEventListener('change', e => {
-                const f = e.target.files[0];
-                if (f) {
-                    const url = URL.createObjectURL(f);
-                    UI.bg.src = url;
-                }
-            });
-
-            // 点击空白取消选中
-            UI.frame.addEventListener('click', (e) => {
-                if (e.target === UI.frame || e.target === UI.txtLayer) {
-                    state.selectedId = null;
-                    document.querySelectorAll('.txt-node').forEach(el => el.classList.remove('active'));
-                    renderList();
-                    UI.controls.style.opacity = '0.5';
-                    UI.controls.style.pointerEvents = 'none';
-                }
-            });
-        }
-
-        // --- 拖拽逻辑 (兼容 Touch & Mouse) ---
-        let dragInfo = null;
-
-        function onDragStart(e) {
+        let dragD = null;
+        function drag(e) {
             e.stopPropagation();
-            if (e.type === 'touchstart') e.preventDefault(); // 防止滚动
-
+            if(e.type === 'touchstart') e.preventDefault();
             const id = e.currentTarget.dataset.id;
-            selectText(id);
-
-            const evt = e.touches ? e.touches[0] : e;
+            sel(id);
+            
+            const t = e.touches ? e.touches[0] : e;
             const rect = e.currentTarget.getBoundingClientRect();
-            const parentRect = UI.txtLayer.getBoundingClientRect();
-
-            // 计算鼠标相对于元素左上角的偏移
-            dragInfo = {
+            const pRect = D.el.lay.getBoundingClientRect();
+            
+            dragD = {
+                d: D.ts.find(x => x.id === id),
                 el: e.currentTarget,
-                t: state.texts.find(t => t.id === id),
-                offsetX: evt.clientX - rect.left,
-                offsetY: evt.clientY - rect.top,
-                parentL: parentRect.left,
-                parentT: parentRect.top,
-                parentW: parentRect.width,
-                parentH: parentRect.height
+                offX: t.clientX - rect.left,
+                offY: t.clientY - rect.top,
+                pL: pRect.left,
+                pT: pRect.top
             };
-
-            document.addEventListener('mousemove', onDragging);
-            document.addEventListener('mouseup', onDragEnd);
-            document.addEventListener('touchmove', onDragging, { passive: false });
-            document.addEventListener('touchend', onDragEnd);
+            
+            document.addEventListener('mousemove', moving);
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchmove', moving, {passive: false});
+            document.addEventListener('touchend', endDrag);
         }
 
-        function onDragging(e) {
-            if (!dragInfo) return;
-            if (e.type === 'touchmove') e.preventDefault();
-
-            const evt = e.touches ? e.touches[0] : e;
-
-            // 计算新的 left/top (相对于容器)
-            // 注意：因为用了 transform translate 处理对齐，这里的 left/top 是锚点位置
-            let newLeft = evt.clientX - dragInfo.parentL - dragInfo.offsetX;
-            let newTop = evt.clientY - dragInfo.parentT - dragInfo.offsetY;
-
-            // 简单的边界限制 (可选)
-            // newLeft = Math.max(0, Math.min(newLeft, dragInfo.parentW));
-            // newTop = Math.max(0, Math.min(newTop, dragInfo.parentH));
-
-            dragInfo.el.style.left = newLeft + 'px';
-            dragInfo.el.style.top = newTop + 'px';
-
-            // 更新数据
-            dragInfo.t.x = Math.round(newLeft);
-            dragInfo.t.y = Math.round(newTop);
+        function moving(e) {
+            if(!dragD) return;
+            if(e.type === 'touchmove') e.preventDefault();
+            const t = e.touches ? e.touches[0] : e;
+            
+            const nx = t.clientX - dragD.pL - dragD.offX;
+            const ny = t.clientY - dragD.pT - dragD.offY;
+            
+            dragD.el.style.left = nx + 'px';
+            dragD.el.style.top = ny + 'px';
+            dragD.d.x = nx;
+            dragD.d.y = ny;
         }
 
-        function onDragEnd() {
-            dragInfo = null;
-            document.removeEventListener('mousemove', onDragging);
-            document.removeEventListener('mouseup', onDragEnd);
-            document.removeEventListener('touchmove', onDragging);
-            document.removeEventListener('touchend', onDragEnd);
+        function endDrag() {
+            dragD = null;
+            document.removeEventListener('mousemove', moving);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchmove', moving);
+            document.removeEventListener('touchend', endDrag);
         }
 
-        // --- 导出图片逻辑 ---
-        function generateImage() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const bg = UI.bg;
-
-            // 设置画布为图片原始尺寸
+        function saveImg() {
+            const cvs = document.createElement('canvas');
+            const ctx = cvs.getContext('2d');
+            const bg = D.el.bg;
             const w = bg.naturalWidth;
             const h = bg.naturalHeight;
-            canvas.width = w;
-            canvas.height = h;
-
-            // 计算网页显示尺寸与原始尺寸的缩放比
-            // 注意：网页显示的背景图可能被缩放，而文字坐标是基于显示尺寸的
-            // 我们需要将文字坐标映射回原始图片尺寸
-            const rect = UI.bg.getBoundingClientRect();
-            const scaleX = w / rect.width;
-            const scaleY = h / rect.height;
-
-            // 1. 绘制背景
+            cvs.width = w; cvs.height = h;
+            
+            const rect = bg.getBoundingClientRect();
+            const sc = w / rect.width;
+            
             ctx.drawImage(bg, 0, 0, w, h);
-
-            // 2. 绘制文字
-            state.texts.forEach(t => {
-                const fontSize = t.fontSize * scaleX; // 假设等比缩放，取X轴比例
-                ctx.font = `${t.weight} ${fontSize}px ${t.fontFamily}`;
-                ctx.fillStyle = t.color;
-                ctx.strokeStyle = t.stroke;
-                ctx.lineWidth = Math.max(2, fontSize * 0.03);
+            
+            D.ts.forEach(t => {
+                const fs = t.s * sc;
+                ctx.font = `${t.w} ${fs}px ${t.f}`;
+                ctx.fillStyle = t.c;
+                ctx.strokeStyle = t.str;
+                ctx.lineWidth = Math.max(2, fs * 0.03);
                 ctx.textBaseline = 'top';
-
-                const lines = t.content.split('\n');
-                const lineHeight = fontSize * t.lineHeight;
-
-                // 计算起始坐标 (映射回原图尺寸)
-                const startX = t.x * scaleX;
-                const startY = t.y * scaleY;
-
-                lines.forEach((line, i) => {
-                    const ly = startY + (i * lineHeight);
-                    let lx = startX;
-
-                    // 处理对齐造成的 X 偏移
-                    const metrics = ctx.measureText(line);
-                    if (t.align === 'center') {
-                        // 在 CSS 中 center 是 translate(-50%)，意味着锚点在文本中心
-                        // Canvas 如果用 textAlign=center，x 应该是中心点
-                        ctx.textAlign = 'center';
-                        // 我们的 DOM 逻辑是：左边缘 = x, 然后 translate(-50%)
-                        // 这意味着 x 坐标实际上是文本块的 Left + Width/2
-                        // 但这里的 t.x 记录的是 DOM 的 style.left
-                        // 因为加了 transform，视觉上的中心就是 style.left
-                        lx = startX;
-                    } else if (t.align === 'right') {
-                        ctx.textAlign = 'right';
-                        lx = startX;
-                    } else {
-                        ctx.textAlign = 'left';
-                        lx = startX;
-                    }
-
-                    // 描边与填充
-                    if (t.stroke && t.stroke !== 'transparent') ctx.strokeText(line, lx, ly);
-                    ctx.fillText(line, lx, ly);
+                
+                const ls = t.t.split('\n');
+                const lh = fs * t.l;
+                const sx = t.x * sc;
+                const sy = t.y * sc;
+                
+                ls.forEach((l, i) => {
+                    const ly = sy + (i * lh);
+                    ctx.textAlign = t.a;
+                    if(t.str) ctx.strokeText(l, sx, ly);
+                    ctx.fillText(l, sx, ly);
                 });
             });
-
-            // 3. 下载
-            const link = document.createElement('a');
-            link.download = 'cover-art-' + Date.now() + '.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
+            
+            const a = document.createElement('a');
+            a.download = 'cover-'+Date.now()+'.png';
+            a.href = cvs.toDataURL();
+            a.click();
         }
 
-        // 启动
         window.onload = init;
-
     </script>
 </body>
-
 </html>
