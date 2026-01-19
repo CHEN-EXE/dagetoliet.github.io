@@ -1,267 +1,268 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shengdanjie福利-大哥国际</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* 重新定义的配色方案：深邃、现代、高对比 */
-            --bg-color: #0f172a;        /* 深蓝黑背景 */
-            --card-bg: #1e293b;        /* 卡片深灰蓝 */
-            --accent-color: #38bdf8;    /* 极客蓝 */
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --radius: 30px;            /* 指定 30px 圆角 */
-            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>主会场</title>
 
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
 
-        header {
-            width: 100%;
-            padding: 50px 0;
-            text-align: center;
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-        }
+<style>
+:root{
+  --bg:#7a0000;
+  --card:#b30000;
+  --gold:#ffd700;
+  --text:#fff;
+  --radius:26px;
+}
 
-        header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            letter-spacing: -1px;
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+*{margin:0;padding:0;box-sizing:border-box}
 
-        .container {
-            max-width: 1000px;
-            width: 90%;
-            padding-bottom: 50px;
-        }
+body{
+  font-family:'Noto Sans SC';
+  background:radial-gradient(circle,#b30000,#5a0000);
+  color:var(--text);
+  min-height:100vh;
+}
 
-        /* 礼物卡片列表 */
-        #gift-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: -20px;
-        }
+header{
+  text-align:center;
+  padding:40px 20px;
+}
 
-        .md-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-        }
+header h1{
+  font-size:2.6rem;
+  color:var(--gold);
+}
 
-        .md-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border-color: var(--accent-color);
-        }
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
 
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--accent-color);
-        }
+#gift-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
 
-        .card-desc {
-            color: var(--text-dim);
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
+.card{
+  background:linear-gradient(145deg,#c40000,#8b0000);
+  border-radius:var(--radius);
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
 
-        /* 按钮设计 */
-        .md-button {
-            background: var(--accent-color);
-            color: #0f172a;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 20px; /* 按钮稍圆润 */
-            font-weight: 700;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            width: 100%;
-            font-size: 1rem;
-        }
+.card h3{
+  color:var(--gold);
+  margin-bottom:10px;
+}
 
-        .md-button:hover {
-            opacity: 0.9;
-        }
+.card p{
+  opacity:.9;
+  margin-bottom:20px;
+}
 
-        /* 表单页面设计 */
-        #form-section {
-            display: none;
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            max-width: 500px;
-            margin: 20px auto;
-        }
+.btn{
+  background:linear-gradient(135deg,#ffd700,#ffb700);
+  border:none;
+  color:#7a0000;
+  padding:14px;
+  width:100%;
+  border-radius:18px;
+  font-weight:700;
+  cursor:pointer;
+}
 
-        .md-input-group { margin-bottom: 25px; }
+.btn:disabled{
+  opacity:.5;
+}
 
-        .md-input-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--text-dim);
-            font-size: 0.9rem;
-        }
+#form{
+  display:none;
+  background:linear-gradient(145deg,#c40000,#8b0000);
+  padding:35px;
+  border-radius:var(--radius);
+  max-width:450px;
+  margin:30px auto;
+}
 
-        .md-input {
-            width: 100%;
-            padding: 15px 20px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 15px;
-            color: white;
-            font-size: 1rem;
-            box-sizing: border-box;
-            outline: none;
-        }
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:18px;
+  border:none;
+  border-radius:14px;
+}
 
-        .md-input:focus { border-color: var(--accent-color); }
-
-        /* 伪加载样式 */
-        #loading-overlay {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .spinner {
-            border: 3px solid rgba(56, 189, 248, 0.1);
-            border-top: 3px solid var(--accent-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        /* 伪提示 (Toast) */
-        #success-toast {
-            display: none;
-            background: var(--accent-color);
-            color: #0f172a;
-            padding: 10px 40px;
-            border-radius: 10px;
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-          
-            transform: translateX(-50%);
-            font-weight: 700;
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
-            z-index: 1000;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+#toast{
+  display:none;
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--gold);
+  color:#7a0000;
+  padding:14px 30px;
+  border-radius:12px;
+  font-weight:700;
+}
+.cover{
+  font-size: 14px;
+  position: absolute;
+  border:none;
+  top:30px;
+  background-color: #ffd700;
+  color:#000;
+  border-top-left-radius: 10px;
+  padding:2px;
+  right:1px;
+  border-bottom-left-radius: 10px;
+}
+.cover2{
+  font-size: 14px;
+  position: absolute;
+  border:none;
+  top:60px;
+  background-color: #ffd700;
+  color:#000;
+  border-top-left-radius: 10px;
+  padding:2px;
+  right:1px;
+  border-bottom-left-radius: 10px;
+}
+</style>
 </head>
-<body>
 
+<body>
+<a href="./rules.html" class="cover">活动规则</a>
+<button onclick="cluser()" class="cover2">清除Cookie</button>
 <header>
-    <h1>大哥国际</h1>
-    <p id="hello" style="color: var(--text-dim)">尊敬的  ,我们你好</p>
+  <h1>大哥国际</h1>
+  <p id="hello"></p>
 </header>
 
 <div class="container">
-    <div id="gift-container">
-         <h1>只允许领取 1 个</h1>
- 
-        </div>
 
-    <div id="form-section">
-        <h2 style="margin-top:0">登记
-         （发货物流统一为大哥国际）
-        </h2>
-           
-        <div class="md-input-group">
-            <label>用户名</label>
-            <input type="text" class="md-input" id="username" placeholder="请输入您的称呼">
-        </div>
-        <div class="md-input-group">
-            <label>到货地址</label>
-            <input type="text" class="md-input" id="address" placeholder="请输入详细收货地址">
-        </div>
-        <button class="md-button" onclick="handleSubmit()">确认提交</button>
-        
-        <div id="loading-overlay">
-            <div class="spinner"></div>
-            <p style="color: var(--accent-color)">正在处理</p>
-        </div>
+  <div id="gift-container">
+    <div class="card">
+      <h3>📅 每日签到</h3>
+      <p>每日可领取一次金币</p>
+      <button class="btn" id="signBtn" onclick="signIn()">立即签到</button>
     </div>
+
+    <div class="card">
+      <h3>🎁 幸运抽奖</h3>
+      <p>签到100金币后可抽一次</p>
+      <button class="btn" id="lotteryBtn" onclick="lottery()">开始抽奖</button>
+    </div>
+
+    <div class="card">
+      <h3>🛒 福利自动设</h3>
+      <p>全成网路 100MB 大流量计把</p>
+      <button class="btn" onclick="openForm()">立即购买</button>
+    </div>
+  </div>
+
+  <div id="form">
+    <h3 style="color:var(--gold);margin-bottom:20px">填写收货信息</h3>
+    <input id="user" placeholder="收货人">
+    <input id="addr" placeholder="收货地址">
+    <button class="btn" onclick="buy()">确认支付</button>
+  </div>
+
 </div>
 
-<div id="success-toast">领取成功！物流码：null</div>
+<div id="toast"></div>
+
 
 <script>
-     // 改名器
-         const params = new URLSearchParams(window.location.search);
-       const helloSays = params.get('user') ||"未知用户";
-document.getElementById("hello").textContent = "尊敬"+helloSays+"，你好"; 
-   
-    // 模拟 JSON 数据
-    const giftsData = [
-        { "name": "至尊黑金马桶盖", "desc": "大哥用" },
-        { "name": "大哥自动除臭芯片", "desc": "集团黑科技，让清新如影随形。" },
-        { "name": "厕所元宇宙通行证", "desc": "解锁全球 5000+ 豪华厕所使用权。" }
-    ];
+/* DOM */
+const hello = document.getElementById("hello")
+const signBtn = document.getElementById("signBtn")
+const lotteryBtn = document.getElementById("lotteryBtn")
+const form = document.getElementById("form")
+const giftBox = document.getElementById("gift-container")
+const toast = document.getElementById("toast")
+const userInput = document.getElementById("user")
+const addrInput = document.getElementById("addr")
 
-    function init() {
-        const list = document.getElementById('gift-container');
-        giftsData.forEach(item => {
-            const el = document.createElement('div');
-            el.className = 'md-card';
-            el.innerHTML = `
-                <div class="card-title">${item.name}</div>
-                <div class="card-desc">${item.desc}</div>
-                <button class="md-button" onclick="goToForm()">领取</button>
-            `;
-            list.appendChild(el);
-        });
+/* 用户名 */
+const p = new URLSearchParams(location.search)
+const name = p.get("user") || "未登录用户"
+hello.textContent = `尊敬的 ${name}，欢迎您`
+
+/* 状态 */
+const today = new Date().toDateString()
+
+function signIn(){
+  if(localStorage.signDate === today){
+    show("今日已签到")
+    return
+  }
+  localStorage.signDate = today
+  show("签到成功 +100 大哥币")
+  signBtn.disabled = true
+}
+
+function lottery(){
+  if(localStorage.signDate !== today){
+    show("请先签到")
+    return
+  }
+  if(localStorage.lottery === today){
+    show("今日已抽")
+    return
+  }
+  localStorage.lottery = today;
+  const p = new URLSearchParams(location.search);
+const name = p.get("user") || "未登录用户";
+let prizes;
+  if (name === "大哥"){
+     prizes = ["现金红包100¥-100¥","大哥国际厕所集团免费送你10%"];
+  } else {
+ 
+  prizes = ["谢谢参与","谢谢参与","谢谢参与","大哥国际厕所集团免费送你10%","谢谢参与","谢谢参与","谢谢参与"];
+  }
+  show("抽中：" + prizes[Math.floor(Math.random()*prizes.length)]);
+  lotteryBtn.disabled = true;
+}
+
+function openForm(){
+  giftBox.style.display = "none"
+  form.style.display = "block"
+}
+
+function buy(){
+  if(!userInput.value || !addrInput.value){
+    alert("请填写完整")
+    return
+  }
+  show("支付成功，物流码：null")
+  form.innerHTML = `<h3>支付成功</hh3
+  <br><h2>物流码:null<br>货物名称：大哥一斤</h2>`;
+}
+
+function show(msg){
+  toast.textContent = msg
+  toast.style.display = "block"
+  setTimeout(()=>toast.style.display="none",2000)
+}
+
+/* 初始化 */
+if(localStorage.signDate === today) signBtn.disabled = true
+if(localStorage.lottery === today) lotteryBtn.disabled = true
+
+   function cluser(){
+        if (confirm("清除Cookie可解决签到问题。是否继续？")) { 
+localStorage.clear();
+show("清除完成 重启网页生效");
+ }
     }
-
-    function goToForm() {
-        document.getElementById('gift-container').style.display = 'none';
-        document.getElementById('form-section').style.display = 'block';
-    }
-
-    function handleSubmit() {
-        const user = document.getElementById('username').value;
-        const addr = document.getElementById('address').value;
-        if(!user || !addr) return alert("请填写完整");
-
-        document.querySelector('#form-section button').style.display = 'none';
-        document.getElementById('loading-overlay').style.display = 'block';
-
-        setTimeout(() => {
-            document.getElementById('loading-overlay').style.display = 'none';
-            const toast = document.getElementById('success-toast');
-            toast.style.display = 'block';
-            
-        }, 2500);
-    }
-
-    window.onload = init;
+    
 </script>
+
 </body>
 </html>
