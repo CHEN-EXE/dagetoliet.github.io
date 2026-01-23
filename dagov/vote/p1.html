@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全成大哥岛馆政府 | 2026年全成大哥岛馆政府委员选举 在线投票</title>
+    <style>
+        /* --- 基础设置 --- */
+        :root {
+            --gov-blue: #003366;
+            --gov-dark: #1a1a1a;
+            --gov-red: #b31942;
+            --gov-bg: #f0f0f0;
+            --text-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gov-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* --- 顶部通告栏 --- */
+        .usa-banner {
+            background-color: #f0f0f0;
+            padding: 4px 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .usa-banner-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 16px;
+            height: 11px;
+            background: linear-gradient(to bottom, #b31942 50%, #fff 50%);
+            display: inline-block;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+
+        .usa-banner-text {
+            color: #555;
+        }
+
+        /* --- 头部与导航 --- */
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gov-blue);
+        }
+
+        .logo-seal {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gov-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 24px;
+            margin-right: 15px;
+            border: 3px solid var(--gov-red);
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .site-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- 导航菜单 --- */
+        .nav-container {
+            background-color: var(--gov-blue);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 25px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #004488;
+            text-decoration: underline;
+        }
+
+        /* --- Hero 区域 --- */
+        .hero {
+            background: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)), 
+                        url('https://source.unsplash.com/random/1600x900/?government') no-repeat center center/cover;
+            background-color: var(--gov-blue); 
+            color: #fff;
+            padding: 60px 20px 100px 20px; /* 底部增加padding */
+            text-align: center;
+            min-height: 600px; /* 保证高度 */
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            color: #e0e0e0;
+        }
+
+        /* --- 投票表单区域样式 --- */
+        .vote-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 30px auto;
+            text-align: left;
+        }
+
+        .vote-loading {
+            text-align: center;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        /* 单选框样式优化 */
+        .vote-option {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .vote-option:hover {
+            background: rgba(0,0,0,0.4);
+        }
+
+        .vote-option input[type="radio"] {
+            transform: scale(1.5);
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .vote-option label {
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            background-color: var(--gov-red);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 20px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #8a1232;
+        }
+
+        /* --- 成功提示样式 --- */
+        .success-wrapper {
+            display: none; /* 默认隐藏 */
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #28a745;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            fill: none;
+            stroke: white;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .success-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .success-sub {
+            color: #ddd;
+        }
+
+        /* --- 页脚 --- */
+        footer {
+            background-color: #e6e6e6;
+            padding: 40px 20px;
+            margin-top: 0;
+            border-top: 1px solid #ccc;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            color: #444;
+        }
+        
+        .disclaimer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #888;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="usa-banner">
+        <div class="usa-banner-inner">
+            <span class="flag-icon"></span>
+            <span class="usa-banner-text">
+                全成大哥岛馆政府  / 2026年全成大哥岛馆政府委员选举 在线投票        
+                </span>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-main">
+            <a href="#" class="logo-area">
+                <div class="logo-seal">78</div>
+                <div>
+                    <div class="site-title">全成大哥岛馆政府</div>
+                    <div class="site-subtitle">QuanChengDage🛫Gos</div>
+                </div>
+            </a>
+        </div>
+
+        <nav class="nav-container">
+            <ul class="navbar">
+                <li class="nav-item">
+                    <a onclick="window.history.go(-1);"    class="nav-link">返回上一页</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>2026年全成大哥岛馆政府委员选举</h1>
+        <p>* 本在线投票面向大众，可匿名投票。<br>* 投票平台实时监测用户IP地址<br>* 本系统由 大哥国际厕所集团 开发。</p>
+    
+        <div class="vote-container">
+            
+            <form id="voteForm">
+                <p style="margin-bottom: 20px; font-size: 0.9rem; opacity: 0.9; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom:10px;">
+                    * 单选项（必填）<br>被投票者名称部分屏蔽
+                </p>
+                
+                <div id="options-wrapper">
+                    <div class="vote-loading">加载。。</div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>提交选票</button>
+            </form>
+
+            <div id="successMessage" class="success-wrapper">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <div class="success-text">投票完成</div>
+                <div class="success-sub">感谢您提交该投票！ </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>大哥国际厕所集团  全成大哥岛馆政府监制</h3>
+            <div class="disclaimer">
+                <p><strong>严正声明</strong></p>
+                <p>这里不需要天天道馆也别路</p>
+                <p>站点坑你的根本没有这个地方</p>
+                <p>(投票仅供虚构)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const optionsWrapper = document.getElementById('options-wrapper');
+            const submitBtn = document.getElementById('submitBtn');
+            const voteForm = document.getElementById('voteForm');
+            const successMessage = document.getElementById('successMessage');
+
+            // 1. 加载 users.json 数据
+            fetch('users-20260121.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应错误或文件不存在');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // 清空加载提示
+                    optionsWrapper.innerHTML = '';
+                    
+                    // 动态生成选项
+                    if (data.length === 0) {
+                        optionsWrapper.innerHTML = '<div class="vote-loading">暂无候选人数据</div>';
+                        return;
+                    }
+
+                    data.forEach((user, index) => {
+                        // 创建 DOM 结构
+                        const optionDiv = document.createElement('div');
+                        optionDiv.className = 'vote-option';
+                        
+                        // 为了方便点击，点击整个div也能触发radio
+                        optionDiv.onclick = function() {
+                            const radio = this.querySelector('input[type="radio"]');
+                            radio.checked = true;
+                            submitBtn.disabled = false; // 启用提交按钮
+                            submitBtn.style.opacity = '1';
+                        };
+
+                        const radioId = `user_${user.id}`;
+                        
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.name = 'candidate'; // 确保是单选组
+                        radio.id = radioId;
+                        radio.value = user.id;
+
+                        const label = document.createElement('label');
+                        label.htmlFor = radioId;
+                        label.textContent = user.name;
+
+                        optionDiv.appendChild(radio);
+                        optionDiv.appendChild(label);
+                        optionsWrapper.appendChild(optionDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    optionsWrapper.innerHTML = `
+                        <div class="vote-loading" style="color:#ff6b6b">
+                            ⚠ 无法加载候选人名单 (users.json)<br>
+                            <small>请确保在本地服务器环境下运行，<br>或检查文件路径。</small>
+                        </div>
+                    `;
+                });
+
+            // 2. 处理表单提交
+            voteForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // 阻止默认表单跳转
+
+                // 检查是否已选择
+                const selected = document.querySelector('input[name="candidate"]:checked');
+                
+                if (selected) {
+                    // 模拟提交延迟效果
+                    submitBtn.textContent = "正在提交...";
+                    submitBtn.disabled = true;
+
+                    setTimeout(() => {
+                        // 隐藏表单，显示成功信息
+                        voteForm.style.display = 'none';
+                        successMessage.style.display = 'block';
+                    }, 800); // 0.8秒后显示成功
+                } else {
+                    alert("请先选择一位大哥！");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
