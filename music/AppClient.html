@@ -58,19 +58,53 @@
             position: sticky; top: 0; z-index: 90;
             background: var(--bg-color); /* 配合 sticky */
         }
+        
+        /* --- 新增：滚动显示的顶部标题 --- */
+        .header-title-center {
+            position: absolute;
+            margin-left:20px; 
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: left;
+            font-size: 20px; font-weight: 600;
+            opacity: 0; transition: opacity 0.3s ease;
+            pointer-events: none; color: var(--text-main);
+        }
+        .header-title-center.visible { opacity: 1; }
+
         .bodys{
             padding: 0 20px 160px 20px; 
         }
-        .header-left { display: flex; align-items: center; gap: 8px;}
+        .header-left { display: flex; align-items: center; gap: 8px; transition: opacity 0.3s ease; }
         .logo { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap:4px; transition: transform 0.3s ease;}
         .logo svg { font-size: 22px; }
         
         .header-controls { display: flex; align-items: center; gap: 15px; }
-        .icon-btn:hover { background: var(--search-bg); border-radius: 10px; }
+        
+        /* --- 修改：Icon按钮及Tooltip动画 --- */
         .icon-btn { 
             background: none; border: none; color: var(--text-main); font-size: 22px;
             padding: 4px; cursor: pointer; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
+            position: relative; /* 定位基准 */
+        }
+        .icon-btn:hover { background: var(--search-bg); border-radius: 10px; }
+        
+        /* Tooltip 伪元素 */
+        .icon-btn::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 110%; left: 50%; transform: translateX(-50%) translateY(-5px);
+            background: rgba(0,0,0,0.8); color: #fff;
+            padding: 5px 8px; border-radius: 6px; font-size: 12px;
+            opacity: 0; pointer-events: none; visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            white-space: nowrap; z-index: 100; font-weight: normal;
+        }
+        /* Tooltip Hover 效果 */
+        .icon-btn:hover::after {
+            opacity: 1; visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
 
         /* --- 底部 Tab 导航栏 --- */
@@ -153,7 +187,7 @@
         .ios-card {
             background: var(--card-bg);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 24px;
             margin-bottom: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
@@ -204,7 +238,7 @@
             border: 0.5px solid rgba(128,128,128,0.2);
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer;
         }
-        .pri_btn{ border:0; padding:5px; border-radius:10px; background:var(--search-bg); color:var(--text-main);}
+        .pri_btn{ border:0; padding:6px; border-radius:10px; background:var(--search-bg); color:var(--text-main);}
         .pri_btn:active{ background-color: #fa243c; color:#fff; }
         .floating-player:active { transform: scale(0.97); }
 
@@ -272,6 +306,10 @@
             width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
             color: var(--text-sub); font-size: 22px; cursor: pointer; transition: color 0.2s;
         }
+          .control-btn-side-chat {
+            width: 20px; height: 20px;       color: var(--text-sub); font-size: 22px; transition: color 0.2s;
+        }
+      
         .control-btn-side.active { color: #fa243c; } 
         .speed-text { font-size: 15px; font-weight: 700; width: 46px; border: 1px solid currentColor; border-radius: 4px; height: 24px; text-align:center; line-height:24px;}
 
@@ -327,7 +365,22 @@
         }
         #toast-box.show { opacity: 1; visibility: visible; }
         .toast-icon { font-size: 32px; }
-
+/* iOS 26 风格评论面板 */
+.comment-overlay {
+    position: fixed; bottom: -100%; left: 0; width: 100%; height: 80vh;
+    background: var(--full-player-bg); backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    z-index: 3000; transition: bottom 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border-radius: 30px 30px 0 0; display: flex; flex-direction: column;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+}
+.comment-overlay.active { bottom: 0; }
+.cmt-header { padding: 20px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.cmt-list { flex: 1; overflow-y: auto; padding: 15px; }
+.cmt-item { background: var(--card-bg); padding: 12px; border-radius: 18px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); }
+.cmt-user { font-weight: bold; font-size: 14px; margin-bottom: 4px; }
+.cmt-content { font-size: 15px; color: var(--text-main); }
+.cmt-close { position: absolute; right: 20px; top: 15px; font-size: 25px; color: var(--text-sub); }
     </style>
 </head>
 <body>
@@ -336,20 +389,18 @@
   
   <div class="header-left">
     <div class="logo">
-   
-     
-      </div>
+    </div>
     </div>
     
+    <div id="header-title" class="header-title-center">首页</div>
+    
     <div class="header-controls">
-      
-              <button class="icon-btn theme-btn" onclick="toggleTheme()">
+        <button class="icon-btn theme-btn" onclick="toggleTheme()" data-tooltip="切换主题">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m3.975 19.8l-.85-.35q-.775-.325-1.037-1.125t.087-1.575l1.8-3.9zm4 2.2q-.825 0-1.412-.587T5.975 20v-6l2.65 7.35q.075.175.15.338t.2.312zm5.15-.1q-.8.3-1.55-.075t-1.05-1.175l-4.45-12.2q-.3-.8.05-1.562t1.15-1.038l7.55-2.75q.8-.3 1.55.075t1.05 1.175l4.45 12.2q.3.8-.05 1.563t-1.15 1.037zM10.975 10q.425 0 .713-.288T11.975 9t-.287-.712T10.975 8t-.712.288T9.975 9t.288.713t.712.287"/></svg>
         </button>
     
-      
-        <button class="icon-btn theme-btn" onclick="loadmus()">
-     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M2 12.08c-.006-.862.91-1.356 1.618-.975l.095.058l2.678 1.804c.972.655.377 2.143-.734 2.007l-.117-.02l-1.063-.234a8.002 8.002 0 0 0 14.804.605a1 1 0 0 1 1.82.828c-1.987 4.37-6.896 6.793-11.687 5.509A10 10 0 0 1 2 12.08m.903-4.228C4.89 3.482 9.799 1.06 14.59 2.343a10 10 0 0 1 7.414 9.581c.007.863-.91 1.358-1.617.976l-.096-.058l-2.678-1.804c-.972-.655-.377-2.143.734-2.007l.117.02l1.063.234A8.002 8.002 0 0 0 4.723 8.68a1 1 0 1 1-1.82-.828"/></g></svg>
+        <button class="icon-btn theme-btn" onclick="loadmus()" data-tooltip="刷新列表">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M2 12.08c-.006-.862.91-1.356 1.618-.975l.095.058l2.678 1.804c.972.655.377 2.143-.734 2.007l-.117-.02l-1.063-.234a8.002 8.002 0 0 0 14.804.605a1 1 0 0 1 1.82.828c-1.987 4.37-6.896 6.793-11.687 5.509A10 10 0 0 1 2 12.08m.903-4.228C4.89 3.482 9.799 1.06 14.59 2.343a10 10 0 0 1 7.414 9.581c.007.863-.91 1.358-1.617.976l-.096-.058l-2.678-1.804c-.972-.655-.377-2.143.734-2.007l.117.02l1.063.234A8.002 8.002 0 0 0 4.723 8.68a1 1 0 1 1-1.82-.828"/></g></svg>
         </button>
     </div>
 </header>
@@ -362,7 +413,7 @@
         <div class="featured-banner">
             <img id="dagepic" src="./img/p1.png" alt="Featured" onerror="this.src='https://via.placeholder.com/600x250?text=App+Music'">
         </div>
-        <div class="section-title">最新的歌曲 <span class="title-more-btn" onclick="switchTab('search')">搜索 ›</span></div>
+        <div class="section-title">最新歌曲 <span class="title-more-btn" onclick="switchTab('search')">搜索 ›</span></div>
         <div class="song-list" id="song-container"></div>
     </div>
 
@@ -377,13 +428,13 @@
 
   <div id="play-view" class="view-hidden">
         <h1 style="margin-top:10px;">库里</h1>
-             <div class="section-title">默认库</div>
+             <div class="section-title">播放列表</div>
         <div class="song-list" id="playlist-container"></div>
     </div>
 
 
     <div id="user-view" class="view-hidden">
-        <h1 style="margin-top:10px;">用户</h1>
+        <h1 style="margin-top:10px;">我的</h1>
         <div class="ios-card">
             <div class="profile-header">
                 <img class="profile-avatar-large" id="profile-avatar-edit" alt="点击修改" src="./img/DefaultProfilePicture.jpg" onclick="changeAvatar()" >
@@ -429,8 +480,8 @@
             <h3>关于全成唱片</h3>
             <div onclick="tools()" class="ios-card submit-card">
                 <div class="submit-info">
-                    <h4>全成唱片 1.3.0</h4>
-                    <p>制作者：NaOH.<br>鸣谢: SPACEDLS<br><strong>本次更新:</strong> 底部Tab导航、本地存储支持。<br>如需硬刷新功能点击该卡片即可显示。<br>
+                    <h4>全成唱片 1.4.0</h4>
+                    <p>制作者：NaOH.<br>鸣谢: SPACEDLS<br><strong>本次更新:</strong> 上线评论功能（到仓库提交），顶部动态显示，Tooltip图标提示。<br>如需硬刷新功能点击该卡片即可显示。<br>
             <div  style="display:none;" id="loader"> 
             
                
@@ -514,6 +565,10 @@
         <div class="fp-title" id="fp-title">歌曲标题</div>
         <div class="fp-artist" id="fp-artist">歌手名</div>
         <div class="fp-lyrics">暂无歌词~</div>
+            
+               <div data-tooltip="1" class="control-btn-side-chat" onclick="toggleComments()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10H4a2 2 0 0 1-2-2v-8C2 6.477 6.477 2 12 2m0 2a8 8 0 0 0-8 8v8h8a8 8 0 1 0 0-16m0 10a1 1 0 0 1 .117 1.993L12 16H9a1 1 0 0 1-.117-1.993L9 14zm3-4a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2z"/></g></svg>
+</div>
+   
     </div>
     <div class="fp-progress-container" id="progress-container">
         <div class="fp-progress-bar" id="progress-bar"></div>
@@ -522,14 +577,18 @@
             <span id="total-duration">00:00</span>
         </div>
     </div>
+
     <div class="fp-controls">
+      
         <div class="control-btn-side" id="loop-btn" onclick="toggleLoopMode()">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M17 17H7v-3l-4 4l4 4v-3h12v-6h-2M7 7h10v3l4-4l-4-4v3H5v6h2z"/></svg>
         </div>
          <div class="fp-play-btn" id="fp-play-trigger" onclick="togglePlay(event)">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M6 4v16a1 1 0 0 0 1.524.852l13-8a1 1 0 0 0 0-1.704l-13-8A1 1 0 0 0 6 4"/></svg>
         </div>
+        
         <div class="control-btn-side speed-text" id="speed-btn" onclick="changeSpeed()">1.0x</div>
+        
     </div>
 </div>
 
@@ -561,7 +620,7 @@
             <div class="avatar-option">
                 <label class="avatar-option-label">
                     <input type="radio" name="avatar-type" value="text" onchange="toggleAvatarInputs()" class="avatar-radio">
-                    文字头像
+                    文字
                 </label>
                 <input type="text" id="avatar-input-text" class="avatar-sub-input" placeholder="输入文字" maxlength="4">
             </div>
@@ -581,7 +640,17 @@
     <div class="toast-text">操作失败</div>
 </div>
 
-<p id="consoles" style="font-size:12px;color:var(--text-sub); text-align:center; margin-top:50px; opacity: 0.7;">Copyright © 2026 全成唱片<br>本站仅供娱乐 音频来源自用户手动提交 如侵权请联络管理者删除 Ver1.3<br>
+<div id="commentOverlay" class="comment-overlay">
+    <div class="cmt-close" onclick="toggleComments()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="m12 14.122l5.303 5.303a1.5 1.5 0 0 0 2.122-2.122L14.12 12l5.304-5.303a1.5 1.5 0 1 0-2.122-2.121L12 9.879L6.697 4.576a1.5 1.5 0 1 0-2.122 2.12L9.88 12l-5.304 5.304a1.5 1.5 0 1 0 2.122 2.12z"/></g></svg>
+    </div>
+    <div class="cmt-header" id="cmtTitle">评论</div>
+    <div class="cmt-list" id="cmtList"></div>
+    
+</div>
+
+
+<p id="consoles" style="font-size:12px;color:var(--text-sub); text-align:center; margin-top:50px; opacity: 0.7;">Copyright © 2026 全成唱片<br>本站仅供娱乐 音频来源自用户手动提交 如侵权请联络管理者删除 Ver1.4<br>
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path d="M14 1.5a.5.5 0 0 0-1 0V2h-.5a.5.5 0 0 0 0 1h.5v.5a.5.5 0 0 0 1 0V3h.5a.5.5 0 0 0 0-1H14zm-8.61.63a.2.2 0 0 1 .06-.104C5.474 2.002 5.493 2 5.5 2s.026.002.052.026a.2.2 0 0 1 .059.104a4.2 4.2 0 0 0 1.135 2.124A4.2 4.2 0 0 0 8.87 5.39a.2.2 0 0 1 .104.059c.024.025.026.044.026.051s-.002.026-.026.052a.2.2 0 0 1-.104.058a4.2 4.2 0 0 0-2.124 1.137A4.2 4.2 0 0 0 5.611 8.87a.2.2 0 0 1-.059.104c-.026.024-.044.026-.051.026c-.008 0-.026-.002-.052-.026a.2.2 0 0 1-.058-.104a4.2 4.2 0 0 0-1.137-2.124A4.2 4.2 0 0 0 2.13 5.61a.2.2 0 0 1-.103-.059C2.003 5.526 2 5.507 2 5.501c0-.008.002-.026.026-.052a.2.2 0 0 1 .104-.059a4.2 4.2 0 0 0 2.123-1.136A4.2 4.2 0 0 0 5.391 2.13M5.5 1c-.576 0-.99.453-1.088.926a3.2 3.2 0 0 1-.865 1.62a3.2 3.2 0 0 1-1.62.865c-.473.098-.927.513-.926 1.091c.001.576.454.989.926 1.087c.426.088 1.067.31 1.62.864s.776 1.195.865 1.621c.098.473.512.926 1.089.926s.99-.454 1.089-.927c.088-.425.31-1.066.864-1.62a3.2 3.2 0 0 1 1.62-.864C9.547 6.491 10 6.077 10 5.5s-.453-.99-.926-1.09a3.2 3.2 0 0 1-1.62-.863a3.2 3.2 0 0 1-.864-1.62C6.49 1.452 6.078 1 5.5 1m5.44 4a2.1 2.1 0 0 1 0 1h.56A1.5 1.5 0 0 1 13 7.5v4a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 6 11.5v-.56a2.1 2.1 0 0 1-1 0v.56A2.5 2.5 0 0 0 7.5 14h4a2.5 2.5 0 0 0 2.5-2.5v-4A2.5 2.5 0 0 0 11.5 5zM8 8.5a.5.5 0 0 1 .5-.5H11a.5.5 0 0 1 0 1H8.5a.5.5 0 0 1-.5-.5m.5 1.5a.5.5 0 0 0 0 1H10a.5.5 0 0 0 0-1zm-6 2a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 0 1H3v.5a.5.5 0 0 1-1 0V14h-.5a.5.5 0 0 1 0-1H2v-.5a.5.5 0 0 1 .5-.5"/></svg>部分音频由AI生成，已在数据中标明。</p>
 
 </div>
@@ -597,13 +666,13 @@
     const browseView = document.getElementById('browse-view');
     const searchView = document.getElementById('search-view');
     const userView = document.getElementById('user-view'); 
-    const playView = document.getElementById('play-view'); // 库里
+    const playView = document.getElementById('play-view'); // 库
     
     // Tabs
     const tabHome = document.getElementById('tab-home');
     const tabSearch = document.getElementById('tab-search');
     const tabUser = document.getElementById('tab-user');
-    const tabPlay = document.getElementById('tab-play'); // 库里tab
+    const tabPlay = document.getElementById('tab-play'); // 库tab
 
     const speedBtn = document.getElementById('speed-btn');
     const loopBtn = document.getElementById('loop-btn');
@@ -634,8 +703,8 @@ function loadmus(){
     async function init() {
         loadUserData(); // 加载本地数据
         try {
-               document.getElementById('song-container').innerHTML=`<div style='text-align:center; color:var(--text-sub); padding:20px;'>
-               <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="3.5" r="1.5"><animateTransform attributeName="transform" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="0 12 12;90 12 12;180 12 12;270 12 12"/><animate attributeName="opacity" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle><circle cx="12" cy="3.5" r="1.5" transform="rotate(30 12 12)"><animateTransform attributeName="transform" begin="0.2s" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="30 12 12;120 12 12;210 12 12;300 12 12"/><animate attributeName="opacity" begin="0.2s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle><circle cx="12" cy="3.5" r="1.5" transform="rotate(60 12 12)"><animateTransform attributeName="transform" begin="0.4s" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="60 12 12;150 12 12;240 12 12;330 12 12"/><animate attributeName="opacity" begin="0.4s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle></g></svg>
+               document.getElementById('song-container').innerHTML=`<div style='text-align:center; color:var(--text-sub); padding:20px;'><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c4.97 0 9 4.03 9 9"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="16;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>
+              
                加载中</div>`;
         const res = await fetch('https://chen-exe.github.io/dagetoliet.github.io/music/mus.json');
             const data = await res.json();
@@ -666,7 +735,7 @@ function loadmus(){
         // 应用主题
         if(storedTheme) {
              document.documentElement.setAttribute('data-theme', storedTheme);
-             document.getElementById("dagepic").src = (storedTheme === 'dark') ? "./img/p.jpg" : "./img/p1.png";
+             document.getElementById("dagepic").src = (storedTheme === 'dark') ? "./img/cover/dark.png" : "./img/cover/light.png";
         }
     }
 
@@ -683,12 +752,12 @@ function loadmus(){
                     <div class="song-name">${s.title}</div>
                     <div class="song-artist">${s.artist}<br><span style="font-size:9px;">${s.showAi}</span></div>
                 </div>
-                <div class="more-btn" onclick="addToQueue(event, ${JSON.stringify(s).replace(/"/g, '&quot;')})"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M19.345 5.993c.278-.103.61-.19.97-.125c.442.08.836.329 1.1.692c.215.296.28.634.308.93c.027.287.027.646.027 1.055v.11c0 .3.002.62-.106.915a1.75 1.75 0 0 1-.392.623c-.22.225-.509.363-.78.492l-.068.033l-1.785.857c-.369.177-.692.332-.964.432c-.261.097-.57.18-.905.136v4.286c0 1.814-1.435 3.321-3.25 3.321s-3.25-1.507-3.25-3.321s1.435-3.322 3.25-3.322a3.2 3.2 0 0 1 1.75.522V10h.003q-.004-.254-.003-.545v-.11c0-.3-.002-.62.106-.915a1.75 1.75 0 0 1 .392-.623c.22-.225.509-.363.78-.492l.068-.033l1.785-.857c.369-.177.692-.332.964-.432"/><path fill="currentColor" fill-rule="evenodd" d="M2.25 5A.75.75 0 0 1 3 4.25h12a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 5m0 4A.75.75 0 0 1 3 8.25h10a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 9m0 4a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75m0 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75" clip-rule="evenodd"/></svg></div>
+                <div data-tooltip="新增" class="more-btn" onclick="addToQueue(event, ${JSON.stringify(s).replace(/"/g, '&quot;')})"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M19.345 5.993c.278-.103.61-.19.97-.125c.442.08.836.329 1.1.692c.215.296.28.634.308.93c.027.287.027.646.027 1.055v.11c0 .3.002.62-.106.915a1.75 1.75 0 0 1-.392.623c-.22.225-.509.363-.78.492l-.068.033l-1.785.857c-.369.177-.692.332-.964.432c-.261.097-.57.18-.905.136v4.286c0 1.814-1.435 3.321-3.25 3.321s-3.25-1.507-3.25-3.321s1.435-3.322 3.25-3.322a3.2 3.2 0 0 1 1.75.522V10h.003q-.004-.254-.003-.545v-.11c0-.3-.002-.62.106-.915a1.75 1.75 0 0 1 .392-.623c.22-.225.509-.363.78-.492l.068-.033l1.785-.857c.369-.177.692-.332.964-.432"/><path fill="currentColor" fill-rule="evenodd" d="M2.25 5A.75.75 0 0 1 3 4.25h12a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 5m0 4A.75.75 0 0 1 3 8.25h10a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 9m0 4a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75m0 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75" clip-rule="evenodd"/></svg></div>
             </div>
         `).join('');
     }
 
-    // 添加到库里
+    // 添加到库
     function addToQueue(e, song) {
         e.stopPropagation(); // 阻止冒泡
         playQueue.push(song);
@@ -709,7 +778,7 @@ function loadmus(){
                     <div class="song-name">${s.title}</div>
                     <div class="song-artist">${s.artist}</div>
                 </div>
-                <div class="more-btn" onclick="removeFromQueue(event, ${i})">
+                <div class="more-btn" data-tooltip="删除" onclick="removeFromQueue(event, ${i})">
                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M7.823 3.368A2 2 0 0 1 9.721 2h4.558a2 2 0 0 1 1.898 1.368L16.72 5H20a1 1 0 1 1 0 2h-1v12a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V7H4a1 1 0 0 1 0-2h3.28zM9.387 5l.334-1h4.558l.334 1z"/></g></svg>
                 </div>
             </div>
@@ -729,10 +798,35 @@ function loadmus(){
         playIndex = index;
         selectSong(playQueue[index]);
     }
+    
+    // --- 新增：滚动监听 ---
+    window.addEventListener('scroll', () => {
+        const titleEl = document.getElementById('header-title');
+        const logoEl = document.querySelector('.logo'); // 获取 Logo 元素
+        
+        if (window.scrollY > 50) {
+            titleEl.classList.add('visible'); // 显示标题
+            if(logoEl) logoEl.style.opacity = '0'; // 隐藏 Logo 避免重叠
+        } else {
+            titleEl.classList.remove('visible'); // 隐藏标题
+            if(logoEl) logoEl.style.opacity = '1'; // 恢复 Logo
+        }
+    });
 
+    // --- 修改：Tab切换更新顶部标题 ---
     function switchTab(tabName) {
         document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
         document.getElementById(`tab-${tabName}`).classList.add('active');
+        
+        // 更新顶部标题文字
+        const titles = {
+            'home': '首页',
+            'search': '搜索',
+            'play': '库里',
+            'user': '我的'
+        };
+        const titleEl = document.getElementById('header-title');
+        if(titleEl) titleEl.innerText = titles[tabName] || '首页';
 
         [browseView, searchView, userView, playView].forEach(view => {
             view.style.opacity = '0';
@@ -746,7 +840,7 @@ function loadmus(){
         else if(tabName === 'user') targetView = userView;
         else if(tabName === 'play') {
              targetView = playView;
-             renderQueue(); // 切换到库里时刷新列表
+             renderQueue(); // 切换到库时刷新列表
         }
 
 
@@ -862,7 +956,7 @@ function loadmus(){
             if(playIndex >= playQueue.length) playIndex = 0; // 循环
             playFromQueue(playIndex);
         } else {
-            showToast("库里暂无歌曲"); 
+            showToast("库暂无歌曲"); 
         }
     }
     
@@ -878,7 +972,7 @@ function loadmus(){
     function toggleTheme() {
         const html = document.documentElement;
         const theme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-        document.getElementById("dagepic").src = (theme === 'dark') ? "./img/p.jpg" : "./img/p1.png";
+        document.getElementById("dagepic").src = (theme === 'dark') ? "./img/cover/dark.png" : "./img/cover/light.png";
         html.setAttribute('data-theme', theme);
         localStorage.setItem('app_theme', theme);
     }
@@ -1016,6 +1110,51 @@ localStorage.clear();
 showToast("清除完成 重启软件生效");
  }
     }
+    
+    
+    let currentPlayingId = null; // 记录当前播放的ID
+
+// 拦截原有的 selectSong 记录ID (请在原有selectSong函数内第一行加上 currentPlayingId = song.id;)
+const originalSelectSong = selectSong;
+selectSong = function(song) {
+    currentPlayingId = song.title; 
+    originalSelectSong(song);
+};
+
+// 切换评论面板
+async function toggleComments() {
+    const panel = document.getElementById('commentOverlay');
+    panel.classList.toggle('active');
+    if(panel.classList.contains('active')) {
+        loadComments();
+    }
+}
+
+// 动态加载逻辑
+async function loadComments() {
+    const list = document.getElementById('cmtList');
+    const title = document.getElementById('cmtTitle');
+    title.innerText = `评论`;
+    list.innerHTML = '加载中...';
+
+    try {
+        const res = await fetch('chat.json');
+        const data = await res.json();
+        // 过滤匹配 chatid === 当前歌曲id
+        const filtered = data.filter(item => String(item.chatid) === String(currentPlayingId));
+        
+        list.innerHTML = filtered.length ? filtered.map(c => `
+            <div class="cmt-item">
+            <img style="border-radius :20px; height:30px;" src="${c.avatar}">
+         </img>       <div class="cmt-user">${c.user}</div>
+                <div class="cmt-content">${c.content}</div>
+                <div style="font-size:10px; color:#888; margin-top:5px;">${c.time}</div>
+            </div>
+        `).join('') : '<div style="text-align:center;color:#888;">暂无评论</div>';
+    } catch (e) {
+        list.innerHTML = '无法加载评论';
+    }
+}
 </script>
 </body>
 </html>
