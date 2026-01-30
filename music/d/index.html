@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全成唱片 - App下载</title>
+    <style>
+        /* --- 全局样式 & 变量 --- */
+        :root {
+            --primary-color: #FA243C;
+            --text-dark: #333;
+            --text-light: #666;
+            --radius-spec: 30px; /* 按照要求圆角处理，30%在长方形按钮上不美观，此处采用30px大圆角模拟APP风格 */
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* --- 容器 (手机电脑自适应) --- */
+        .app-container {
+            width: 100%;
+            max-width: 500px; /* 电脑端限制宽度模拟手机 */
+            background: #fff;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 40px;
+        }
+
+        /* --- 顶部轮播图 --- */
+        .carousel {
+            width: 100%;
+            height: 800px;
+            position: relative;
+            overflow: hidden;
+            background: #eee;
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .slide.active { opacity: 1; }
+
+        /* --- 通用按钮样式 --- */
+        .btn {
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s;
+        }
+        .btn:active { opacity: 0.8; }
+
+        /* --- 观看视频按钮 --- */
+        .video-btn {
+            margin-top: 20px;
+            color: var(--primary-color);
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            padding: 8px 20px;
+            border-radius: var(--radius-spec);
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .icon-play { width: 14px; height: 14px; fill: var(--primary-color); margin-right: 5px; }
+
+        /* --- Logo + 标题 Flex布局 --- */
+        .brand-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 30%; /* 严格按照要求的30%圆角 */
+            background-color: #eee;
+            margin-right: 15px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .app-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* --- 下载按钮 --- */
+        .download-btn {
+            width: 80%;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 18px;
+            border-radius: var(--radius-spec);
+            box-shadow: 0 6px 15px rgba(250, 36, 60, 0.3);
+            margin-bottom: 25px;
+        }
+        .icon-download { width: 20px; height: 20px; fill: white; margin-right: 8px; }
+
+        /* --- 协议链接 Flex布局 --- */
+        .policy-links {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            margin-bottom: 40px;
+        }
+        .policy-links a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        .policy-links a:hover { text-decoration: underline; color: var(--primary-color); }
+
+        /* --- 底部版权 --- */
+        .copyright {
+            margin-top: auto; /* 推到底部 */
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        /* --- 视频弹窗 --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            width: 90%;
+            max-width: 600px;
+            background: #000;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .close-modal {
+            position: absolute;
+            top: -30px; right: 0;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        video { width: 100%; display: block; }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="carousel" id="carousel">
+            <img src="./tp.png" class="slide active" alt="Slide 1">
+            <img src="./tp2.png" class="slide" alt="Slide 2">
+            <img src="./tp3.png" class="slide" alt="Slide 3">
+        </div>
+
+        <button class="btn video-btn" onclick="openModal()">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            观看视频
+        </button>
+
+        <div class="brand-section">
+            <img src="./logo.png" alt="Logo" class="app-logo">
+            <span class="app-name">全成唱片</span>
+        </div>
+
+        <button class="btn download-btn" onclick="location.href='././quancheng_music.apk'">
+            <svg class="icon-download" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            立即下载
+        </button>
+
+        <div class="policy-links">
+            <a href="./privacy/index.html">隐私政策</a>
+            <a href="././doc/">功能开放</a>
+        </div>
+
+        <div class="copyright">
+            Copyright 2026 © QuanChengMusic. DageGuoji.
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal()">✕</div>
+            <video id="promoVideo" controls>
+                <source src="" type="video/mp4">
+                您的浏览器不支持Video标签。
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // --- 轮播图逻辑 ---
+        let slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 3000); // 3秒切换
+
+        // --- 视频弹窗逻辑 ---
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('promoVideo');
+
+        function openModal() {
+            modal.style.display = 'flex';
+            video.play();
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            video.pause();
+        }
+
+        // 点击遮罩层关闭
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    </script>
+</body>
+</html>
