@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全成UI QuanCheng UI - 快如大哥</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#EF4444'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '8px',
+                        DEFAULT: '12px',
+                        'md': '16px',
+                        'lg': '20px',
+                        'xl': '24px',
+                        '2xl': '28px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '6px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-white min-h-screen min-w-[1440px]">
+    <!-- Header -->
+    <header class="bg-white py-6 px-8 border-b border-gray-200">
+        <div class="flex items-center justify-between max-w-[1440px] mx-auto">
+            <div class="flex items-center space-x-2">
+                <img src="./img/biglogo.png" alt="Logo" style="height:30px;">
+                <span class="text-xl text-gray-600">Dev</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="./index.html" class="text-gray-700 hover:text-primary transition-colors duration-200">首页</a>
+                <a class="text-gray-700 hover:text-primary transition-colors duration-200">教程</a>
+            </nav>
+            <a href="./d/setup全成UI-工具包.zip"
+                class="bg-primary text-white px-6 py-2 rounded-button whitespace-nowrap hover:bg-blue-600 transition-colors duration-200">
+                下载体验
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <img src="./img/c/hp.svg" alt="Hero Image" class="w-full h-full object-cover">
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-[1440px] mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <img src="./img/biglogo.png" alt="Logo" style="height:30px;">
+
+                </div>
+
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400">© 2026-2030 全成UI. 保留所有权利.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+
+                    <a href="https://github.com/CHEN-EXE/dagetoliet.github.io/" class="text-gray-400 hover:text-white transition-colors duration-200">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全成UI QuanCheng UI - 快如大哥</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#EF4444'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '8px',
+                        DEFAULT: '12px',
+                        'md': '16px',
+                        'lg': '20px',
+                        'xl': '24px',
+                        '2xl': '28px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '6px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-white min-h-screen min-w-[1440px]">
+    <!-- Header -->
+    <header class="bg-white py-6 px-8 border-b border-gray-200">
+        <div class="flex items-center justify-between max-w-[1440px] mx-auto">
+            <div class="flex items-center space-x-2">
+                <img src="./img/biglogo.png" alt="Logo" style="height:30px;">
+                <span class="text-xl text-gray-600">Dev</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="./index.html" class="text-gray-700 hover:text-primary transition-colors duration-200">首页</a>
+                <a href="./help.html" class="text-gray-700 hover:text-primary transition-colors duration-200">教程</a>
+            </nav>
+            <a href="./d/setup全成UI-工具包.zip"
+                class="bg-primary text-white px-6 py-2 rounded-button whitespace-nowrap hover:bg-blue-600 transition-colors duration-200">
+                下载体验
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <img src="./img/c/c1.svg" alt="Hero Image" class="w-full h-full object-cover">
+    <img src="./img/c/c2.svg" alt="Hero Image" class="w-full h-full object-cover">
+    <img src="./img/c/c3.svg" alt="Hero Image" class="w-full h-full object-cover">
+
+    <!-- Performance Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-[1440px] mx-auto px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-bold text-gray-900">轻</h2>
+                    <p class="text-xl text-gray-600 leading-relaxed">
+                        全成UI 采用先的内存管理技术，占用内存仅 1 PB，相传统系统节省 -60% 的内存空间。
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <span class="text-gray-700">启动速度提升 300%</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <span class="text-gray-700">应用响应时间减少 50%</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <span class="text-gray-700">电池续航延长 25%</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <span class="text-gray-700">系统稳定性提升 90%</span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">系统性能对比</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">全成UI 内存不占用</span>
+                                <span class="text-gray-900 font-medium">1.0 PB</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-green-500 h-3 rounded-full" style="width: 98%"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-[1440px] mx-auto px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">用户评价</h2>
+                <p class="text-xl text-gray-600">听听用户怎么说 皆为大数据整合</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            Z
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">大哥did122***</h4>
+                            <p class="text-gray-600 text-sm">老资历</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">
+                        "用了全成UI之后，手机发热不错，暖手宝用了，很实用，孩子爱吃"
+                    </p>
+                    <div class="flex text-yellow-400 mt-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            L
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">大哥did7891****</h4>
+                            <p class="text-gray-600 text-sm">设寄</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">
+                        "界面不错跟10年前那个一样，烂，也好使。"
+                    </p>
+                    <div class="flex text-yellow-400 mt-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            W
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">大哥did1930302***</h4>
+                            <p class="text-gray-600 text-sm">开发者</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">
+                        "作为一名开发者，我很欣赏全成UI的设计理念，速度慢了广告多了好使。"
+                    </p>
+                    <div class="flex text-yellow-400 mt-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-indigo-700">
+        <div class="max-w-[1440px] mx-auto px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">立即体验全成UI</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="./d/setup全成UI-工具包.zip"
+                    class="bg-white text-blue-600 px-8 py-3 rounded-button whitespace-nowrap hover:bg-gray-100 transition-colors duration-200 text-lg font-medium">
+                    下载 介质
+                </a>
+                <a href="./help.html
+                "
+                    class="border-2 border-white text-white px-8 py-3 rounded-button whitespace-nowrap hover:bg-white hover:text-blue-600 transition-colors duration-200 text-lg font-medium">
+                    使用教程
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-[1440px] mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <img src="./img/biglogo.png" alt="Logo" style="height:30px;">
+
+                </div>
+
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400">© 2026-2030 全成UI. 保留所有权利.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+
+                    <a href="https://github.com/CHEN-EXE/dagetoliet.github.io/"
+                        class="text-gray-400 hover:text-white transition-colors duration-200">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
