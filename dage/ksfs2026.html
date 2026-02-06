@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年*全成同学考试成绩</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            transform: skewX(-10deg);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            transform: skewX(10deg);
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .evaluation {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            transform: skewX(-10deg);
+        }
+
+        .evaluation h2,
+        .evaluation p {
+            transform: skewX(10deg);
+        }
+
+        #shareBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transform: skewX(-15deg);
+        }
+
+        #shareBtn:hover {
+            background-color: #0056b3;
+        }
+
+        #shareBtn span {
+            display: inline-block;
+            transform: skewX(15deg);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>2025-2026年期末考试*全成同学考试成绩</h1>
+    <button id="shareBtn"><span>分享战绩</span></button>
+    <table>
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>班级</th>
+                <th>排名</th>
+                <th>总分</th>
+                <th>语文</th>
+                <th>数学</th>
+                <th>英语</th>
+                <th>物理</th>
+                <th>化学</th>
+                <th>政治</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 示例数据，可以根据需要修改 -->
+            <tr>
+                <td>*全成</td>
+                <td>11</td>
+                <td>676</td>
+                <td>174</td>
+                <td>68</td>
+                <td>14</td>
+                <td>15</td>
+                <td>20</td>
+                <td>12</td>
+                <td>45</td>
+            </tr>
+            <!-- 添加更多行 -->
+        </tbody>
+    </table>
+    <div class="evaluation">
+        <h2>评价</h2>
+        <p>大哥牛逼哈哈！</p>
+    </div>
+
+    <script>
+        document.getElementById('shareBtn').addEventListener('click', async () => {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: '2026年*全成同学考试成绩',
+                        text: '查看*全成的考试成绩！',
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    console.log('分享失败:', err);
+                }
+            } else {
+                // 备选：复制链接到剪贴板
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('链接已复制到剪贴板！');
+                }).catch(err => {
+                    console.log('复制失败:', err);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

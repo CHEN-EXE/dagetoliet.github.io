@@ -1,245 +1,367 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大哥国际餐馆 - 尊贵点餐系统</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.prod.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/naive-ui@2.34.4/dist/index.prod.js"></script>
-
+    <title>大是哥餐饮 - 致力于极致美味</title>
     <style>
-        body {
+        /* --- 全局样式 --- */
+        * {
             margin: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f9f9fb;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .header-banner {
-          
-            background: url(https://cdn.pixabay.com/photo/2020/03/13/08/34/south-station-4927286_1280.jpg);
-            background-position: center center;
-  background-size: cover;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
         }
-        .main-container {
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- 导航栏 --- */
+        header {
+            background-color: #D03A48;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             max-width: 1200px;
-            margin: -30px auto 40px;
-            padding: 0 20px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
         }
-        .item-icon {
-            font-size: 40px;
-            height: 100px;
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #D03A48;
+            /* 橙红色，激发食欲 */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #D03A48;
+        }
+
+        /* --- 图片轮播 (Carousel) --- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            /* 轮播高度 */
+            overflow: hidden;
+            margin-top: 70px;
+            /* 避开固定导航栏 */
+            background-color: #000;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #fdfaf2;
-            border-radius: 8px;
-            margin-bottom: 12px;
+            background-size: cover;
+            background-position: center;
         }
-        .sticky-cart {
-            position: sticky;
-            top: 20px;
+
+        .slide.active {
+            opacity: 1;
         }
-        footer {
-            padding: 40px;
+
+        /* 轮播文字层 */
+        .slide-content {
             text-align: center;
-            color: #999;
-            background: #1a1a1a;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .slide-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+        }
+
+        /* 轮播按钮 */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        /* --- 特色菜品展示 --- */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .section-title span {
+            border-bottom: 3px solid #D03A48;
+            padding-bottom: 10px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-img {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .menu-info {
+            padding: 1.5rem;
+        }
+
+        .menu-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            color: #D03A48;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* --- 页脚 --- */
+        footer {
+            background-color: #2c2c2c;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .carousel-container {
+                height: 400px;
+            }
+
+            .slide-content h2 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div id="app">
-    <n-config-provider :theme-overrides="themeOverrides">
-        <div class="header-banner">
-            <n-h1 style="color: white; margin: 0; font-weight: 600;">大哥国际餐馆</n-h1>
-            <n-p  style="color:#fff;opacity: 0.9;">大哥VIP公共厕所旁分店</n-p>
-            <n-space justify="center" style="margin-top: 15px;">
-                <n-button color="#fff" strong secondary   size="small" @click="showEditModal = true">
-                    <template #icon><n-icon><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M21.03 2.97a3.578 3.578 0 0 1 0 5.06l-2.644 2.645a6.45 6.45 0 0 0-1.579-.543L17.94 9L15 6.06L5.062 16a.75.75 0 0 0-.193.333l-1.05 3.85l3.85-1.05A.75.75 0 0 0 8 18.938l1.13-1.13c.114.555.298 1.085.543 1.579l-.612.612a2.25 2.25 0 0 1-.999.58l-5.116 1.395a.75.75 0 0 1-.92-.921l1.395-5.116a2.25 2.25 0 0 1 .58-.999L15.97 2.97a3.578 3.578 0 0 1 5.06 0zM15.5 11c.293 0 .58.025.86.072l.174.716a2 2 0 0 0 2.413 1.475l.098-.026l.601-.179c.363.467.653.997.854 1.57l-.447.431a2 2 0 0 0-.17 2.699l.142.157l.475.457c-.2.573-.49 1.102-.853 1.57l-.602-.179a2 2 0 0 0-2.485 1.352l-.026.098l-.173.716a5.18 5.18 0 0 1-1.723 0l-.172-.716a2 2 0 0 0-2.413-1.476l-.098.026l-.602.178a5.549 5.549 0 0 1-.853-1.57l.447-.43a2 2 0 0 0 .055-2.827l-.055-.055l-.447-.43c.2-.574.49-1.103.853-1.57l.602.178a2 2 0 0 0 2.485-1.351l.026-.098l.172-.716c.28-.047.569-.072.862-.072zm0 4c-.8 0-1.45.672-1.45 1.5c0 .829.65 1.5 1.45 1.5c.8 0 1.45-.671 1.45-1.5c0-.828-.65-1.5-1.45-1.5zm1.53-10.97l-.97.97L19 7.94l.97-.97a2.078 2.078 0 1 0-2.94-2.94z" fill="currentColor"></path></g></svg></n-icon></template>编辑
-                    </n-button>
-                <n-button color="#fff" strong secondary size="small" @click="fetchMenu" :loading="loading">
-                    <template #icon><n-icon><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4"></path><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path></g></svg></n-icon></template>刷新
-                </n-button>
-            </n-space>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img style="height: 50px;" src="./大是哥logo.png"/></div>
+            <ul class="nav-links">
+                <li><a href="#">首页</a></li>
+                <li><a href="#menu">招牌菜谱</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="./foods/">在线点单</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="carousel-container">
+        <div class="slide active"
+            style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bigl.webp');">
+
+        </div>
+        <div class="slide"
+            style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./dsg2.webp');">
+
         </div>
 
-        <main class="main-container">
-            <n-grid x-gap="24" :cols="12" item-responsive>
-                <n-gi span="12 m:8">
-                    <n-card title="菜单" :bordered="false" size="large">
-                     
-                        <n-empty v-if="menuItems.length === 0" description="菜单加载中..." style="padding: 40px;"></n-empty>
-                        
-                        <n-grid x-gap="16" y-gap="16" cols="1 s:2 m:2 l:3" responsive="screen">
-                            <n-gi v-for="item in menuItems" :key="item.id">
-                                <n-card hoverable>
-                                    <div class="item-icon">{{ item.icon }}</div>
-                                    <n-text strong style="font-size: 1.1rem;">{{ item.name }}
-                                    <n-tag :bordered="false" type="warning">
-      HOT
-    </n-tag></n-text><br/>
-                                    <n-text depth="3" style="font-size: 0.85rem; height: 40px; display: block; margin-top: 4px;">
-                                        {{ item.desc }}
-                                    </n-text>
-                                    <template #footer>
-                                        <n-space align="center" justify="space-between">
-                                            <n-text type="warning" strong style="font-size: 1.2rem;">¥{{ item.price }}</n-text>
-                                            <n-button secondary type="primary" size="small" @click="addToCart(item)">
-                                                添加到菜单
-                                            </n-button>
-                                        </n-space>
-                                    </template>
-                                </n-card>
-                            </n-gi>
-                        </n-grid>
-                    </n-card>
-                </n-gi>
+        <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
 
-                <n-gi span="12 m:4">
-                    <div class="sticky-cart">
-                        <n-card title="当前账单" head-style="font-weight: bold;">
-                            <div v-if="Object.keys(cart).length === 0" style="text-align: center; padding: 20px 0;">
-                                <n-text depth="3">
-                                  <n-empty description="大哥，你还没点菜">
-  </n-empty>
-                                </n-text>
-                            </div>
-                            
-                            <n-list v-else>
-                                <n-list-item v-for="(item, id) in cart" :key="id">
-                                    <n-thing :title="item.name">
-                                        <template #description>
-                                            <n-text depth="3">单价: ¥{{ item.price }}</n-text>
-                                        </template>
-                                    </n-thing>
-                                    <template #suffix>
-                                        <n-space align="center">
-                                            <n-button circle size="tiny" @click="changeQty(id, -1)">-</n-button>
-                                            <n-text strong>{{ item.qty }}</n-text>
-                                            <n-button circle size="tiny" @click="changeQty(id, 1)">+</n-button>
-                                        </n-space>
-                                    </template>
-                                </n-list-item>
-                            </n-list>
+    <section id="menu" class="section">
+        <div class="section-title">
+            <span>招牌推荐</span>
+        </div>
+        <div class="menu-grid" id="menu-grid">
+            <div class="loading">加载中...</div>
+        </div>
+    </section>
 
-                            <template #action>
-                                <n-statistic label="合计" :value="totalPrice" style="margin-bottom: 15px;">
-                                    <template #prefix>¥</template>
-                                </n-statistic>
-                                <n-button block type="error" size="large" @click="checkout" :disabled="totalPrice === 0">
-                                    立即下单
-                                </n-button>
-                            </template>
-                        </n-card>
-                    </div>
-                </n-gi>
-            </n-grid>
-        </main>
+    <section id="about" class="section" style="background-color: #fff;">
+        <div class="section-title">
+            <span>关于大是哥</span>
+        </div>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <p>大是哥不光是全成文化也是大哥岛文化的根基，大是大哥，哥是大哥，大哥是凝聚力，全成是社会的稳定，大哥万事兴，正大天下哥！"以大是本新媒体、哥是本安全食品牌产品、《大是哥之歌》歌曲、大是哥社交型可复制餐饮门店、大是哥礼仪礼俗服务（民俗风水类） 传播社会基本认知共识，满足时代需求！
+            </p>
+        </div>
+    </section>
 
-        <footer>
-            <p>© 2026-11451 大哥国际餐馆 & 大哥国际厕所集团</p>
-            <p style="font-size: 12px; margin-top: 10px;">本站点仅供娱乐，梗概不对外公开。</p>
-        </footer>
+    <footer id="contact">
+        <h3>大是哥餐饮</h3>
+        <p>预订电话：1880-888891</p>
+        <p>地址：大哥岛成县120号北路</p>
+        <p>站点仅供娱乐，如侵权联系仓库删除</p>
+        <p>&copy; 2026 Da Shi Ge Catering. All Rights Reserved.</p>
+    </footer>
 
-        <n-modal v-model:show="showOrderModal" preset="dialog" type="success" title="下单成功" positive-text="打印小票" @positive-click="clearCart">
-            <div style="text-align: center; padding: 20px 0;">
-                <n-h2>号码 DG-{{ Math.floor(Math.random()*900 + 100) }}</n-h2>
-                <p>请在大哥VIP厕所门口耐心等待，预计等待 114514 秒。</p>
-            </div>
-        </n-modal>
+    <div style="padding:10px;border-radius:20px;box-shadow:1px 1px 1px 0px; position: absolute;background-color: #fff;width:auto;bottom:10px;left:20px;">
+        大哥国际厕所集团开发
+    </div>
 
-        <n-modal v-model:show="showEditModal" preset="card" title="如何修改菜单？" style="width: 400px;">
-            <p>请前往 GitHub 仓库修改 <code>Foods.json</code> 文件。</p>
-            <n-button style="width:50%;" tag="a" href="https://github.com/CHEN-EXE/dagetoliet.github.io/" target="_blank" block type="primary">前往仓库</n-button>
-        </n-modal>
 
-    </n-config-provider>
-</div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
 
-<script>
-    const { createApp, ref, computed, onMounted } = Vue;
+        // 切换幻灯片函数
+        function showSlide(index) {
+            // 移除所有 slide 的 active 类
+            slides.forEach(slide => slide.classList.remove('active'));
 
-    const app = createApp({
-        setup() {
-            const menuItems = ref([]);
-            const cart = ref({});
-            const loading = ref(false);
-            const showOrderModal = ref(false);
-            const showEditModal = ref(false);
+            // 处理索引边界
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
 
-            // 主题定制
-            const themeOverrides = {
-                common: {
-                    primaryColor: '#d4af37',
-                    primaryColorHover: '#b8860b',
-                    primaryColorPressed: '#8a6609',
-                }
-            };
-
-            const fetchMenu = async () => {
-                loading.value = true;
-                try {
-                    const response = await fetch('foods.json');
-                    if (!response.ok) throw new Error('网络请求错误');
-                    menuItems.value = await response.json();
-                } catch (err) {
-                    window.$message?.error('加载失败: ' + err.message);
-                    // 模拟数据供测试
-                    menuItems.value = [
-                        {id:1, name:'测试菜品', price: 99, icon:'🍜', desc:'加载Foods.json失败后的占位符'}
-                    ];
-                } finally {
-                    loading.value = false;
-                }
-            };
-
-            const addToCart = (item) => {
-                if (cart.value[item.id]) {
-                    cart.value[item.id].qty++;
-                } else {
-                    cart.value[item.id] = { ...item, qty: 1 };
-                }
-            };
-
-            const changeQty = (id, delta) => {
-                if (cart.value[id]) {
-                    cart.value[id].qty += delta;
-                    if (cart.value[id].qty <= 0) delete cart.value[id];
-                }
-            };
-
-            const totalPrice = computed(() => {
-                return Object.values(cart.value).reduce((sum, item) => sum + (item.price * item.qty), 0);
-            });
-
-            const checkout = () => {
-                showOrderModal.value = true;
-            };
-
-            const clearCart = () => {
-                cart.value = {};
-            };
-
-            onMounted(fetchMenu);
-
-            return {
-                menuItems, cart, loading, showOrderModal, showEditModal,
-                themeOverrides, totalPrice,
-                fetchMenu, addToCart, changeQty, checkout, clearCart
-            };
+            // 给当前 slide 添加 active 类
+            slides[currentSlide].classList.add('active');
         }
-    });
 
-    app.use(naive);
-    app.mount('#app');
-</script>
+        // 按钮点击事件
+        function moveSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
 
+        // 自动播放
+        setInterval(() => {
+            moveSlide(1);
+        }, 5000); // 每5秒切换一次
+
+        // 加载招牌推荐从 foods.json 并渲染前三项
+        async function loadMenu() {
+            try {
+                const res = await fetch('./foods/foods.json');
+                if (!res.ok) throw new Error('网络错误: ' + res.status);
+                const data = await res.json();
+                const top = Array.isArray(data) ? data.slice(0, 3) : [];
+                const grid = document.getElementById('menu-grid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                top.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'menu-item';
+                    div.innerHTML = `
+                        <div class="menu-img">
+                            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">
+                                ${item.icon || '🍽️'}
+                            </div>
+                        </div>
+                        <div class="menu-info">
+                            <h3>${item.name || ''}</h3>
+                            <p>${item.desc || ''}</p>
+                            <div class="price">¥ ${item.price != null ? item.price : ''}</div>
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                });
+                if (top.length === 0) grid.innerHTML = '<div>暂无招牌推荐</div>';
+            } catch (e) {
+                const grid = document.getElementById('menu-grid');
+                if (grid) grid.innerHTML = '<div>加载招牌推荐失败</div>';
+                console.error(e);
+            }
+        }
+        loadMenu();
+    </script>
 </body>
+
 </html>
