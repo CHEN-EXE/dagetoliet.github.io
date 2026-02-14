@@ -1,0 +1,59 @@
+CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00{
+    PNT-1:CGI_BIN,
+    PNT0:Assets,
+    PNT1:DAGEWIFI6,
+    PNT2:2022-05-11_16-30-00,
+    PNT3:CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00,
+    PNT4:CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00,
+    PNT5:CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00,
+    DNS:"chen-exe.github.io/dagetoliet.github.io/cgi_bin/BH64/JDNS_DOM/ASSETS.BAT",
+    TELNET:1,
+    USER:root,
+    PASS:DAGENB666@sb64,
+    PORT:23,
+    IP:192.168.1.32,
+    MAC:00:91:29:7E:SB:0D,
+    MODEL:DAWIFI6_PNSPLUS,
+    VENDOR:DAGE TECHNOLOGY,
+    VERSION:DAWIFI6_PNSPLUS_V1.0.0.1,
+    FIRMWARE:DAWIFI6_PNSPLUS_V1.0.0.1,
+    SERIAL:DAWIFI6_PNSPLUS_V1.0.0.1,
+    HARDWARE:DAWIFI6_PNSPLUS_V1.0.0.1,
+    OS:HDAGENB666OS_64_32V1.0.0.1_debug,
+    STATUS:DAWIFI6_PNSPLUS_V1.0.0.1,
+    TIME:2022-05-11_16-30-00,
+    SITE:{
+        SITE1:"/index.html",
+        SITE2:"/bank/index.html",
+        SITE3:"/music/index.html",
+        SITE4:"/cgi_bin/index.htm",
+        SITE5:"/dage/1.html",
+        SITELOAD:"./SITELOAD.BIN"
+    },
+    FILE:{
+        FILELOAD:"./FILELOAD.BIN"
+    },
+    DOWNLOAD_BIN:{
+        DOWN1:"192.168.1.300:7891/CGI_download/bin64.bin",
+        DOWN2:"192.168.1.300:7891/CGI_download/bin32.bin"
+    }
+    NOTICE:{
+        BIN;
+        ------- DAGE TECH --------
+        MAKE FROM WUQUANCHENG.
+        64%86-2029-DAWIFI6_PNSPLUS
+        DAGE NB??~!!!!!
+        BIN DONE;
+        BIN;
+        ------- VIRUS 000 --------
+        VIRUS DON;FREE;
+        12 23 42 45 00 13 01 43 43 91 82 01 49 29 -- FILEREAD
+        21 42 44 42 42 56 22 55 11 63 42 53 63 50 -- CLOSE_BIN
+        BIN-NO_DONE; START: 12:00:00;
+        BIN;
+        ------- LOT VIRUS --------
+        POWERED BY ?;
+        The content of this document is for entertainment purposes only and is not real data; please be aware and distinguish accordingly!
+        BIN;
+    }
+}

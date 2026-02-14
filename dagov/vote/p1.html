@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,13 +140,15 @@
 
         /* --- Hero 区域 --- */
         .hero {
-            background: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)), 
-                        url('https://source.unsplash.com/random/1600x900/?government') no-repeat center center/cover;
-            background-color: var(--gov-blue); 
+            background: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)),
+                url('https://source.unsplash.com/random/1600x900/?government') no-repeat center center/cover;
+            background-color: var(--gov-blue);
             color: #fff;
-            padding: 60px 20px 100px 20px; /* 底部增加padding */
+            padding: 60px 20px 100px 20px;
+            /* 底部增加padding */
             text-align: center;
-            min-height: 600px; /* 保证高度 */
+            min-height: 600px;
+            /* 保证高度 */
         }
 
         .hero h1 {
@@ -183,7 +186,7 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
             padding: 10px 15px;
             border-radius: 4px;
             cursor: pointer;
@@ -191,7 +194,7 @@
         }
 
         .vote-option:hover {
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.4);
         }
 
         .vote-option input[type="radio"] {
@@ -227,15 +230,23 @@
 
         /* --- 成功提示样式 --- */
         .success-wrapper {
-            display: none; /* 默认隐藏 */
+            display: none;
+            /* 默认隐藏 */
             text-align: center;
             animation: fadeIn 0.5s ease-in-out;
             padding: 20px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .success-icon {
@@ -247,7 +258,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .success-icon svg {
@@ -285,7 +296,7 @@
             text-align: center;
             color: #444;
         }
-        
+
         .disclaimer {
             margin-top: 20px;
             font-size: 0.8rem;
@@ -295,14 +306,15 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="usa-banner">
         <div class="usa-banner-inner">
             <span class="flag-icon"></span>
             <span class="usa-banner-text">
-                全成大哥岛馆政府  / 2026年全成大哥岛馆政府委员选举 在线投票        
-                </span>
+                全成大哥岛馆政府 / 2026年全成大哥岛馆政府委员选举 在线投票
+            </span>
         </div>
     </div>
 
@@ -320,7 +332,7 @@
         <nav class="nav-container">
             <ul class="navbar">
                 <li class="nav-item">
-                    <a onclick="window.history.go(-1);"    class="nav-link">返回上一页</a>
+                    <a onclick="window.history.go(-1);" class="nav-link">返回上一页</a>
                 </li>
             </ul>
         </nav>
@@ -328,15 +340,18 @@
 
     <section class="hero">
         <h1>2026年全成大哥岛馆政府委员选举</h1>
-        <p>* 本在线投票面向大众，可匿名投票。<br>* 投票平台实时监测用户IP地址<br>* 本系统由 大哥国际厕所集团 开发。</p>
-    
+        <p>选举已于2026.1.30结束<br>
+            <small>将在2026.2.20发布选举结果</small>
+        </p>
+
         <div class="vote-container">
-            
+
             <form id="voteForm">
-                <p style="margin-bottom: 20px; font-size: 0.9rem; opacity: 0.9; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom:10px;">
+                <p
+                    style="margin-bottom: 20px; font-size: 0.9rem; opacity: 0.9; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom:10px;">
                     * 单选项（必填）<br>被投票者名称部分屏蔽
                 </p>
-                
+
                 <div id="options-wrapper">
                     <div class="vote-loading">加载。。</div>
                 </div>
@@ -359,7 +374,7 @@
 
     <footer>
         <div class="footer-content">
-            <h3>大哥国际厕所集团  全成大哥岛馆政府监制</h3>
+            <h3>大哥国际厕所集团 全成大哥岛馆政府监制</h3>
             <div class="disclaimer">
                 <p><strong>严正声明</strong></p>
                 <p>这里不需要天天道馆也别路</p>
@@ -370,7 +385,7 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const optionsWrapper = document.getElementById('options-wrapper');
             const submitBtn = document.getElementById('submitBtn');
             const voteForm = document.getElementById('voteForm');
@@ -387,7 +402,7 @@
                 .then(data => {
                     // 清空加载提示
                     optionsWrapper.innerHTML = '';
-                    
+
                     // 动态生成选项
                     if (data.length === 0) {
                         optionsWrapper.innerHTML = '<div class="vote-loading">暂无候选人数据</div>';
@@ -398,9 +413,9 @@
                         // 创建 DOM 结构
                         const optionDiv = document.createElement('div');
                         optionDiv.className = 'vote-option';
-                        
+
                         // 为了方便点击，点击整个div也能触发radio
-                        optionDiv.onclick = function() {
+                        optionDiv.onclick = function () {
                             const radio = this.querySelector('input[type="radio"]');
                             radio.checked = true;
                             submitBtn.disabled = false; // 启用提交按钮
@@ -408,7 +423,7 @@
                         };
 
                         const radioId = `user_${user.id}`;
-                        
+
                         const radio = document.createElement('input');
                         radio.type = 'radio';
                         radio.name = 'candidate'; // 确保是单选组
@@ -428,19 +443,19 @@
                     console.error('Fetch error:', error);
                     optionsWrapper.innerHTML = `
                         <div class="vote-loading" style="color:#ff6b6b">
-                            ⚠ 无法加载候选人名单 (users.json)<br>
-                            <small>请确保在本地服务器环境下运行，<br>或检查文件路径。</small>
+                           选举已于2026.1.30结束<br>
+                            <small>将在2026.2.20发布选举结果</small>
                         </div>
                     `;
                 });
 
             // 2. 处理表单提交
-            voteForm.addEventListener('submit', function(e) {
+            voteForm.addEventListener('submit', function (e) {
                 e.preventDefault(); // 阻止默认表单跳转
 
                 // 检查是否已选择
                 const selected = document.querySelector('input[name="candidate"]:checked');
-                
+
                 if (selected) {
                     // 模拟提交延迟效果
                     submitBtn.textContent = "正在提交...";
@@ -459,4 +474,5 @@
     </script>
 
 </body>
+
 </html>

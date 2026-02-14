@@ -1,358 +1,591 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN" class="mdui-theme-auto">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-    <title>大哥国际传媒 | DaGE Media</title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no" />
+  <title>大哥国际传媒 | DaGE Media</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
-    <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
-    <style>
-        :root {
-            /* 自定义 M3 品牌色倾向 */
-            --mdui-color-primary: #fff; 
-        }
+  <style>
+    :root {
+      --mdui-color-primary: #fff;
+    }
 
-        body {
-            background-color: var(--mdui-color-surface);
-            color: var(--mdui-color-on-surface);
-            margin: 0;
-            padding-bottom: 80px; /* 为移动端底部导航留空 */
-        }
+    body {
+      background-color: var(--mdui-color-surface);
+      color: var(--mdui-color-on-surface);
+      margin: 0;
+      padding-bottom: 80px;
+      /* 底部导航高度 */
+      height: 100vh;
+      overflow: hidden;
+      /* 防止 Body 滚动，交由子容器滚动 */
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* Hero 区域：M3 风格大容器 */
-        .hero-banner {
-            margin: 16px;
-            border-radius: 28px;
-            background: var(--mdui-color-primary-container);
-            color: var(--mdui-color-on-primary-container);
-            padding: 60px 24px;
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-        }
+    /* ----- 通用布局 ----- */
+    .page-container {
+      flex: 1;
+      overflow-y: auto;
+      display: none;
+      /* 默认隐藏所有页面 */
+      height: 100%;
+      position: relative;
+    }
 
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-        }
+    .page-container.active {
+      display: block;
+    }
 
-        /* 视频容器：采用 M3 16:9 比例容器 */
-        .video-section {
-            margin: 24px 0;
-            border-radius: 24px;
-            overflow: hidden;
-            background: var(--mdui-color-surface-container-high);
-            aspect-ratio: 16 / 9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    /* ----- 首页样式 ----- */
+    .hero-banner {
+      margin: 16px;
+      border-radius: 28px;
+      background: var(--mdui-color-primary-container);
+      color: var(--mdui-color-on-primary-container);
+      padding: 60px 24px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
 
-        .video-placeholder {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
 
-        /* M3 风格卡片微调 */
-        mdui-card {
-            padding: 0;
-            border-radius: 24px; /* 更显著的圆角 */
-            transition: transform 0.2s ease;
-        }
-        
-        mdui-card:hover {
-            transform: translateY(-4px);
-        }
+    mdui-card {
+      padding: 0;
+      border-radius: 24px;
+      transition: transform 0.2s ease;
+    }
 
-        .section-label {
-            padding: 24px 16px 8px;
-            font-weight: 500;
-            color: var(--mdui-color-primary);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
+    mdui-card:hover {
+      transform: translateY(-4px);
+    }
 
-        .material-symbols-rounded {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-        }
-    </style>
+    .section-label {
+      padding: 24px 16px 8px;
+      font-weight: 500;
+      color: var(--mdui-color-primary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* ----- TikTok 风格视频播放器样式 ----- */
+    #video-page {
+      background: #000;
+      padding-bottom: 0;
+      /* 视频页不需要底部 padding，因为它是全屏的 */
+      overflow: hidden;
+    }
+
+    /* 滚动容器 */
+    .video-feed {
+      height: 100%;
+      /* 减去底部导航高度，如果导航是覆盖式的则设为100% */
+      width: 100%;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      /* 核心：垂直强制吸附 */
+      scroll-behavior: smooth;
+    }
+
+    /* 隐藏滚动条 */
+    .video-feed::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* 单个视频容器 */
+    .video-item {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      /* 核心：吸附到顶部 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      overflow: hidden;
+    }
+
+    /* 视频本体 */
+    .video-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* 填满屏幕 */
+      display: block;
+    }
+
+    /* 视频覆盖层 (Controls UI) */
+    .video-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 40%);
+      pointer-events: none;
+      /* 让点击穿透到 video */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 2;
+    }
+
+    .video-info {
+      margin-bottom: 20px;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      pointer-events: auto;
+    }
+
+    .video-author {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .video-desc {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+
+    /* 播放/暂停按钮居中 */
+    .play-status-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80px;
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* 右侧操作栏 */
+    .video-actions {
+      position: absolute;
+      right: 10px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 10;
+      pointer-events: auto;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+    }
+
+    .action-btn mdui-button-icon {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      margin-bottom: 4px;
+    }
+
+    /* 顶部导航栏特定样式 */
+    mdui-top-app-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+
+    /* 在视频页隐藏顶部栏 */
+    body.mode-video mdui-top-app-bar {
+      transform: translateY(-100%);
+    }
+
+    body.mode-video .page-container {
+      padding-top: 0;
+      /* 视频页不需要顶部留白 */
+    }
+
+    #home,
+    #aboutus {
+      padding-top: 64px;
+      /* 为顶部导航栏留出空间 */
+    }
+  </style>
 </head>
+
 <body>
 
-    <mdui-top-app-bar variant="center-aligned">
-          <mdui-tooltip placement="bottom-start" content="新增图文">
-        <mdui-button-icon
-        id="updates" icon="add"></mdui-button-icon>
-        </mdui-tooltip>
-        <mdui-top-app-bar-title>
-          <img style="height:20px;" src="./大哥传媒.png"/>
-        </mdui-top-app-bar-title>
-   <mdui-avatar>大</mdui-avatar> 
-    </mdui-top-app-bar>
+  <mdui-top-app-bar variant="center-aligned">
+    <mdui-tooltip placement="bottom-start" content="新增图文">
+      <mdui-button-icon id="updates" icon="add"></mdui-button-icon>
+    </mdui-tooltip>
+    <mdui-top-app-bar-title>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <img style="height:24px;" src="./大哥传媒.png" onerror="this.style.display='none'" />
+        <span>大哥传媒</span>
+      </div>
+    </mdui-top-app-bar-title>
+    <mdui-avatar style="margin-right: 12px;">大</mdui-avatar>
+  </mdui-top-app-bar>
 
-    <main id="home" class="mdui-container">
-        
-        <div class="hero-banner">
-          
-            <div class="hero-title">大哥传媒</div>
-            <p style="font-size: 1.2rem; opacity: 0.9;">分区选择</p>
-            
-            <mdui-segmented-button-group full-width selects="single" id="segmented-buttons">
-  <mdui-segmented-button value="大哥" selected>大哥</mdui-segmented-button>
-  <mdui-segmented-button value="R78">R78</mdui-segmented-button>
-  <mdui-segmented-button value="R91">R91</mdui-segmented-button>
-</mdui-segmented-button-group>
+  <main id="home" class="page-container active mdui-container">
+
+    <div class="hero-banner">
+      <div class="hero-title">大哥传媒</div>
+      <p style="font-size: 1.2rem; opacity: 0.9;">分区选择</p>
+      <mdui-segmented-button-group full-width selects="single" id="segmented-buttons">
+      </mdui-segmented-button-group>
+    </div>
+
+    <mdui-card clickable style="width: 100%;height: auto;margin-bottom:16px;">
+      <div style="padding: 16px;">
+        <p style="font-size:10px; opacity:0.6; margin:0 0 4px 0;">Ads•广告</p>
+        <h2 style="margin:0 0 8px 0;">免费送你大哥智慧厕所使用权</h2>
+        <p style="margin:0 0 16px 0;">大哥国际厕所公司</p>
+        <mdui-button href="./../" target="_blank" variant="tonal">查看详情</mdui-button>
+      </div>
+    </mdui-card>
+
+    <h2 class="section-label">内容列表</h2>
+
+    <div id="media-content" style="margin: 0 0 24px 0;">
+      <mdui-card style="width: 100%; padding: 16px;">加载中...</mdui-card>
+    </div>
+
+    <p style="margin:0;font-size:15px;text-align:center;">Copyright 2026 大哥国际传媒</p>
+    <p style="margin:0;font-size:11px;text-align:center; padding-bottom: 20px;">本站仅供您一乐，并无任何违规内容</p>
+  </main>
+
+
+  <main id="video-page" class="page-container">
+    <div class="video-feed" id="video-feed-container">
+      <div class="video-item" style="background: #121212; color: #fff;">
+        <div style="text-align:center">
+          <mdui-circular-progress></mdui-circular-progress>
+          <p>正在加载视频流...</p>
         </div>
+      </div>
+    </div>
+  </main>
 
- <mdui-card clickable style="width: 100%;height: auto;margin-bottom:-10px;">
+
+  <div id="aboutus" class="page-container mdui-container">
+    <div class="hero-banner">
+      <div class="hero-title">关于</div>
+      <mdui-card clickable style="width: 100%;height: auto; background: rgba(255,255,255,0.2);">
         <div style="padding: 16px;">
-    <p style="font-size:9px;">Ads•广告</p>
-        <h2>免费送你大哥智慧厕所使用权</h2>
-        <p>大哥国际厕所公司</p>
-        <mdui-button  href="./../" target="_blank" variant="tonal">查看详情</mdui-button>
-        
-        </div></mdui-card>
-
-  <h2  class="section-label">图文</h2>
-      
-<div id="media-content" style="margin: 24px 0;margin-top:-10px;">
-  <mdui-card clickable style="width: 100%;height: auto">
-        <div style="padding: 16px;">
-        选择分区后继续</div></mdui-card>
-</div>
-
-<p style="margin:0;font-size:15px;text-align:center;">Copyright 2026 大哥国际传媒</p>
-<p style="margin:0;font-size:11px;text-align:center;">本站仅供您一乐，并无任何违规内容</p>
-  
-    </main>
-
-        <div style="display:none;" id="aboutus">
-              <main class="mdui-container">
-        
-        <div class="hero-banner">
-          
-            <div class="hero-title">网站声明</div>
-            
-     <mdui-card clickable style="width: 100%;height: auto">
-        <div style="padding: 16px;">
-      此站点仅供娱乐，无任何违规内容。 <br> 如有疑问请联系仓库管理者。</div></mdui-card>
-       
+          此站点仅供娱乐 如有疑问请联系仓库管理者。视频资源来源于用户投稿，如有侵犯隐私，请联系仓库管理者删除
         </div>
+      </mdui-card>
+    </div>
 
-      <mdui-list style="margin-top:-70px;">
-  <mdui-list-item rounded headline-line="1" description-line="2">
-    Github 仓库
-    <span slot="description">CHEN-EXE/dagetoliet.github.io/</span>
-  </mdui-list-item>
-  <mdui-list-item rounded headline-line="1" description-line="2">
-    开发
-    <span slot="description">NaOH-Coludai</span>
-  </mdui-list-item>
-  
-  <mdui-list-item rounded headline-line="1" description-line="2">
-    界面
-    <span slot="description">
-      LOGO：SPACEDLS<br>ui：MDUI2
-    </span>
-  </mdui-list-item>
-  <mdui-list-item rounded headline-line="1" description-line="2">
-    公司（假的）
-    <span slot="description">大哥国际厕所集团 提供技术支持<br>"大哥国际，走向全城。"</span>
-  </mdui-list-item>
+    <mdui-list style="background: var(--mdui-color-surface-container-low); border-radius: 24px; margin-top: -20px;">
+      <mdui-list-item rounded headline-line="1" description-line="2">
+        Github 仓库
+        <span slot="description">CHEN-EXE/dagetoliet.github.io/</span>
+      </mdui-list-item>
+      <mdui-list-item rounded headline-line="1" description-line="2">
+        开发
+        <span slot="description">NaOH-Coludai</span>
+      </mdui-list-item>
+      <mdui-list-item rounded headline-line="1" description-line="2">
+        UI 界面
+        <span slot="description">MDUI 2 / TikTok Style</span>
+      </mdui-list-item>
+       <mdui-list-item rounded headline-line="1" description-line="2">
+       资源投稿
+        <span slot="description">SPACEDLS</span>
+      </mdui-list-item>
+    </mdui-list>
+  </div>
 
-</mdui-list>
-      
-  
-            
-<p style="margin:0;font-size:15px;text-align:center;">Copyright 2026 大哥国际传媒</p>
-<p style="margin:0;font-size:11px;text-align:center;">本站仅供您一乐，并无任何违规内容</p>
-  
-        </div>
-     
 
-    <mdui-navigation-bar value="home">
-        <mdui-navigation-bar-item value="home" onclick="changeMode('home')" icon="home">首页</mdui-navigation-bar-item>
-        <mdui-navigation-bar-item value="about" onclick="changeMode('aboutus')" icon="article">站点声明
-        </mdui-navigation-bar-item>
-    </mdui-navigation-bar>
+  <mdui-navigation-bar value="home" style="z-index: 1001;">
+    <mdui-navigation-bar-item value="home" icon="home">首页</mdui-navigation-bar-item>
+    <mdui-navigation-bar-item value="video" icon="movie">视频</mdui-navigation-bar-item>
+    <mdui-navigation-bar-item value="about" icon="info">关于</mdui-navigation-bar-item>
+  </mdui-navigation-bar>
 
-<mdui-snackbar id="snackbars" class="example-snackbar">出错啦</mdui-snackbar>
 
-<mdui-dialog
-  close-on-overlay-click
-  headline="切换板块提醒"
-  class="media-p"
-  description="您正在切换的板块可能存在逆天的内容，请注意辨别！（点遮盖部分取消操作。）"
-  icon="warning"
->
-  <mdui-button slot="action" variant="tonal">明白</mdui-button>
-</mdui-dialog>
+  <mdui-snackbar id="snackbars" class="example-snackbar"></mdui-snackbar>
 
-<mdui-dialog class="update-dialog">
-  <h2>图文新增教程</h2>
-  <p>请在<a href="https://github.com/CHEN-EXE/dagetoliet.github.io/" target="_blank" >此仓库(Github)</a>克隆一个仓库到您账号上，在克隆仓库修改/media/medias.json里面的数据后合并到主仓库即可。
-  （审核通过后）<br>
-<mdui-icon name='warning_amber'></mdui-icon>由于网络原因，使用中国移动运营商网络可能无法正常进入。请自行寻找方法解决
-<br>
-<mdui-icon name='help_outline'></mdui-icon>不会操作？请自行去百度一下。
-  </p>
-  <mdui-button slot="action" variant="tonal">关闭窗口</mdui-button>
-</mdui-dialog>
-</body>
-<script>
-  const update = document.querySelector(".update-dialog");
-  const openupdate = document.getElementById("updates");
-  const closeupdate = update.querySelector("mdui-button");
+  <mdui-dialog close-on-overlay-click headline="切换板块提醒" class="media-p" description="您正在切换的板块可能存在逆天的内容，请注意辨别！"
+    icon="warning">
+    <mdui-button slot="action" variant="tonal">明白</mdui-button>
+  </mdui-dialog>
 
-  openupdate.addEventListener("click", () => update.open = true);
-  closeupdate.addEventListener("click", () => update.open = false);
+  <mdui-dialog class="update-dialog">
+    <h2>图文新增教程</h2>
+    <p>详细教程请访问 Github 仓库。</p>
+    <mdui-button slot="action" variant="tonal">关闭</mdui-button>
+  </mdui-dialog>
 
-  const dialog1 = document.querySelector(".media-p");
-  const segmentedButtonsGroup = document.getElementById("segmented-buttons");
-  const segmentedButtons = document.querySelectorAll("mdui-segmented-button");
 
-  // 添加点击事件监听器
-  segmentedButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      dialog1.open = true;
-      dialog1.currentButton = button;
+  <script>
+    // --- 变量定义 ---
+    const navBar = document.querySelector('mdui-navigation-bar');
+    const dialog1 = document.querySelector(".media-p");
+    const videoFeed = document.getElementById('video-feed-container');
+    let videoDataLoaded = false;
+
+    // --- 导航逻辑 ---
+    navBar.addEventListener('change', (event) => {
+      const value = event.target.value;
+      changeMode(value);
     });
-  });
 
-  
-  dialog1.querySelectorAll('mdui-button[slot="action"]').forEach((button) => {
-    button.addEventListener('click', () => {
-      if (button.textContent === '明白') {
-        dialog1.open = false;
-        const currentButton = dialog1.currentButton;
-        const sectorName = currentButton.textContent.trim();
-        loadMediaContent(sectorName);
-        // 更新
-        segmentedButtons.forEach(btn => {
-          btn.removeAttribute('selected');
-          if (btn.textContent.trim() === sectorName) {
-            btn.setAttribute('selected', '');
+    function changeMode(value) {
+      // 隐藏所有页面
+      document.querySelectorAll('.page-container').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      // 暂停所有视频
+      document.querySelectorAll('video').forEach(v => v.pause());
+
+      // 移除 Body 的特殊样式类
+      document.body.classList.remove('mode-video');
+
+      if (value === 'home') {
+        document.getElementById('home').classList.add('active');
+      } else if (value === 'video') {
+        document.getElementById('video-page').classList.add('active');
+        document.body.classList.add('mode-video');
+        // 如果是第一次进入视频页，加载数据
+        if (!videoDataLoaded) loadVideoFeed();
+        // 重新激活 IntersectionObserver (如果有必要)
+      } else if (value === 'about') {
+        document.getElementById('aboutus').classList.add('active');
+      }
+    }
+
+    // --- 首页图文逻辑 ---
+    const segmentedButtonsGroup = document.getElementById("segmented-buttons");
+
+    // 绑定弹窗确认按钮
+    dialog1.querySelectorAll('mdui-button[slot="action"]').forEach((button) => {
+      button.addEventListener('click', () => {
+        if (button.textContent === '明白') {
+          dialog1.open = false;
+          const currentButton = dialog1.currentButton;
+          const sectorName = currentButton.textContent.trim();
+          loadMediaContent(sectorName);
+
+          // 手动更新选中状态
+          document.querySelectorAll('mdui-segmented-button').forEach(btn => btn.removeAttribute('selected'));
+          currentButton.setAttribute('selected', '');
+        }
+      });
+    });
+
+    function loadSectorButtons() {
+      fetch('medias.json')
+        .then(res => res.json())
+        .then(data => {
+          segmentedButtonsGroup.innerHTML = '';
+          // 过滤掉 'video_feed' 这个特殊的 key，只保留图文分区
+          const sectorNames = Object.keys(data).filter(key => key !== 'video_feed');
+
+          sectorNames.forEach((sectorName, index) => {
+            const button = document.createElement('mdui-segmented-button');
+            button.setAttribute('value', sectorName);
+            button.textContent = sectorName;
+            if (index === 0) button.setAttribute('selected', '');
+
+            button.addEventListener("click", () => {
+              dialog1.open = true;
+              dialog1.currentButton = button;
+            });
+            segmentedButtonsGroup.appendChild(button);
+          });
+
+          if (sectorNames.length > 0) loadMediaContent(sectorNames[0]);
+        })
+        .catch(err => showSnackbar('加载分区失败: ' + err));
+    }
+
+    function loadMediaContent(sectorName) {
+      fetch('medias.json')
+        .then(res => res.json())
+        .then(data => {
+          const contentDiv = document.getElementById('media-content');
+          contentDiv.innerHTML = '';
+
+          const list = data[sectorName];
+          if (list && Array.isArray(list)) {
+            list.forEach(media => {
+              const card = document.createElement('div');
+              card.innerHTML = `
+                                <mdui-card clickable style="width: 100%; margin-bottom: 16px;">
+                                    <div style="padding: 16px;">
+                                        <div style="font-size: 1.3rem; font-weight: 600;">${media.title}</div>
+                                        <div style="display:flex; align-items:center; gap:5px; opacity:0.7; margin-top:4px;">
+                                            <mdui-icon name="account_circle" style="font-size:16px"></mdui-icon>
+                                            <span style="font-size:0.9rem">${media.buttonText || '未知作者'}</span>
+                                        </div>
+                                    </div>
+                                    <mdui-collapse accordion>
+                                        <mdui-collapse-item>
+                                            <mdui-list-item slot="header" icon="article">查看详情</mdui-list-item>
+                                            <div style="padding: 0 16px 16px 56px; opacity: 0.8;">
+                                                ${media.description}
+                                            </div>
+                                        </mdui-collapse-item>
+                                    </mdui-collapse>
+                                </mdui-card>
+                            `;
+              contentDiv.appendChild(card);
+            });
           }
         });
-      }
-    });
-  });
+    }
 
-  // 页面加载时
-  window.onload = () => {
-    const firstSectorName = segmentedButtons[0].textContent.trim();
-    loadMediaContent(firstSectorName);
-    segmentedButtons[0].setAttribute('selected', '');
-  };
+    // --- 视频流核心逻辑 (TikTok Style) ---
 
-  function loadMediaContent(sectorName) {
-    fetch('medias.json')
-      .then(response => response.json())
-      .then(data => {
-        const mediaContent = document.getElementById('media-content');
-        mediaContent.innerHTML = '';
-        const sectorData = data[sectorName];
-        if (sectorData) {
-          sectorData.forEach((media) => {
-            const mediaItem = document.createElement('div');
-            mediaItem.classList.add('mdui-card', 'mdui-m-b-2');
-            mediaItem.style.borderRadius = '24px';
-            mediaItem.style.transition = 'transform 0.2s ease';
-            mediaItem.innerHTML = `
-              <mdui-card clickable style="width: 100%">
-                <div style="padding: 16px;">
-                  <div style="font-size: 1.5rem; font-weight: 500;">${media.title}</div>
-                  <p style="opacity: 0.7;">
-                    <mdui-icon style="font-size:17px;" name='account_circle'></mdui-icon> ${media.buttonText}</p>
-                </div>
-                       <mdui-collapse accordion>
-                    <mdui-collapse-item>
-                      <mdui-list-item slot="header" icon="article">图文详情</mdui-list-item>
-                      <div style="margin-left: 2.5rem">
-                        <mdui-list-item>
-                          ${media.description}
-                        </mdui-list-item>
-                      </div>
-                    </mdui-collapse-item>
-                  </mdui-collapse>
-           
-              </mdui-card>
-            `;
-            mediaContent.appendChild(mediaItem);
+    function loadVideoFeed() {
+      fetch('medias.json')
+        .then(res => res.json())
+        .then(data => {
+          videoFeed.innerHTML = ''; // 清空骨架
+          const videos = data['video_feed'] || []; // 假设 JSON key 是 video_feed
+
+          if (videos.length === 0) {
+            videoFeed.innerHTML = '<div style="color:white;text-align:center;padding-top:50%;">暂无视频</div>';
+            return;
+          }
+
+          videos.forEach((v, index) => {
+            const div = document.createElement('div');
+            div.className = 'video-item';
+            div.innerHTML = `
+                            <video src="${v.url}" loop playsinline preload="${index < 2 ? 'auto' : 'none'}" 
+                                   poster="${v.cover || ''}"></video>
+                            
+                            <mdui-icon class="play-status-icon" name="play_arrow"></mdui-icon>
+
+                            <div class="video-overlay">
+                                <div class="video-info">
+                                    <div class="video-author">
+                                        <mdui-avatar src="${v.avatar}" style="width:32px;height:32px">U</mdui-avatar>
+                                        @${v.author}
+                                    </div>
+                                    <div class="video-desc">${v.title}<br>${v.description || ''}</div>
+                                </div>
+                            </div>
+
+                            <div class="video-actions">
+                                <div class="action-btn">
+                                    <mdui-button-icon icon="favorite_border"></mdui-button-icon>
+                                    <span style="font-size:12px">赞</span>
+                                </div>
+                                <div class="action-btn">
+                                    <mdui-button-icon icon="chat_bubble_outline"></mdui-button-icon>
+                                    <span style="font-size:12px">评</span>
+                                </div>
+                                <div class="action-btn">
+                                    <mdui-button-icon icon="share"></mdui-button-icon>
+                                    <span style="font-size:12px">享</span>
+                                </div>
+                            </div>
+                        `;
+
+            // 点击播放/暂停
+            const videoEl = div.querySelector('video');
+            const iconEl = div.querySelector('.play-status-icon');
+
+            div.addEventListener('click', () => {
+              if (videoEl.paused) {
+                videoEl.play();
+                iconEl.style.opacity = '0'; // 播放时隐藏图标
+              } else {
+                videoEl.pause();
+                iconEl.style.opacity = '1'; // 暂停时显示图标
+                iconEl.setAttribute('name', 'play_arrow');
+              }
+            });
+
+            videoFeed.appendChild(div);
           });
-        } else {
-          const snackbar = document.querySelector(".example-snackbar");
-          snackbar.open = true;
-          document.getElementById("snackbars").textContent = `没找到 ${sectorName} 分区`;
-          console.warn(`No data found for sector: ${sectorName}`);
-        }
-      })
-      .catch(error => {
-        console.error('Error loading media content:', error);
-        const snackbar = document.querySelector(".example-snackbar");
-        snackbar.open = true;
-        document.getElementById("snackbars").textContent = `加载失败: ${error}`;
-      });
-  }
 
-  function changeMode(value) {
-    if (value === 'home') {
-      document.getElementById(value).style.display = "block";
-      document.getElementById('aboutus').style.display = "none";
-    }
-    if (value === 'aboutus') {
-      document.getElementById(value).style.display = "block";
-      document.getElementById('home').style.display = "none";
-    }
-  }
-  
-  function loadSectorButtons() {
-  fetch('medias.json')
-    .then(response => response.json())
-    .then(data => {
-      const segmentedButtonsGroup = document.getElementById("segmented-buttons");
-      segmentedButtonsGroup.innerHTML = ''; // 清空
-      const sectorNames = Object.keys(data);
-      sectorNames.forEach((sectorName, index) => {
-        const button = document.createElement('mdui-segmented-button');
-        button.setAttribute('value', sectorName);
-        if (index === 0) {
-          button.setAttribute('selected', '');
-        }
-        button.textContent = sectorName;
-        button.addEventListener("click", () => {
-          dialog1.open = true;
-          dialog1.currentButton = button;
+          setupVideoObserver();
+          videoDataLoaded = true;
+        })
+        .catch(err => {
+          console.error(err);
+          showSnackbar('视频加载失败');
         });
-        segmentedButtonsGroup.appendChild(button);
+    }
+
+    // Intersection Observer: 自动播放当前可视区域的视频，暂停其他的
+    function setupVideoObserver() {
+      const options = {
+        root: document.getElementById('video-feed-container'),
+        rootMargin: '0px',
+        threshold: 0.6 // 视频展示超过 60% 时触发
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const video = entry.target.querySelector('video');
+          const icon = entry.target.querySelector('.play-status-icon');
+
+          if (entry.isIntersecting) {
+            // 进入视野：播放
+            video.play().catch(e => console.log("需用户交互才能播放音频", e));
+            icon.style.opacity = '0';
+          } else {
+            // 离开视野：暂停并重置时间
+            video.pause();
+            video.currentTime = 0;
+          }
+        });
+      }, options);
+
+      document.querySelectorAll('.video-item').forEach(item => {
+        observer.observe(item);
       });
-      // 首次
-      if (sectorNames.length > 0) {
-        loadMediaContent(sectorNames[0]);
-      }
-    })
-    .catch(error => {
-      console.error('Error loading sector buttons:', error);
-    });
-}
+    }
 
-// 动态数据
-window.onload = () => {
-  loadSectorButtons();
-};
-</script>
+    // --- 工具函数 ---
+    function showSnackbar(msg) {
+      const sb = document.getElementById('snackbars');
+      sb.innerHTML = msg;
+      sb.open = true;
+    }
+
+    const updateDialog = document.querySelector(".update-dialog");
+    document.getElementById("updates").addEventListener("click", () => updateDialog.open = true);
+    updateDialog.querySelector("mdui-button").addEventListener("click", () => updateDialog.open = false);
+
+    // 初始化
+    window.onload = () => {
+      loadSectorButtons();
+    };
+
+  </script>
+</body>
+
 </html>
-
