@@ -1,0 +1,361 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>大哥国际厕所集团应聘在线填报系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+<style>
+    :root {
+        --primary-blue: rgb(1, 126, 184);
+        --border-color: #e0e0e0;
+        --transition-speed: 0.3s;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: 'Inter', 'PingFang SC', sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    header {
+        z-index: 2000;
+        padding: 0 15px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #000;
+        border-bottom: 1px solid #333;
+        box-sizing: border-box;
+    }
+
+    .header-content {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .menu-toggle {
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* 移动端菜单层 */
+    .mobile-nav {
+        position: fixed;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        padding: 80px 20px 30px;
+        box-sizing: border-box;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1500;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .mobile-nav.active {
+        top: 0;
+    }
+
+    .mobile-nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        padding: 10px;
+        border-bottom: 1px solid #222;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .baike-background {
+        margin-top: 60px;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://cdn.pixabay.com/photo/2013/08/09/05/58/kuala-lumpur-170985_1280.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 250px;
+        position: relative;
+    }
+
+    .play_btn {
+        outline: none;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: var(--transition-speed);
+    }
+
+    .play_btn:hover {
+        background-color: var(--primary-blue);
+        transform: scale(1.1);
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 20px 0 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .grid-menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 12px;
+    }
+
+    .regeng-cards {
+        padding: 15px 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        background: #fff;
+        text-align: center;
+        transition: all var(--transition-speed);
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .regeng-cards:hover {
+        background-color: var(--primary-blue);
+        color: #fff;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(1, 126, 184, 0.3);
+    }
+
+    .regeng-cards svg {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+        fill: currentColor;
+    }
+
+    .member-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .footer {
+        text-align: center;
+        padding: 40px 20px;
+        color: #999;
+        font-size: 13px;
+    }
+
+    .footer a {
+        color: var(--primary-blue);
+        margin: 0 10px;
+        text-decoration: none;
+    }
+
+
+    .otto1dialog {
+        border: none;
+        border-radius: 20px;
+        padding: 20px;
+        max-width: 90vw;
+        width: 400px;
+    }
+
+    @media (min-width: 768px) {
+        .baike-background {
+            height: 350px;
+        }
+
+        .grid-menu {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
+
+<body>
+    <style type="text/css">
+    </style>
+
+
+
+
+
+
+
+
+    <div class="container">
+        <h1 style="text-align: center; margin-top: 20px;">大哥国际厕所集团应聘在线填报系统</h1>
+
+        <div id="otto6"
+            style="line-height:1.8; padding:15px; background:#fff; border-radius:12px; margin-bottom:20px; margin-top: 20px;">
+            欢迎申请我们的岗位！请认真填写下方信息。<br>
+            * 所有标有红色星号(*)的字段为必填项<br>
+            * 请确保提供的联系方式正确，方便我们与您联系<br>
+            * 提交后我们将在5个工作日内进行审核<br><br>
+            感谢您的关注和支持！
+        </div>
+
+        <form id="recruitmentForm" style="background:#fff; padding:20px; border-radius:12px; margin-bottom:20px;">
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">* 姓名:</label><br>
+                <input type="text" id="name" placeholder="请输入您的真实姓名"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box;"
+                    required />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">* 年龄:</label><br>
+                <input type="number" id="age" placeholder="请输入您的年龄"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box;"
+                    required />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">* 性别:</label><br>
+                <select id="gender"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box;"
+                    required>
+                    <option value="">请选择</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                    <option value="其他">其他</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">* 邮箱:</label><br>
+                <input type="email" id="email" placeholder="请输入您的邮箱地址"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box;"
+                    required />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">* 电话:</label><br>
+                <input type="tel" id="phone" placeholder="请输入您的联系电话"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box;"
+                    required />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">* 应聘岗位:</label><br>
+                <select id="position"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box;"
+                    required>
+                    <option value="">请选择</option>
+                    <option value="产品经理">产品经理</option>
+                    <option value="技术工程师">技术工程师</option>
+                    <option value="市场营销">市场营销</option>
+                    <option value="人力资源">人力资源</option>
+                    <option value="销售代表">销售代表</option>
+                    <option value="其他">其他</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">* 工作经历:</label><br>
+                <textarea id="experience" placeholder="请简述您的工作经历（至少20字）"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box; min-height: 80px;"
+                    required></textarea>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">* 自我介绍:</label><br>
+                <textarea id="introduction" placeholder="请简述您为什么想加入我们公司（至少30字）"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box; min-height: 100px;"
+                    required></textarea>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="button" onclick="submitForm()"
+                    style="background-color: var(--primary-blue); color: white; padding: 12px 40px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold;">提交</button>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+    <script>
+        function submitForm() {
+            // 获取所有表单字段
+            const name = document.getElementById('name').value.trim();
+            const age = document.getElementById('age').value.trim();
+            const gender = document.getElementById('gender').value;
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const position = document.getElementById('position').value;
+            const experience = document.getElementById('experience').value.trim();
+            const introduction = document.getElementById('introduction').value.trim();
+
+            // 验证所有字段是否填写
+            if (!name || !age || !gender || !email || !phone || !position || !experience || !introduction) {
+                alert('请填写所有必填项！');
+                return;
+            }
+
+            // 验证邮箱格式
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('请输入有效的邮箱地址！');
+                return;
+            }
+
+            // 验证电话格式（简单验证）
+            const phoneRegex = /^1[3-9]\d{9}$|^0\d{2,3}-?\d{7,8}$/;
+            if (!phoneRegex.test(phone)) {
+                alert('请输入有效的电话号码！');
+                return;
+            }
+
+            // 验证工作经历长度
+            if (experience.length < 20) {
+                alert('工作经历至少需要20个字！');
+                return;
+            }
+
+            // 验证自我介绍长度
+            if (introduction.length < 30) {
+                alert('自我介绍至少需要30个字！');
+                return;
+            }
+
+            // 所有验证通过，显示完成对话框
+            alert('填写完成！');
+
+            // 可以在这里添加后续操作，比如清空表单
+            // document.getElementById('recruitmentForm').reset();
+        }
+    </script>
+</body>
+
+</html>
