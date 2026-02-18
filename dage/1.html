@@ -1,4 +1,3 @@
-<!-- 大哥国际厕所集团某员工开发 BY SB666  老板不是人  -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -7,262 +6,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>大哥同志简历</title>
 
-    <!--新年大哥牛逼-->
-    <meta charset="utf-8">
-    <div class="deng-box2">
-        <div class="deng">
-            <div class="xian">
-            </div>
-            <div class="deng-a">
-                <div class="deng-b">
-                    <div class="deng-t">大</div>
-                </div>
-            </div>
-            <div class="shui shui-a">
-                <div class="shui-c">
-                </div>
-                <div class="shui-b"></div>
-            </div>
-        </div>
-    </div>
-    <div class="deng-box3">
-        <div class="deng">
-            <div class="xian">
-            </div>
-            <div class="deng-a">
-                <div class="deng-b">
-                    <div class="deng-t">牛</div>
-                </div>
-            </div>
-            <div class="shui shui-a">
-                <div class="shui-c"></div>
-                <div class="shui-b">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="deng-box1">
-        <div class="deng">
-            <div class="xian">
-            </div>
-            <div class="deng-a">
-                <div class="deng-b">
-                    <div class="deng-t">逼</div>
-                </div>
-            </div>
-            <div class="shui shui-a">
-                <div class="shui-c"></div>
-                <div class="shui-b"></div>
-            </div>
-        </div>
-    </div>
-    <div class="deng-box">
-        <div class="deng">
-            <div class="xian">
-            </div>
-            <div class="deng-a">
-                <div class="deng-b">
-                    <div class="deng-t">哥</div>
-                </div>
-            </div>
-            <div class="shui shui-a">
-                <div class="shui-c">
-                </div>
-                <div class="shui-b"></div>
-            </div>
-        </div>
-    </div>
-    <style type="text/css">
-        .deng-box {
-            position: fixed;
-            top: -40px;
-            right: 150px;
-            z-index: 9999;
-            pointer-events: none;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .deng-box1 {
-            position: fixed;
-            top: -30px;
-            right: 10px;
-            z-index: 9999;
-            pointer-events: none
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
         }
 
-        .deng-box2 {
-            position: fixed;
-            top: -40px;
-            left: 150px;
-            z-index: 9999;
-            pointer-events: none
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            min-height: 100vh;
         }
 
-        .deng-box3 {
-            position: fixed;
-            top: -30px;
-            left: 10px;
-            z-index: 9999;
-            pointer-events: none
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
         }
 
-        .deng-box1 .deng,
-        .deng-box3 .deng {
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar .name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .sidebar .title {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .contact-info {
+            text-align: left;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .contact-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 14px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-left: 4px solid #667eea;
+            background: #fafafa;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline {
             position: relative;
-            width: 120px;
-            height: 90px;
-            margin: 50px;
-            background: #d8000f;
-            background: rgba(216, 0, 15, .8);
-            border-radius: 50% 50%;
-            -webkit-transform-origin: 50% -100px;
-            -webkit-animation: swing 5s infinite ease-in-out;
-            box-shadow: -5px 5px 30px 4px #fc903d
+            padding-left: 30px;
         }
 
-        .deng {
-            position: relative;
-            width: 120px;
-            height: 90px;
-            margin: 50px;
-            background: #d8000f;
-            background: rgba(216, 0, 15, .8);
-            border-radius: 50% 50%;
-            -webkit-transform-origin: 50% -100px;
-            -webkit-animation: swing 3s infinite ease-in-out;
-            box-shadow: -5px 5px 50px 4px #fa6c00
-        }
-
-        .deng-a {
-            width: 100px;
-            height: 90px;
-            background: #d8000f;
-            background: rgba(216, 0, 15, .1);
-            margin: 12px 8px 8px 8px;
-            border-radius: 50% 50%;
-            border: 2px solid #dc8f03
-        }
-
-        .deng-b {
-            width: 45px;
-            height: 90px;
-            background: #d8000f;
-            background: rgba(216, 0, 15, .1);
-            margin: -4px 8px 8px 26px;
-            border-radius: 50% 50%;
-            border: 2px solid #dc8f03
-        }
-
-        .xian {
+        .timeline::before {
+            content: '';
             position: absolute;
-            top: -20px;
-            left: 60px;
+            left: 0;
+            top: 0;
+            bottom: 0;
             width: 2px;
-            height: 20px;
-            background: #dc8f03
+            background: #667eea;
         }
 
-        .shui-a {
+        .timeline-item {
             position: relative;
-            width: 5px;
-            height: 20px;
-            margin: -5px 0 0 59px;
-            -webkit-animation: swing 4s infinite ease-in-out;
-            -webkit-transform-origin: 50% -45px;
-            background: orange;
-            border-radius: 0 0 5px 5px
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .shui-b {
+        .timeline-item::before {
+            content: '';
             position: absolute;
-            top: 14px;
-            left: -2px;
-            width: 10px;
-            height: 10px;
-            background: #dc8f03;
-            border-radius: 50%
-        }
-
-        .shui-c {
-            position: absolute;
-            top: 18px;
-            left: -2px;
-            width: 10px;
-            height: 35px;
-            background: orange;
-            border-radius: 0 0 0 5px
-        }
-
-        .deng:before {
-            position: absolute;
-            top: -7px;
-            left: 29px;
+            left: -36px;
+            top: 25px;
+            width: 12px;
             height: 12px;
-            width: 60px;
-            content: " ";
-            display: block;
-            z-index: 999;
-            border-radius: 5px 5px 0 0;
-            border: solid 1px #dc8f03;
-            background: orange;
-            background: linear-gradient(to right, #dc8f03, orange, #dc8f03, orange, #dc8f03)
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
         }
 
-        .deng:after {
-            position: absolute;
-            bottom: -7px;
-            left: 10px;
-            height: 12px;
-            width: 60px;
-            content: " ";
-            display: block;
-            margin-left: 20px;
-            border-radius: 0 0 5px 5px;
-            border: solid 1px #dc8f03;
-            background: orange;
-            background: linear-gradient(to right, #dc8f03, orange, #dc8f03, orange, #dc8f03)
+        .timeline-date {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        .deng-t {
-            font-family: 黑体, Arial, Lucida Grande, Tahoma, sans-serif;
-            font-size: 3.2rem;
-            color: #dc8f03;
-            font-weight: 700;
-            line-height: 85px;
-            text-align: center
+        .project-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .night .deng-box,
-        .night .deng-box1,
-        .night .deng-t {
-            background: 0 0 !important
-        }
-
-        @-moz-keyframes swing {
-            0% {
-                -moz-transform: rotate(-10deg)
-            }
-
-            50% {
-                -moz-transform: rotate(10deg)
-            }
-
-            100% {
-                -moz-transform: rotate(-10deg)
-            }
-        }
-
-        @-webkit-keyframes swing {
-            0% {
-                -webkit-transform: rotate(-10deg)
-            }
-
-            50% {
-                -webkit-transform: rotate(10deg)
-            }
-
-            100% {
-                -webkit-transform: rotate(-10deg)
-            }
+        .project-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
     </style>
 
@@ -276,19 +207,9 @@
 
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background: #000;
             min-height: 100vh;
             padding: 20px;
-            /* hhhhhhhhh */
-            filter: grayscale(100%);
-            -webkit-filter: grayscale(100%);
-            /* 兼容 Safari 和旧版浏览器 */
-            -moz-filter: grayscale(100%);
-            /* 兼容 Firefox */
-            -ms-filter: grayscale(100%);
-            /* 兼容 IE */
-            -o-filter: grayscale(100%);
-            /* 兼容 Opera */
 
             color: #fff;
             overflow-x: hidden;
@@ -611,120 +532,401 @@
     <base target="_blank">
 </head>
 
-<body>
-
-    <div class="header">
-        <img src="" alt="入照片" class="profile-img">
-        <h1 id="username" class="name">五群臣</h1>
-        <p class="title">大哥国际厕所集团老板</p>
-    </div>
-    <br>
+<body id="xiasren">
 
 
-    <div class="section">
-        <h2 class="section-title">个人信息</h2>
-        <div class="info-grid">
-            <div class="info-item">
-                <div class="info-label">姓</div>
-                <div>武</div>
+    <!--新年大哥牛逼-->
+    <meta charset="utf-8">
+    <div class="deng-box2">
+        <div class="deng">
+            <div class="xian">
             </div>
-            <div class="info-item">
-                <div class="info-label">年龄</div>
-                <div>滚木</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">学历</div>
-                <div>初中</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">专业</div>
-                <div>粪便排出供应技术</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">工作年限</div>
-                <div>1145141919810年</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">期望职位</div>
-                <div>公司法人</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">技能特长</h2>
-        <div class="skill-list">
-            <span class="skill-tag">吃饭</span>
-            <span class="skill-tag">睡觉</span>
-            <span class="skill-tag">拉屎</span>
-            <span class="skill-tag">洗澡</span>
-            <span class="skill-tag">说话</span>
-            <span class="skill-tag">公共粪便排出供应技术</span>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">工作经历</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date"> 至今</div>
-                <h3>专研公共粪便排出供应技术</h3>
-                <p>简称公共厕所</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">项目经验</h2>
-        <div class="project-card">
-            <div class="project-title">Toliet</div>
-            <p>技术栈：H T M L</p>
-            <p>项目描述：公共厕所拉屎系统</p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">联系方式</h2>
-        <div class="contact-info">
-            <div class="contact-item">
-                <div class="contact-icon">📱</div>
-                <div>
-                    <div class="info-label">电话</div>
-                    <div>-</div>
+            <div class="deng-a">
+                <div class="deng-b">
+                    <div class="deng-t">牛</div>
                 </div>
             </div>
-            <div class="contact-item">
-                <div class="contact-icon">📧</div>
-                <div>
-                    <div class="info-label">邮箱</div>
-                    <div>-</div>
+            <div class="shui shui-a">
+                <div class="shui-c">
                 </div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">📍</div>
-                <div>
-                    <div class="info-label">地址</div>
-                    <div>不告诉你</div>
-                </div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">💼</div>
-                <div>
-                    <div class="info-label">Facebook</div>
-                </div>
-                <div>不告诉你</div>
+                <div class="shui-b"></div>
             </div>
         </div>
     </div>
+    <div class="deng-box3">
+        <div class="deng">
+            <div class="xian">
+            </div>
+            <div class="deng-a">
+                <div class="deng-b">
+                    <div class="deng-t">大</div>
+                </div>
+            </div>
+            <div class="shui shui-a">
+                <div class="shui-c"></div>
+                <div class="shui-b">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="deng-box1">
+        <div class="deng">
+            <div class="xian">
+            </div>
+            <div class="deng-a">
+                <div class="deng-b">
+                    <div class="deng-t">哥</div>
+                </div>
+            </div>
+            <div class="shui shui-a">
+                <div class="shui-c"></div>
+                <div class="shui-b"></div>
+            </div>
+        </div>
+    </div>
+    <div class="deng-box">
+        <div class="deng">
+            <div class="xian">
+            </div>
+            <div class="deng-a">
+                <div class="deng-b">
+                    <div class="deng-t">逼</div>
+                </div>
+            </div>
+            <div class="shui shui-a">
+                <div class="shui-c">
+                </div>
+                <div class="shui-b"></div>
+            </div>
+        </div>
     </div>
 
-    <p style="text-align:center;">仅供娱乐请勿当真，上当别怪我</p>
+
+    <style type="text/css">
+        .deng-box {
+            position: fixed;
+            top: -40px;
+            right: 150px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .deng-box1 {
+            position: fixed;
+            top: -30px;
+            right: 10px;
+            z-index: 9999;
+            pointer-events: none
+        }
+
+        .deng-box2 {
+            position: fixed;
+            top: -40px;
+            left: 150px;
+            z-index: 9999;
+            pointer-events: none
+        }
+
+        .deng-box3 {
+            position: fixed;
+            top: -30px;
+            left: 10px;
+            z-index: 9999;
+            pointer-events: none
+        }
+
+        .deng-box1 .deng,
+        .deng-box3 .deng {
+            position: relative;
+            width: 120px;
+            height: 90px;
+            margin: 50px;
+            background: #d8000f;
+            background: rgba(216, 0, 15, .8);
+            border-radius: 50% 50%;
+            -webkit-transform-origin: 50% -100px;
+            -webkit-animation: swing 5s infinite ease-in-out;
+            box-shadow: -5px 5px 30px 4px #fc903d
+        }
+
+        .deng {
+            position: relative;
+            width: 120px;
+            height: 90px;
+            margin: 50px;
+            background: #d8000f;
+            background: rgba(216, 0, 15, .8);
+            border-radius: 50% 50%;
+            -webkit-transform-origin: 50% -100px;
+            -webkit-animation: swing 3s infinite ease-in-out;
+            box-shadow: -5px 5px 50px 4px #fa6c00
+        }
+
+        .deng-a {
+            width: 100px;
+            height: 90px;
+            background: #d8000f;
+            background: rgba(216, 0, 15, .1);
+            margin: 12px 8px 8px 8px;
+            border-radius: 50% 50%;
+            border: 2px solid #dc8f03
+        }
+
+        .deng-b {
+            width: 45px;
+            height: 90px;
+            background: #d8000f;
+            background: rgba(216, 0, 15, .1);
+            margin: -4px 8px 8px 26px;
+            border-radius: 50% 50%;
+            border: 2px solid #dc8f03
+        }
+
+        .xian {
+            position: absolute;
+            top: -20px;
+            left: 60px;
+            width: 2px;
+            height: 20px;
+            background: #dc8f03
+        }
+
+        .shui-a {
+            position: relative;
+            width: 5px;
+            height: 20px;
+            margin: -5px 0 0 59px;
+            -webkit-animation: swing 4s infinite ease-in-out;
+            -webkit-transform-origin: 50% -45px;
+            background: orange;
+            border-radius: 0 0 5px 5px
+        }
+
+        .shui-b {
+            position: absolute;
+            top: 14px;
+            left: -2px;
+            width: 10px;
+            height: 10px;
+            background: #dc8f03;
+            border-radius: 50%
+        }
+
+        .shui-c {
+            position: absolute;
+            top: 18px;
+            left: -2px;
+            width: 10px;
+            height: 35px;
+            background: orange;
+            border-radius: 0 0 0 5px
+        }
+
+        .deng:before {
+            position: absolute;
+            top: -7px;
+            left: 29px;
+            height: 12px;
+            width: 60px;
+            content: " ";
+            display: block;
+            z-index: 999;
+            border-radius: 5px 5px 0 0;
+            border: solid 1px #dc8f03;
+            background: orange;
+            background: linear-gradient(to right, #dc8f03, orange, #dc8f03, orange, #dc8f03)
+        }
+
+        .deng:after {
+            position: absolute;
+            bottom: -7px;
+            left: 10px;
+            height: 12px;
+            width: 60px;
+            content: " ";
+            display: block;
+            margin-left: 20px;
+            border-radius: 0 0 5px 5px;
+            border: solid 1px #dc8f03;
+            background: orange;
+            background: linear-gradient(to right, #dc8f03, orange, #dc8f03, orange, #dc8f03)
+        }
+
+        .deng-t {
+            font-family: 黑体, Arial, Lucida Grande, Tahoma, sans-serif;
+            font-size: 3.2rem;
+            color: #dc8f03;
+            font-weight: 700;
+            line-height: 85px;
+            text-align: center
+        }
+
+        .night .deng-box,
+        .night .deng-box1,
+        .night .deng-t {
+            background: 0 0 !important
+        }
+
+        @-moz-keyframes swing {
+            0% {
+                -moz-transform: rotate(-10deg)
+            }
+
+            50% {
+                -moz-transform: rotate(10deg)
+            }
+
+            100% {
+                -moz-transform: rotate(-10deg)
+            }
+        }
+
+        @-webkit-keyframes swing {
+            0% {
+                -webkit-transform: rotate(-10deg)
+            }
+
+            50% {
+                -webkit-transform: rotate(10deg)
+            }
+
+            100% {
+                -webkit-transform: rotate(-10deg)
+            }
+        }
+    </style>
+
+    <div class="container">
+        <div class="sidebar">
+            <button id="modes" onclick="toggleMode()" style="
+    padding: 6px;
+    margin-bottom: 20px;
+">切换到冥间模式</button><br>
+            <img src="./dage.jpg" alt="入照片" class="profile-img">
+            <h1 id="username" class="name">五群臣</h1>
+            <p class="title">大哥国际厕所集团老板</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div>
+                        <div class="info-label">电话</div>
+                        <div>7891</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <div class="info-label">邮箱</div>
+                        <div>wcdx@of.edu.kg</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <div class="info-label">地址</div>
+                        <div>中国</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="#ffffff"
+                                d="M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02" />
+                        </svg>
+
+                    </div>
+                    <div>
+                        <div class="info-label">Facebook</div>
+                        <div id="username2">武全成</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="section">
+             <h2 class="section-title">神人信息</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">姓</div>
+                        <div>武</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">年龄</div>
+                        <div>1500+100*100-200</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">学历</div>
+                        <div>初中</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">专业</div>
+                        <div>没有</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">工作年限</div>
+                        <div>Null 年</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">期望职位</div>
+                        <div>法人</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">技能特长</h2>
+                <div class="skill-list">
+                    <span class="skill-tag">活着</span>
+                       <span class="skill-tag">Roblox</span>
+                          <span class="skill-tag">G&B</span>
+                             <span class="skill-tag">看篇</span>
+                       </div>
+              <br> 多么诱人呐，可是我却不知道你晚上在哪里😍😍😍
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">工作经历</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date"> 公元 两千零二十五年</div>
+                        <h3>专研公共粪便排出供应技术</h3>
+                        <p>简称公共厕所</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date"> 公元 两千零二十六年</div>
+                        <h3>多领域</h3>
+                        <p>公共厕所收费，唱片音乐，大是哥，酒店文化，餐饮，教培行业，传媒，集团，游戏，QuanChengUI，银行，股票，大哥岛政府运营，大哥全成网络科技，全成移动。</p>
+                    </div>
+                         <div class="timeline-item">
+                        <div class="timeline-date"> 将来</div>
+                        <h3>？</h3>
+                        <p style="text-decoration: line-through">漂唱</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">项目经验</h2>
+                <div class="project-card">
+                    <div class="project-title">Toliet</div>
+                    <p>技术栈：D A G E N B</p>
+                    <p>项目描述：Null</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">吓人吗</h2>
+                实在不好意思吓到你们，这是我做的恶搞朋友的站点，千万别在晚上看不然会害怕到时候别追究我责任。
+                想正常看？点切换模式就可以了
+            </div>
+            <p>Powered By 大哥做的冥间简历</p>
+        </div>
+    </div>
 
     <script>
-        // 改名器
         const params = new URLSearchParams(window.location.search);
         document.getElementById("username").textContent = params.get('dagename') || "大 哥";
-        // 添加滚动动画效果
+         document.getElementById("username2").textContent = params.get('dagename') || "大 哥";
         const sections = document.querySelectorAll('.section');
 
         const observerOptions = {
@@ -748,7 +950,6 @@
             observer.observe(section);
         });
 
-        // 添加技能标签点击效果
         const skillTags = document.querySelectorAll('.skill-tag');
         skillTags.forEach(tag => {
             tag.addEventListener('click', function () {
@@ -759,7 +960,6 @@
             });
         });
 
-        // 添加项目卡片悬停效果
         const projectCards = document.querySelectorAll('.project-card');
         projectCards.forEach(card => {
             card.addEventListener('mouseenter', function () {
@@ -770,6 +970,40 @@
                 this.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
             });
         });
+
+        const results = { value: 0 };
+        function toggleMode() {
+            if (results.value == 0) {
+             
+                if (confirm('是否要切换到冥间模式？\n吓死你我可不管')) {
+                    document.getElementById('modes').textContent = '切换到正常模式';
+                    document.getElementById('xiasren').style = `
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+        `;
+                    results.value = 1;
+                }
+
+
+            } else if (results.value == 1) {
+                document.getElementById('modes').textContent = '切换到冥间模式';
+                document.getElementById('xiasren').style = `
+            filter: none;
+            -webkit-filter: none;
+            -moz-filter: none;
+            -ms-filter: none;
+            -o-filter: none;
+        `;
+                results.value = 0;
+            }
+        }
+
+
+
+
     </script>
 </body>
 
