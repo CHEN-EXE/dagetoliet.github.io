@@ -3,6 +3,8 @@
 
 > [!WARNING]
 > 本项目仓库仅供娱乐性质和站点练习，请勿过度解读！
+# img.Assets
+![0](/restaurant/dsg2.webp "pn")
 
 https://chen-exe.github.io/dagetoliet.github.io/
 
