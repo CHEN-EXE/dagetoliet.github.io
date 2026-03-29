@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全成大哥岛馆政府 | WuQuanCHengSGv</title>
+    <style>
+        /* --- 基础设置 --- */
+        :root {
+            --gov-blue: #003366; /* 经典的政府深蓝 */
+            --gov-dark: #1a1a1a;
+            --gov-red: #b31942;
+            --gov-bg: #f0f0f0;
+            --text-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gov-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* --- 顶部通告栏 (仿USWDS Banner) --- */
+        .usa-banner {
+            background-color: #f0f0f0;
+            padding: 4px 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .usa-banner-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 16px;
+            height: 11px;
+            background: linear-gradient(to bottom, #b31942 50%, #fff 50%);
+            display: inline-block;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+
+        .usa-banner-text {
+            color: #555;
+        }
+
+        /* --- 头部与导航 --- */
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gov-blue);
+        }
+
+        .logo-seal {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gov-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 24px;
+            margin-right: 15px;
+            border: 3px solid var(--gov-red);
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .site-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- 导航菜单 --- */
+        .nav-container {
+            background-color: var(--gov-blue);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 25px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #004488;
+            text-decoration: underline;
+        }
+
+        /* 下拉菜单 */
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+            border-top: 4px solid var(--gov-red);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--gov-blue);
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown a:hover {
+            background-color: #f9f9f9;
+            color: var(--gov-red);
+        }
+
+        .nav-item:hover .dropdown {
+            display: block;
+        }
+
+        /* --- Hero 区域 --- */
+        .hero {
+            background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.8)), 
+                        url("./img/c1.png") no-repeat center center/cover;
+            /* 如果图片加载不出，显示纯色 */
+            background-color: var(--gov-blue); 
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .search-box {
+            display: inline-flex;
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            padding: 2px;
+        }
+
+        .search-box input {
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            width: 300px;
+            outline: none;
+        }
+
+        .search-box button {
+            background-color: var(--gov-red);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- 内容区域 --- */
+        .main-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: 4px solid var(--gov-blue);
+            padding: 25px;
+            border-radius: 4px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--gov-blue);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .btn-link {
+            color: var(--gov-blue);
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --- 页脚 --- */
+        footer {
+            background-color: #e6e6e6;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid #ccc;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            color: #444;
+        }
+        
+        .disclaimer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #888;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            .dropdown {
+                position: static;
+                border-top: none;
+                background-color: #002244;
+            }
+            .dropdown a {
+                color: #ccc;
+                padding-left: 40px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .search-box input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+       <!--新年大哥牛逼-->
+<meta charset="utf-8">
+<div class="deng-box2">
+<div class="deng">
+<div class="xian">
+</div>
+<div class="deng-a">
+<div class="deng-b">
+<div class="deng-t">哥</div>
+</div>
+</div>
+<div class="shui shui-a">
+<div class="shui-c">
+</div>
+<div class="shui-b"></div>
+</div>
+</div>
+</div>
+<div class="deng-box3">
+<div class="deng">
+<div class="xian">
+</div>
+<div class="deng-a">
+<div class="deng-b">
+<div class="deng-t">大</div>
+</div>
+</div>
+<div class="shui shui-a">
+<div class="shui-c"></div>
+<div class="shui-b">
+</div>
+</div>
+</div>
+</div>
+<div class="deng-box1">
+<div class="deng">
+<div class="xian">
+</div>
+<div class="deng-a">
+<div class="deng-b">
+<div class="deng-t">逼</div>
+</div>
+</div>
+<div class="shui shui-a">
+<div class="shui-c"></div>
+<div class="shui-b"></div>
+</div>
+</div>
+</div>
+<div class="deng-box">
+<div class="deng">
+<div class="xian">
+</div>
+<div class="deng-a">
+<div class="deng-b">
+<div class="deng-t">牛</div>
+</div>
+</div>
+<div class="shui shui-a">
+<div class="shui-c">
+</div>
+<div class="shui-b"></div>
+</div>
+</div>
+</div>
+<style type="text/css">
+.deng-box {
+position: fixed;
+top: -40px;
+right: 150px;
+z-index: 9999;
+pointer-events: none;
+}
+.deng-box1 {
+position: fixed;
+top: -30px;
+right: 10px;
+z-index: 9999;
+pointer-events: none
+}
+
+.deng-box2 {
+position: fixed;
+top: -40px;
+left: 150px;
+z-index: 9999;
+pointer-events: none
+}
+.deng-box3 {
+position: fixed;
+top: -30px;
+left: 10px;
+z-index: 9999;
+pointer-events: none
+}
+.deng-box1 .deng,
+.deng-box3 .deng {
+position: relative;
+width: 120px;
+height: 90px;
+margin: 50px;
+background: #d8000f;
+background: rgba(216, 0, 15, .8);
+border-radius: 50% 50%;
+-webkit-transform-origin: 50% -100px;
+-webkit-animation: swing 5s infinite ease-in-out;
+box-shadow: -5px 5px 30px 4px #fc903d
+}
+.deng {
+position: relative;
+width: 120px;
+height: 90px;
+margin: 50px;
+background: #d8000f;
+background: rgba(216, 0, 15, .8);
+border-radius: 50% 50%;
+-webkit-transform-origin: 50% -100px;
+-webkit-animation: swing 3s infinite ease-in-out;
+box-shadow: -5px 5px 50px 4px #fa6c00
+}
+.deng-a {
+width: 100px;
+height: 90px;
+background: #d8000f;
+background: rgba(216, 0, 15, .1);
+margin: 12px 8px 8px 8px;
+border-radius: 50% 50%;
+border: 2px solid #dc8f03
+}
+.deng-b {
+width: 45px;
+height: 90px;
+background: #d8000f;
+background: rgba(216, 0, 15, .1);
+margin: -4px 8px 8px 26px;
+border-radius: 50% 50%;
+border: 2px solid #dc8f03
+}
+.xian {
+position: absolute;
+top: -20px;
+left: 60px;
+width: 2px;
+height: 20px;
+background: #dc8f03
+}
+.shui-a {
+position: relative;
+width: 5px;
+height: 20px;
+margin: -5px 0 0 59px;
+-webkit-animation: swing 4s infinite ease-in-out;
+-webkit-transform-origin: 50% -45px;
+background: orange;
+border-radius: 0 0 5px 5px
+}
+.shui-b {
+position: absolute;
+top: 14px;
+left: -2px;
+width: 10px;
+height: 10px;
+background: #dc8f03;
+border-radius: 50%
+}
+.shui-c {
+position: absolute;
+top: 18px;
+left: -2px;
+width: 10px;
+height: 35px;
+background: orange;
+border-radius: 0 0 0 5px
+}
+.deng:before {
+position: absolute;
+top: -7px;
+left: 29px;
+height: 12px;
+width: 60px;
+content: " ";
+display: block;
+z-index: 999;
+border-radius: 5px 5px 0 0;
+border: solid 1px #dc8f03;
+background: orange;
+background: linear-gradient(to right, #dc8f03, orange, #dc8f03, orange, #dc8f03)
+}
+.deng:after {
+position: absolute;
+bottom: -7px;
+left: 10px;
+height: 12px;
+width: 60px;
+content: " ";
+display: block;
+margin-left: 20px;
+border-radius: 0 0 5px 5px;
+border: solid 1px #dc8f03;
+background: orange;
+background: linear-gradient(to right, #dc8f03, orange, #dc8f03, orange, #dc8f03)
+}
+.deng-t {
+font-family: 黑体, Arial, Lucida Grande, Tahoma, sans-serif;
+font-size: 3.2rem;
+color: #dc8f03;
+font-weight: 700;
+line-height: 85px;
+text-align: center
+}
+.night .deng-box,
+.night .deng-box1,
+.night .deng-t {
+background: 0 0 !important
+}
+@-moz-keyframes swing {
+0% {
+-moz-transform: rotate(-10deg)
+}
+50% {
+-moz-transform: rotate(10deg)
+}
+100% {
+-moz-transform: rotate(-10deg)
+}
+}
+@-webkit-keyframes swing {
+0% {
+-webkit-transform: rotate(-10deg)
+}
+50% {
+-webkit-transform: rotate(10deg)
+}
+100% {
+-webkit-transform: rotate(-10deg)
+}
+}
+</style>
+
+
+
+    <div class="usa-banner">
+        <div class="usa-banner-inner">
+            <span class="flag-icon"></span>
+            <span class="usa-banner-text">
+                全成 大哥岛/馆政府  
+                <a href="./goverment/">政务公开</a>
+                <a href="./goverment/">政府服务平台</a>
+                
+                </span>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-main">
+            <a href="#" class="logo-area">
+                <div class="logo-seal">78</div>
+                <div>
+                    <div class="site-title">全成大哥岛馆政府</div>
+                    <div class="site-subtitle">QuanChengDage🛫Gos</div>
+                </div>
+            </a>
+        </div>
+
+        <nav class="nav-container">
+            <ul class="navbar">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">导航</a>
+                    <div class="dropdown">
+                        <a href="./vote/p1.html">2026年全成大哥岛馆政府委员选举 在线投票</a>
+                        <a href="./goverment/">申请小弟资格</a>
+                        <a href="./goverment/">预约见面</a>      <a href="#">2026 大哥发表致辞</a>
+                  
+                     <a href="./goverment/">在线政务+</a>
+                                 <a href="#">文旅全成</a>
+                             <a href="#">全成新闻网</a>
+         
+                       </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>馆政府 • 大哥岛</h1>
+        <p>[NEW] 大哥发表2026春节致辞</p>
+        
+        <div class="search-box">
+            <input type="text" placeholder="搜索岛上服务 .">
+            <button>搜索</button>
+        </div>
+        <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">热门搜索：如何挑战一天岛馆一堆、大哥喜欢吃食、今日大哥</p>
+    </section>
+
+    <section class="main-content">
+        <div class="card">
+            <h2>文章</h2>
+                 <a href="./col/col-20260122.html" class="btn-link">全成大哥岛馆政府介绍 &rarr;</a>
+        </div>
+
+        <div class="card">
+            <h2>加入我们</h2>
+            <p>全成大哥岛馆正在招募有张力的青年。</p>
+            <a href="./goverment/" class="btn-link">查看空缺职位 &rarr;</a>
+        </div>
+
+        <div class="card">
+            <h2>今日通告</h2>
+            <p>大哥今日岛 多了晕厥，请各位别干...[More]</p>
+            
+        </div>
+
+        <div class="card">
+            <h2>下载</h2>
+            <p>Download 海岛奇兵 [>]<br>Download 全成政务通，App</p>
+            <a class="btn-link">获取指南 &rarr;</a>
+        </div>
+    </section>
+
+    <footer>
+      
+        <div class="footer-content">
+            <h3>全成大哥岛馆政府</h3>
+        
+        
+<div class="lang-switch">
+  <button onclick="setLang('zh')">中文</button>
+  <button onclick="setLang('en')">QUANCHENG</button>
+</div>
+
+
+            <p>地址：道馆</p>
+            <p>电话：123-78大哥</p>
+            <img alt="全成大哥岛馆政府授权"></img>
+            <div class="disclaimer">
+                <p><strong>严正声明 / Disclaimer：</strong></p>
+                <p>这里不需要天天道馆也别路</p>
+                <p>站点坑你的根本没有这个地方</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+[
+    {
+    "title": "这里是大这里是哥",
+    "artist": "SPACE vs. SUNO",
+    "cover": "./img/这里是大这里是哥.jpg",
+    "url": "./src/这里是大这里是哥.mp3",
+    "showAi": "本歌曲为AI生成"
+  },
+{
+    "title": "这里是大这里是哥2",
+    "artist": "SPACE vs. SUNO",
+    "cover": "./img/这里是大这里是哥.jpg",
+    "url": "./src/这里是大这里是哥(2).mp3",
+    "showAi": "本歌曲为AI生成"
+  },
+  {
+    "title": "大哥大道西",
+    "artist": "SPACE vs. SUNO",
+    "cover": "./img/大哥dj.jpg",
+    "url": "./src/大哥大道西.mp3",
+    "showAi": "本歌曲为AI生成"
+  },
+    {
+    "title": "大哥末路当磨折 (PHONK REMIX)",
+    "artist": "SPACE vs. SUNO",
+    "cover": "./img/大哥dj.jpg",
+    "url": "./src/大哥dj.mp3",
+    "showAi": "本歌曲为AI生成"
+  },
+     {
+    "title": "大哥末路当磨折",
+    "artist": "SPACE vs. SUNO",
+    "cover": "./img/大哥末路当磨折.jpg",
+    "url": "./src/大哥末路当磨折-SPACE vs SUNO.mp3",
+    "showAi": "本歌曲为AI生成"
+  },
+  {
+    "title": "大哥大道",
+    "artist": "NaOH 制作.",
+    "cover": "./img/dagem1.jpg",
+    "url": "./src/o1.mp3",
+     "showAi":""
+  },
+   {
+    "title": "NO BATIDÃO(Feat.dage)",
+    "artist": "DJ.SPACE.",
+    "cover": "./img/NO BATIDÃO.jpg",
+    "url": "./src/NO BATIDÃO - DJ.SPACE.mp3",
+ "showAi": ""
+  
+  }
+ 
+ 
+]

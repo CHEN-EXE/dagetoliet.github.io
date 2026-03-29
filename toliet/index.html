@@ -1,0 +1,413 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>智慧厕所</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://res.weiunity.com/msg/msg.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/naive-ui/dist/index.prod.js"></script>
+    <style>
+      body {
+        background-color: #eeeeee !important;
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+      .login_content {
+        position: absolute;
+        top: 20%;
+        
+        bottom: 50%;
+        text-align: center;
+        width: 100%;
+        font-size: 40px;
+      }
+      .btn-custom {
+        width: 160px;
+        height: 40px;
+        font-size: 15px;
+      }
+      .input-custom {
+        width: 300px;
+        margin: 0 auto 8px auto;
+        border-radius: 20px;
+      }
+      .benefits {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .benefits > span {
+        font-size: 15px;
+        color: #2B2B2F;
+        font-weight: 700;
+      }
+      .benefits ul {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-left: 0;
+      }
+      .benefits ul li {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      .benefits ul li span {
+        font-weight: 600;
+        font-size: 12px;
+        color: #5F5D6B;
+      }
+      .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        border-top: 1px solid #ebebec;
+      }
+      .price {
+        position: relative;
+        font-size: 32px;
+        color: #2B2B2F;
+        font-weight: 900;
+      }
+      .price sup {
+        font-size: 13px;
+      }
+      .price sub {
+        position: absolute;
+        font-size: 11px;
+        color: #5F5D6B;
+        bottom: 5px;
+      }
+      /* 从左侧渐入 */
+.left-fade-in {
+
+  /* 定义动画 */
+  animation-duration: 1s; /* 动画时间 */
+  animation-name: fadein; /* 关键帧名字 */
+}
+
+/* 定义关键帧 */
+@keyframes fadein {
+  0% {
+    opacity: 0;
+    transform: translateY(600px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <n-config-provider :theme-overrides="themeOverrides">
+        <div class="login_content">
+          <p style="
+          font-size:35px;
+  animation-duration: 0.3s; /* 动画时间 */
+  animation-name: fadein;">
+            <svg
+            style="margin-bottom:-5px;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4 21h-2.154l-2-5H5.754l-2 5H1.6L8 5h2zm4.6-9v9h-2v-9zM6.554 14h4.892L9 7.885zM19.529 2.32a.507.507 0 0 1 .942 0l.253.61a4.37 4.37 0 0 0 2.25 2.327l.717.32a.53.53 0 0 1 0 .962l-.758.338a4.36 4.36 0 0 0-2.22 2.25l-.246.566a.506.506 0 0 1-.934 0l-.247-.565a4.36 4.36 0 0 0-2.219-2.251l-.76-.338a.53.53 0 0 1 0-.963l.718-.32a4.37 4.37 0 0 0 2.251-2.325z"/></svg>
+          智慧厕所
+          </p>
+          <p style="
+  animation-duration: 0.3s; /* 动画时间 */
+  animation-name: fadein;margin-top:-30px;font-size:20px;">{{ contentText }}</p>
+
+          <div v-show="step === 1">
+        <n-qr-code value="https://chen-exe.github.io/dagetoliet.github.io/auth/?g2" type="canvas" size="240" error-correction-level="M"
+        ></n-qr-code>
+   
+            <p style="
+  animation-duration: 0.5s; /* 动画时间 */
+  animation-name: fadein;margin-top:7px;margin:0;font-size:20px;">有问题? <a style="color:rgb(52,143,232);cursor:pointer;" @click="showHelper = true">在线客服</a></p>
+            <br>
+            <img src="./text.jpg" style="margin-bottom:8px;border-radius:10px;"/>
+            <br>
+            <n-input id="input_pl" style="width:290px;" class="input-custom" placeholder="输入如上文本以完成验证。"></n-input>
+            <br>
+            <n-button @click="check_robot" style="margin-bottom: 8px;border-radius:100px;">检查人机验证 ✅</n-button>
+            <p style="margin-bottom:5px;font-size:17px; color:rgba(0,0,0,0.601)">更多方式</p>
+            <n-button type="info" round class="btn-custom" @click="otto1">登陆</n-button>
+          </div>
+
+          <div v-show="step === 2">
+            <n-input v-model:value="inputValue" class="input-custom" placeholder="输入占坑时间（分钟）"></n-input>
+            <br>
+            <n-button type="info" round class="btn-custom" @click="otto2">结算</n-button>
+          </div>
+
+          <div v-show="step === 3">
+            <p>共计支付 ¥{{ inputValue }}</p>
+            <p style="font-size:20px;margin-top:3px;color:rgba(0,0,0,0.473)">*如厕请注意时间限制</p>
+            <n-button type="info" round class="btn-custom" @click="otto3">
+              <template #icon>
+                <n-icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#fff" d="M9.001 14.278a.73.73 0 0 1-.97-.296l-2.05-4.5a.367.367 0 0 1 .551-.448l2.363 1.683a1.1 1.1 0 0 0 .977.111l11.113-4.946C18.993 3.534 15.713 2 12 2C5.925 2 1 6.104 1 11.167c0 2.762 1.482 5.248 3.8 6.929a.73.73 0 0 1 .27.83l-.496 1.85c-.023.087-.059.177-.059.268c0 .202.164.367.367.367c.08 0 .144-.03.212-.069l2.408-1.39a1.15 1.15 0 0 1 .584-.17q.169.001.323.05a13 13 0 0 0 3.591.502c6.075 0 11-4.104 11-9.167c0-1.534-.454-2.978-1.253-4.248L9.081 14.232z"/></svg>
+                </n-icon>
+              </template>
+            </n-button>
+          </div>
+
+          <div v-show="step === 4">
+            <p style="color:red; font-size: 48px; font-weight: bold; margin: 10px 0;">
+              {{ countdownDisplay }}
+            </p>
+            <center style="width: 320px; margin: 0 auto;">
+              <n-alert title="感谢本次服务！点此处终结" type="info" style="text-align: left; margin-bottom: 9px; cursor: pointer;" @click="endService"></n-alert>
+              <n-alert title="请在规定时间内完成如厕" type="info" closable style="text-align: left;"></n-alert>
+            </center>
+            <br>
+            <n-space justify="center">
+              <n-button round color="rgba(0,0,0,0.521)" class="btn-custom" @click="extendTime">续费</n-button>
+              <n-button type="info" round class="btn-custom" @click="showStop = true">不拉了</n-button>
+            </n-space>
+          </div>
+
+          <p style="color:rgb(189,189,189);font-size:10px;margin-top:20px;">大哥国际厕所集团开发 仅供娱乐</p>
+          <p style="color:rgb(189,189,189);font-size:14px;">版本号：Ver.2.3<br>保险免费维保单位:DaGE insurance</p>
+      
+          <img style="height:40px;" src="./src/safety.png"
+      ></img> <br> </div>
+
+        <n-modal v-model:show="showHelper">
+          <n-card style="width: 450px; border-radius: 16px; background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);" :bordered="false" size="huge" role="dialog" aria-modal="true">
+            <template #header>
+              <div style="text-align: center; font-weight: 700; font-size: 17px; color: #2B2B2F;">如厕训练计划（坚持250天）</div>
+            </template>
+            <p style="text-align: center; font-weight: 600; font-size: 11px; color: #5F5D6B;">大哥国际厕所集团面向广大厕所用户开放的付费计划</p>
+            
+            <n-tabs type="segment" animated style="margin-top: 10px;">
+              <n-tab-pane name="monthly" tab="月度"></n-tab-pane>
+         
+            </n-tabs>
+
+            <div class="benefits">
+              <span>你享受什么？</span>
+              <ul>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="16" width="16">
+                    <rect fill="black" rx="8" height="16" width="16"></rect>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="white" d="M5 8.5L7.5 10.5L11 6"></path>
+                  </svg>
+                  <span>获得多年客服的24小时对话能力以及对话还有交谈。</span>
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="16" width="16">
+                    <rect fill="black" rx="8" height="16" width="16"></rect>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="white" d="M5 8.5L7.5 10.5L11 6"></path>
+                  </svg>
+                  <span>预付费要求1000支出然后完成后回退账户。</span>
+                </li>
+              </ul>
+            </div>
+<label class="price"><sup>$</sup>2000</sub></label>
+            <div class="modal-footer">
+              
+              
+             
+             <n-button onclick="msg.info('请稍候，正在前往收银台')" color="#0bdd12" style="width: 100%; height: 40px; border-radius: 7px; color: #fff; font-weight: 600;">订阅</n-button>
+            </div>
+          </n-card>
+        </n-modal>
+
+        <n-modal v-model:show="showStop">
+          <n-card style="width: 400px; border-radius: 20px;" title="提示" :bordered="false" size="huge" role="dialog" aria-modal="true">
+            <template #header-extra>
+              <n-icon size="24" color="rgba(96, 165, 250, 1)">
+                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path clip-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" fill-rule="evenodd"></path>
+                </svg>
+              </n-icon>
+            </template>
+            <p style="color: rgba(107, 114, 128, 1);">确定不拉了？<br>此操作不会浪费一分钱，同时也不回退回到您的账户中。</p>
+            <template #footer>
+              <n-space vertical>
+                <n-button type="info" block style="border-radius: 8px; height: 40px;" @click="confirmStop">不拉了</n-button>
+                <n-button block style="border-radius: 8px; height: 40px; background-color: rgba(249, 250, 251, 1); color: rgba(107, 114, 128, 1); border: none;" @click="showStop = false">还是继续吧</n-button>
+              </n-space>
+            </template>
+          </n-card>
+        </n-modal>
+
+        <n-modal v-model:show="showExtend">
+          <n-card style="width: 400px; border-radius: 20px;" title="续费加时" :bordered="false" size="huge" role="dialog" aria-modal="true">
+            <p style="color: rgba(107, 114, 128, 1);">当前剩余时间：{{ countdownDisplay }}</p>
+            <n-input v-model:value="extendMinutes" class="input-custom" placeholder="输入要增加的分钟数" style="margin-top: 15px;"></n-input>
+            <template #footer>
+              <n-space vertical>
+                <n-button type="info" block style="border-radius: 8px; height: 40px;" @click="confirmExtend">确认续费 ¥{{ extendMinutes || 0 }}</n-button>
+                <n-button block style="border-radius: 8px; height: 40px; background-color: rgba(249, 250, 251, 1); color: rgba(107, 114, 128, 1); border: none;" @click="showExtend = false">取消</n-button>
+              </n-space>
+            </template>
+          </n-card>
+        </n-modal>
+
+        <n-modal v-model:show="showTimeUp" :mask-closable="false" :close-on-esc="false">
+          <n-card style="width: 400px; border-radius: 20px; text-align: center;" :bordered="false" size="huge" role="dialog" aria-modal="true">
+            <p style="font-size: 18px; color: #2B2B2F; margin-bottom: 20px;">感谢使用智慧厕所！本次服务结束</p>
+            <n-alert title="请注意！" type="warning">
+      点击结束如厕后马桶会立即合盖，请注意安全！[意外保险已支持]
+    </n-alert>
+    <br>
+            <n-button type="info" block style="border-radius: 8px; height: 40px;" @click="returnHome">结束如厕</n-button>
+          </n-card>
+        </n-modal>
+      </n-config-provider>
+    </div>
+
+    <script>
+      const { createApp, ref, computed, onUnmounted } = Vue;
+      
+      const app = createApp({
+        setup() {
+          const step = ref(1);
+          const contentText = ref('一人一坑 扫码登陆后自动开门');
+          const inputValue = ref('');
+          const showHelper = ref(false);
+          const showStop = ref(false);
+          const showExtend = ref(false);
+          const showTimeUp = ref(false);
+          const extendMinutes = ref('');
+          const remainingSeconds = ref(0);
+          const timerInterval = ref(null);
+
+          const countdownDisplay = computed(() => {
+            const hours = Math.floor(remainingSeconds.value / 3600);
+            const minutes = Math.floor((remainingSeconds.value % 3600) / 60);
+            const seconds = remainingSeconds.value % 60;
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+          });
+
+          const themeOverrides = {
+            common: {
+              primaryColor: 'rgb(52,143,232)',
+              primaryColorHover: 'rgba(52,143,232,0.899)',
+              primaryColorPressed: 'rgba(52,143,232,0.999)'
+            }
+          };
+
+          const startCountdown = () => {
+            if (timerInterval.value) clearInterval(timerInterval.value);
+            timerInterval.value = setInterval(() => {
+              if (remainingSeconds.value > 0) {
+                remainingSeconds.value--;
+              } else {
+                clearInterval(timerInterval.value);
+                showTimeUp.value = true;
+              }
+            }, 1000);
+          };
+
+          const otto1 = () => {
+            msg.info('你好，User.');
+            contentText.value = 'Please input time,that pay.';
+            step.value = 2;
+          };
+
+          const otto2 = () => {
+            contentText.value = "请核实信息，然后再进行下一步";
+            if (inputValue.value.trim() !== "" && !isNaN(inputValue.value)) {
+              step.value = 3;
+            } else {
+              msg.info('计算价格出错');
+            }
+          };
+
+          const check_robot =() =>{
+            const input_check = "大哥我错了";
+            const input_now = document.getElementById("input_pl").input.value;
+            
+            if (input_now === "大哥我错了"){
+              msg.info("验证通过");
+            } else {
+              alert("no");
+            }
+          }
+
+          const otto3 = () => {
+            msg.success('支付完成');
+            contentText.value = "请耐心等待马桶响应...";
+            remainingSeconds.value = parseInt(inputValue.value) * 60;
+            startCountdown();
+            step.value = 4;
+          };
+
+          const endService = () => {
+            if (timerInterval.value) clearInterval(timerInterval.value);
+            msg.success('服务已结束');
+            step.value = 1;
+            contentText.value = '一人一坑 扫码登陆后自动开门';
+            inputValue.value = '';
+            remainingSeconds.value = 0;
+          };
+
+          const extendTime = () => {
+            showExtend.value = true;
+            extendMinutes.value = '';
+          };
+
+          const confirmExtend = () => {
+            const minutes = parseInt(extendMinutes.value);
+            if (minutes > 0) {
+              remainingSeconds.value += minutes * 60;
+              msg.success(`已续费 ${minutes} 分钟`);
+              showExtend.value = false;
+            } else {
+              msg.error('请输入有效的分钟数');
+            }
+          };
+
+          const confirmStop = () => {
+            if (timerInterval.value) clearInterval(timerInterval.value);
+            showStop.value = false;
+            step.value = 1;
+            contentText.value = '一人一坑 扫码登陆后自动开门';
+            inputValue.value = '';
+            remainingSeconds.value = 0;
+            msg.info('已取消如厕');
+          };
+
+          const returnHome = () => {
+            window.location.reload();
+          };
+
+          onUnmounted(() => {
+            if (timerInterval.value) clearInterval(timerInterval.value);
+          });
+
+          return {
+            step,
+            contentText,
+            inputValue,
+            showHelper,
+            showStop,
+            showExtend,
+            showTimeUp,
+            extendMinutes,
+            countdownDisplay,
+            check_robot,
+            themeOverrides,
+            otto1,
+            otto2,
+            otto3,
+            endService,
+            extendTime,
+            confirmExtend,
+            confirmStop,
+            returnHome
+          };
+        }
+      });
+      app.use(naive);
+      app.mount('#app');
+    </script>
+  </body>
+</html>

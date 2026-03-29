@@ -1,0 +1,140 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>授权登陆</title>
+    <!-- 大哥国际厕所公司开发 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://res.weiunity.com/msg/msg.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  </head>
+  <style>
+  body {
+    background-color: #f9f9f9;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  * {
+    margin: 0;
+  }
+  .error {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    background: #EF665B;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px -3px #111;
+  }
+  .error__icon {
+    width: 20px;
+    height: 20px;
+    transform: translateY(-2px);
+    margin-right: 8px;
+  }
+  .error__icon path {
+    fill: #fff;
+  }
+  .error__title {
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+  }
+  .error__close {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .error__close path {
+    fill: #fff;
+  }
+  .login_content {
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .otto3_input {
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.628);
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 10px;
+  }
+  .otto3_input:hover {
+    border: 1.5px solid rgba(52,143,232,0.899);
+  }
+  .btn {
+    width: 100%;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    height: 45px;
+    font-size: 20px;
+    color: #fff;
+    background-color: rgb(18,184,246);
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: rgba(52,143,232,0.899);
+  }
+  </style>
+  <body>
+     <div id="disp" style="display:none;background-color:#000;opacity:0.5;color:#fff;border-radius:5px; position: absolute;top:30px;height: auto;max-width:430px;text-align:center;padding:5px;margin-right:30px;margin-left:30px;">
+        全成唱片未安装或不是最新版。
+      </div>
+     
+    <div class="login_content">
+      <h1 style="font-weight:300;">DaGE</h1>
+      <p style="margin-top:9px;color:#8b8b8b">0万大哥已选择大哥Auth登陆应用</p>
+      <button onclick="login()" id="loginname" class="btn">一键登录</button>
+    </div>
+  </body>
+  <script>
+    function login(){
+      document.getElementById("loginname").textContent = "正在拉起全成唱片...";
+      
+  msg.loading(getQueryString("g2_auth") || "请稍等");
+  // 尝试打开应用
+    const appScheme = 'qcmusic://'; // 替换为你的应用scheme
+    const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.example.app';
+    
+    // 尝试打开应用
+    window.location.href = appScheme;
+    
+    // 如果应用未安装，跳转到应用商店
+    setTimeout(function() {
+        if (!document.hidden) {
+      msg.info("全成唱片未安装");   }
+    }, 2000);
+
+
+      console.log("拉起");
+setTimeout(() => {
+  
+      document.getElementById("loginname").textContent = "一键登录";
+      document.getElementById("disp").style.display="block";
+          msg.close();
+setTimeout(() => {
+      document.getElementById("disp").style.display="none";
+  
+}, 2000);
+}, 2000);
+}
+  function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+  </script>
+</html>

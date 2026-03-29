@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+
+<title>活动规则 / Activity Rules</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Noto Sans SC',sans-serif;
+  background:radial-gradient(circle,#b30000,#5a0000);
+  color:#fff;
+  margin:0;
+  padding:20px;
+}
+
+.lang-switch{
+  text-align:right;
+  max-width:900px;
+  margin:0 auto 10px;
+}
+
+.lang-switch button{
+  background:#ffd700;
+  border:none;
+  color:#7a0000;
+  padding:6px 14px;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  margin-left:8px;
+}
+
+.rule-box{
+  max-width:900px;
+  margin:auto;
+  background:linear-gradient(145deg,#c40000,#8b0000);
+  border-radius:24px;
+  padding:32px;
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+h1{
+  text-align:center;
+  color:#ffd700;
+  margin-bottom:28px;
+}
+
+h2{
+  color:#ffd700;
+  font-size:1.15rem;
+  margin:24px 0 8px;
+}
+
+p,li{
+  line-height:1.9;
+  font-size:0.95rem;
+}
+
+ul{padding-left:20px}
+
+.divider{
+  height:1px;
+  background:rgba(255,255,255,.2);
+  margin:28px 0;
+}
+
+.footer{
+  margin-top:30px;
+  font-size:0.85rem;
+  opacity:.85;
+  text-align:center;
+}
+
+/* 语言控制 */
+.lang{display:none}
+.lang.active{display:block}
+</style>
+</head>
+
+<body>
+
+<div class="lang-switch">
+  <button onclick="setLang('zh')">中文</button>
+  <button onclick="setLang('en')">English</button>
+</div>
+
+<div class="rule-box">
+
+  <!-- 中文 -->
+  <div class="lang active" id="zh">
+    <h1>🛡 活动规则说明</h1>
+
+    <h2>一、活动性质说明</h2>
+    <p>
+      本活动为平台展示及互动体验活动，页面内容仅用于演示，
+      不构成任何形式的现实承诺、投资建议或收益保证。
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>二、活动时间</h2>
+    <p>
+      活动时间为 2026年1月1日至2026年1月30日，
+      平台有权根据实际情况调整或终止活动。
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>三、签到与抽奖</h2>
+    <ul>
+      <li>签到与抽奖仅为互动体验功能</li>
+      <li>页面中显示的积分、奖励无现实等价价值</li>
+      <li>抽奖结果为系统随机生成，仅供展示</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>四、福利展示与信息填写</h2>
+    <p>
+      页面中的福利展示、购买入口及信息填写，
+      不代表真实交易或实际服务承诺。
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>五、免责声明</h2>
+    <p>
+      本活动不涉及博彩、投资或收益分配行为，
+      因理解偏差产生的争议平台不承担责任。
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>六、最终解释权</h2>
+    <p>本活动最终解释权归大哥国际所有。</p>
+  </div>
+
+  <!-- English -->
+  <div class="lang" id="en">
+    <h1>🛡 Activity Rules</h1>
+
+    <h2>1. Activity Nature</h2>
+    <p>
+      This activity is for platform display and interactive experience only.
+      All content is for demonstration purposes and does not constitute
+      any financial commitment or guarantee.
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>2. Activity Period</h2>
+    <p>
+      The activity runs from January 1, 2026 to January 30, 2026.
+      The platform reserves the right to modify or terminate the activity.
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>3. Check-in & Lottery</h2>
+    <ul>
+      <li>Check-in and lottery features are for interaction only</li>
+      <li>Displayed points and rewards have no real-world value</li>
+      <li>Lottery results are randomly generated for display</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>4. Benefits & Information</h2>
+    <p>
+      Benefit displays, purchase entries and information input
+      do not represent real transactions or service obligations.
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>5. Disclaimer</h2>
+    <p>
+      This activity does not involve gambling, investment,
+      or profit distribution of any kind.
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>6. Final Interpretation</h2>
+    <p>
+      The platform reserves the final right of interpretation.
+    </p>
+  </div>
+
+  <div class="footer">
+    © 2026 大哥国际 · All Rights Reserved
+  </div>
+
+</div>
+
+<script>
+function setLang(lang){
+  document.querySelectorAll('.lang').forEach(el=>{
+    el.classList.remove('active')
+  })
+  document.getElementById(lang).classList.add('active')
+}
+</script>
+
+</body>
+</html>

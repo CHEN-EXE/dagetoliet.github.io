@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大哥旧已会员中心</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #0f0d0c;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 414px;
+    background-color: #0f0d0c;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    height: 60px;
+}
+
+.back-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.header-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.header-right {
+    font-size: 13px;
+    color: #b3b3b3;
+}
+
+.card-section {
+    padding: 0 20px;
+    margin-top: 10px;
+}
+
+.vip-card {
+    background: linear-gradient(135deg, #2b2824 0%, #151412 100%);
+    border: 1px solid #3c3832;
+    border-radius: 20px;
+    padding: 24px 20px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.expiry-tag {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    background: rgba(184, 155, 114, 0.15);
+    color: #c6a77b;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.card-title-wrap {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ebd0a1;
+    margin-left: 6px;
+}
+
+.card-subtitle {
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-top: 12px;
+    line-height: 1.6;
+}
+
+.card-user {
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-top: 16px;
+}
+
+.hex-badge-outer {
+    position: absolute;
+    right: 20px;
+    top: 36px;
+    width: 84px;
+    height: 96px;
+    background: linear-gradient(180deg, #fcebce 0%, #c4995c 100%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hex-badge-inner {
+    width: 76px;
+    height: 88px;
+    background: linear-gradient(180deg, #2c2822 0%, #171513 100%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.benefits-row {
+    display: flex;
+    justify-content: space-between;
+    background: #1d1c1a;
+    margin-top: 12px;
+    padding: 16px 12px;
+    border-radius: 16px;
+}
+
+.benefit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.benefit-icon {
+    width: 36px;
+    height: 36px;
+    background: #2a2825;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ebd0a1;
+    margin-bottom: 8px;
+}
+
+.benefit-title {
+    font-size: 12px;
+    color: #d1c2a8;
+    margin-bottom: 4px;
+}
+
+.benefit-desc {
+    font-size: 10px;
+    color: #7e7a75;
+}
+
+.arrow-down-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.bottom-sheet {
+    background-color: #ffffff;
+    border-radius: 20px 20px 0 0;
+    padding: 24px 20px;
+    min-height: 450px;
+    position: relative;
+}
+
+.sheet-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.presets-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.preset-box {
+    flex: 1;
+    background-color: #fdf8f5;
+    border-radius: 8px;
+    padding: 16px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.preset-num {
+    font-size: 28px;
+    color: #644b38;
+}
+
+.preset-unit {
+    font-size: 11px;
+    color: #644b38;
+    margin-left: 2px;
+    margin-top: 10px;
+}
+
+.preset-tag {
+    font-size: 11px;
+    color: #c0a797;
+    margin-left: 12px;
+    line-height: 1.2;
+}
+
+.preset-check {
+    position: absolute;
+    right: 32%;
+    top: -9px;
+    width: 18px;
+    height: 18px;
+    background-color: #684120;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.custom-box {
+    background-color: #fdf8f5;
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.custom-val {
+    display: flex;
+    align-items: baseline;
+}
+
+.custom-num {
+    font-size: 26px;
+    border: none;
+    width:80%;
+    text-align: right;
+    background: none;
+    color: #644b38;
+}
+
+.custom-unit {
+    font-size: 12px;
+    color: #644b38;
+    margin-left: 4px;
+}
+
+.custom-action {
+    display: flex;
+    align-items: center;
+}
+
+.custom-tag {
+    font-size: 11px;
+    color: #c0a797;
+    margin-right: 12px;
+    line-height: 1.2;
+}
+
+.custom-btn {
+  border:none;
+  width:60px;
+    background-color: #684120;
+    color: #ffffff;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 16px;
+}
+
+.email-input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    background-color: #fafafa;
+    text-align: center;
+    font-size: 13px;
+    color: #333;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+.email-input::placeholder {
+    color: #cccccc;
+}
+
+.confirm-gift-btn {
+    width: 100%;
+    height: 44px;
+    background-color: #f3f3f3;
+    color: #bbbbbb;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expiry-banner {
+    margin-top: 40px;
+    background-color: #eecfb7;
+    color: #644b38;
+    border:none;
+    width:100%;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    position: relative;
+}
+
+.unlimited-badge {
+    position: absolute;
+    right: 0;
+    top: -10px;
+    background-color: #ef6b6b;
+    color: #ffffff;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 10px 10px 10px 0;
+}
+
+.member-desc-title {
+    text-align: center;
+    font-size: 13px;
+    color: #333;
+    margin-top: 30px;
+}
+
+.member-desc-content {
+    font-size: 12px;
+    color: #666;
+    margin-top: 15px;
+}
+
+.edit-btn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    color: #eecfb7;
+    background:none;
+    border: 1px solid #eecfb7;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+.edit-btn:hover{
+  background-color: #eecfb7;
+  color:#000;
+}
+</style>
+</head>
+<body>
+
+<div class="app-container">
+    <header class="header">
+        <div class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+        </div>
+        <div class="header-title">会员中心</div>
+        <div class="header-right">购买记录</div>
+    </header>
+
+    <section class="card-section">
+        <div class="vip-card">
+            <div class="expiry-tag">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2c0 0-5 6-5 11 0 2.76 2.24 5 5 5s5-2.24 5-5c0-5-5-11-5-11zm0 13c-1.1 0-2-.9-2-2 0-1.5 2-4 2-4s2 2.5 2 4c0 1.1-.9 2-2 2z"/>
+                </svg>
+                2030.2.20 到期
+            </div>
+            
+            <div class="card-title-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#ebd0a1">
+                    <path d="M4 19h16v2H4v-2zm1-3l2-8 3 4 2-5 2 5 3-4 2 8H5z"/>
+                </svg>
+                <div class="card-title">骨灰级订阅</div>
+            </div>
+            
+            <div class="card-subtitle">
+                连续续费4年<br>
+                视频观看无上限 全网资源开放
+            </div>
+            
+            <div class="card-user">
+                大哥 (**) QQ 32******764
+            </div>
+
+            <div class="hex-badge-outer">
+                <div class="hex-badge-inner">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="#fcebce">
+                        <path d="M4 19h16v2H4v-2zm1-3l2-8 3 4 2-5 2 5 3-4 2 8H5z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="benefits-row">
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 19h16v2H4v-2zm1-3l2-8 3 4 2-5 2 5 3-4 2 8H5z"/>
+                    </svg>
+                </div>
+                <div class="benefit-title">优势一</div>
+                <div class="benefit-desc">高速节点</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 19h16v2H4v-2zm1-3l2-8 3 4 2-5 2 5 3-4 2 8H5z"/>
+                    </svg>
+                </div>
+                <div class="benefit-title">优势二</div>
+                <div class="benefit-desc">豪华大片免费</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 19h16v2H4v-2zm1-3l2-8 3 4 2-5 2 5 3-4 2 8H5z"/>
+                    </svg>
+                </div>
+                <div class="benefit-title">优势三</div>
+                <div class="benefit-desc">覆盖库全站</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 19h16v2H4v-2zm1-3l2-8 3 4 2-5 2 5 3-4 2 8H5z"/>
+                    </svg>
+                </div>
+                <div class="benefit-title">优势在我</div>
+                <div class="benefit-desc">无限次数</div>
+            </div>
+        </div>
+
+        <div class="arrow-down-wrap">
+            <svg width="16" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+            </svg>
+        </div>
+    </section>
+
+    <section class="bottom-sheet">
+        <div class="sheet-title">赠与朋友</div>
+        
+        <div class="presets-row">
+            <div class="preset-box">
+                <div class="preset-num">100</div>
+                <div class="preset-unit">次机会</div>
+                <div class="preset-tag">赠<br>送</div>
+                <div class="preset-check">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="preset-box">
+                <div class="preset-num">30</div>
+                <div class="preset-unit">次机会</div>
+                <div class="preset-tag">赠<br>送</div>
+            </div>
+        </div>
+
+        <div class="custom-label">自定义次数</div>
+        <div class="custom-box">
+            <div class="custom-val">
+                <input id="sharenumber" type="number" value="100000" class="custom-num"></input>
+                <div class="custom-unit">次机会</div>
+            </div>
+            <div class="custom-action">
+                <div class="custom-tag">赠<br>送</div>
+                <button onclick="shareit()" class="custom-btn">确定</button>
+            </div>
+        </div>
+
+        <input type="mail" class="email-input" placeholder="输入朋友的邮箱地址...">
+        
+        <button onclick="share_user()" class="confirm-gift-btn">确认赠与</button>
+
+        <button onclick="buyit()" class="expiry-banner">
+            到期时间2030.02.20
+            <div class="unlimited-badge">无限次数</div>
+        </button>
+
+        <div class="member-desc-title">说明</div>
+        <div class="member-desc-content">
+      该界面仅供娱乐，请勿当真！
+          
+        </div>
+<br>
+        <button class="edit-btn">编辑</button>
+    </section>
+</div>
+
+</body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+  function buyit(){
+ swal({
+  title: "开通出错",
+  text: "账户会员到期时间已达上限",
+  icon: "warning",
+});
+  }
+  
+  function share_user(){
+  swal("输入 7891 以完成验证。", {
+  content: "input",
+})
+.then((value) => {
+  swal(`输入的内容是 ${value}`);
+  swal(`失败`);
+});
+  }
+  
+  function shareit(){
+    let numb =   document.getElementById("sharenumber").value;
+    swal({
+  title: "赠与提醒",
+  text: "你确定要选择："+ numb
+  +"吗？",
+  icon: "info",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("选择完成！", {
+      icon: "success",
+    });
+  } else {
+   }
+});
+  }
+</script>
+</html>

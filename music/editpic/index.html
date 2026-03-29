@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>氢氧化钠。Banner/图片生成器。</title>
+    <style>
+        :root {
+            --primary: #FA243C;
+            --bg: #f2f4f7;
+            --border: #eee;
+        }
+        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); }
+        
+        .app { display: flex; height: 100%; width: 100%; overflow: hidden; }
+        
+        .preview-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e0e0e0;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .canvas-box {
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: #fff;
+            user-select: none;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .bg-img { display: block; max-width: 100%; max-height: 80vh; pointer-events: none; }
+        
+        .txt-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+        
+        .txt-node {
+            position: absolute;
+            cursor: move;
+            white-space: pre;
+            padding: 2px;
+            border: 1px dashed transparent;
+            line-height: 1.2;
+            transform-origin: 0 0;
+        }
+        .txt-node.active { border-color: var(--primary); z-index: 100; }
+        
+        .controls {
+            width: 350px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border);
+            z-index: 20;
+            height: 100%;
+        }
+        
+        .c-head { padding: 15px; border-bottom: 1px solid var(--border); font-weight: bold; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        
+        .c-body {
+            flex: 1;
+            overflow-y: auto; 
+            padding: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .c-foot { padding: 15px; border-top: 1px solid var(--border); background: #fff; flex-shrink: 0; }
+        
+        .form-group { margin-bottom: 15px; }
+        .label { display: block; font-size: 12px; color: #888; margin-bottom: 5px; }
+        
+        input[type="text"], textarea, select {
+            width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;
+            background: #f9f9f9; font-size: 14px;
+        }
+        input:focus, textarea:focus, select:focus { border-color: var(--primary); background: #fff; }
+        
+        .row { display: flex; gap: 10px; }
+        .col { flex: 1; }
+        
+        input[type="range"] { width: 100%; accent-color: var(--primary); }
+        
+        .color-wrap { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 4px; padding: 4px; background: #f9f9f9; }
+        input[type="color"] { border: none; width: 25px; height: 25px; background: none; padding: 0; }
+        
+        .btn {
+            width: 100%; padding: 10px; border: none; border-radius: 6px;
+            background: var(--primary); color: #fff; font-weight: bold; cursor: pointer;
+        }
+        .btn:active { opacity: 0.8; }
+        .btn-sm { padding: 5px 10px; font-size: 12px; width: auto; background: #eee; color: #333; }
+        .btn-del { color: var(--primary); background: rgba(250,36,60,0.1); }
+        
+        .layer-list { border: 1px solid #eee; border-radius: 4px; max-height: 100px; overflow-y: auto; }
+        .l-item { padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; cursor: pointer; display: flex; justify-content: space-between; }
+        .l-item.active { background: #fff0f2; color: var(--primary); }
+        
+        #editor { transition: opacity 0.2s; }
+        .disabled { opacity: 0.5; pointer-events: none; }
+
+        @media (max-width: 768px) {
+            .app { flex-direction: column; }
+            .preview-area { flex: none; height: 40vh; background: #333; padding: 10px; }
+            .bg-img { max-height: 100%; object-fit: contain; }
+            .controls { width: 100%; flex: 1; border-left: none; border-top: 1px solid var(--border); overflow: hidden; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="preview-area" id="frame">
+            <div class="canvas-box">
+                <img id="bg" class="bg-img" src="./cover.png" alt="BG">
+                <div id="layer" class="txt-layer"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="c-head">
+                <span>编辑</span>
+                <div style="display:flex; gap:8px;">
+                    <label class="btn btn-sm" for="upImg">换图</label>
+                    <input type="file" id="upImg" accept="image/*" hidden>
+                    <button class="btn btn-sm" onclick="addTxt()">+ 文本</button>
+                </div>
+            </div>
+
+            <div class="c-body">
+                <div class="form-group">
+                    <div class="row" style="justify-content:space-between; margin-bottom:5px;">
+                        <span class="label">图层</span>
+                        <button class="btn btn-sm btn-del" onclick="delTxt()">删除</button>
+                    </div>
+                    <div id="list" class="layer-list"></div>
+                </div>
+
+                <div id="editor" class="disabled">
+                    <div class="form-group">
+                        <span class="label">内容</span>
+                        <textarea id="i_txt" rows="2"></textarea>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col">
+                            <span class="label">字体</span>
+                            <select id="i_font">
+                                <option value="Arial">Arial</option>
+                                <option value="Microsoft YaHei">微软雅黑</option>
+                                <option value="SimSun">宋体</option>
+                                <option value="Times New Roman">Times</option>
+                                <option value="Segoe UI">Segoe UI</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <span class="label">字号 <span id="v_size"></span></span>
+                            <input id="i_size" type="range" min="10" max="200">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col">
+                            <span class="label">颜色</span>
+                            <div class="color-wrap">
+                                <input id="i_col" type="color">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <span class="label">描边</span>
+                            <div class="color-wrap">
+                                <input id="i_str" type="color">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col">
+                            <span class="label">粗细</span>
+                            <select id="i_w">
+                                <option value="400">常规</option>
+                                <option value="700">加粗</option>
+                                <option value="900">极粗</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <span class="label">对齐</span>
+                            <select id="i_a">
+                                <option value="left">左</option>
+                                <option value="center">中</option>
+                                <option value="right">右</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="label">行高 <span id="v_lh"></span></span>
+                        <input id="i_lh" type="range" min="0.8" max="3" step="0.1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="c-foot">
+                <button class="btn" onclick="saveImg()">生成图片</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const D = {
+            ts: [],
+            sel: null,
+            el: {
+                bg: document.getElementById('bg'),
+                lay: document.getElementById('layer'),
+                lst: document.getElementById('list'),
+                ed: document.getElementById('editor'),
+                inputs: {
+                    t: document.getElementById('i_txt'),
+                    f: document.getElementById('i_font'),
+                    s: document.getElementById('i_size'),
+                    c: document.getElementById('i_col'),
+                    st: document.getElementById('i_str'),
+                    w: document.getElementById('i_w'),
+                    a: document.getElementById('i_a'),
+                    l: document.getElementById('i_lh')
+                }
+            }
+        };
+
+        function init() {
+            addTxt({ t: "点击无法输入文本。", s: 60, y: 50 });
+            bind();
+        }
+
+        function bind() {
+            const i = D.el.inputs;
+            i.t.oninput = e => up('t', e.target.value);
+            i.f.onchange = e => up('f', e.target.value);
+            i.s.oninput = e => { document.getElementById('v_size').innerText = e.target.value; up('s', +e.target.value); };
+            i.c.oninput = e => up('c', e.target.value);
+            i.st.oninput = e => up('str', e.target.value);
+            i.w.onchange = e => up('w', e.target.value);
+            i.a.onchange = e => up('a', e.target.value);
+            i.l.oninput = e => { document.getElementById('v_lh').innerText = e.target.value; up('l', e.target.value); };
+
+            document.getElementById('upImg').onchange = e => {
+                if(e.target.files[0]) D.el.bg.src = URL.createObjectURL(e.target.files[0]);
+            };
+            
+            document.getElementById('frame').addEventListener('click', e => {
+                if(e.target.id === 'layer' || e.target.classList.contains('canvas-box')) sel(null);
+            });
+        }
+
+        function addTxt(o={}) {
+            const id = 't'+Date.now();
+            const d = { id, t: "文本", x: 20, y: 20, s: 40, f: "Arial", c: "#ffffff", str: "#000000", w: "700", a: "left", l: 1.2, ...o };
+            D.ts.push(d);
+            
+            const el = document.createElement('div');
+            el.id = id;
+            el.className = 'txt-node';
+            el.dataset.id = id;
+            el.addEventListener('mousedown', drag);
+            el.addEventListener('touchstart', drag, {passive: false});
+            el.addEventListener('click', e => { e.stopPropagation(); sel(id); });
+            
+            D.el.lay.appendChild(el);
+            syncDOM(d);
+            renderList();
+            sel(id);
+        }
+
+        function delTxt() {
+            if(!D.sel) return;
+            document.getElementById(D.sel).remove();
+            D.ts = D.ts.filter(x => x.id !== D.sel);
+            sel(null);
+            renderList();
+        }
+
+        function sel(id) {
+            D.sel = id;
+            document.querySelectorAll('.txt-node').forEach(e => e.classList.toggle('active', e.id === id));
+            renderList();
+
+            if(!id) {
+                D.el.ed.classList.add('disabled');
+                return;
+            }
+            D.el.ed.classList.remove('disabled');
+            
+            const d = D.ts.find(x => x.id === id);
+            const i = D.el.inputs;
+            i.t.value = d.t;
+            i.f.value = d.f;
+            i.s.value = d.s; document.getElementById('v_size').innerText = d.s;
+            i.c.value = d.c;
+            i.st.value = d.str;
+            i.w.value = d.w;
+            i.a.value = d.a;
+            i.l.value = d.l; document.getElementById('v_lh').innerText = d.l;
+        }
+
+        function up(k, v) {
+            if(!D.sel) return;
+            const d = D.ts.find(x => x.id === D.sel);
+            d[k] = v;
+            syncDOM(d);
+            if(k === 't') renderList();
+        }
+
+        function syncDOM(d) {
+            const el = document.getElementById(d.id);
+            el.innerText = d.t;
+            el.style.left = d.x + 'px';
+            el.style.top = d.y + 'px';
+            el.style.fontSize = d.s + 'px';
+            el.style.fontFamily = d.f;
+            el.style.color = d.c;
+            el.style.webkitTextStroke = `1px ${d.str}`;
+            el.style.fontWeight = d.w;
+            el.style.textAlign = d.a;
+            el.style.lineHeight = d.l;
+            
+            if(d.a === 'center') el.style.transform = 'translateX(-50%)';
+            else if(d.a === 'right') el.style.transform = 'translateX(-100%)';
+            else el.style.transform = 'none';
+        }
+
+        function renderList() {
+            D.el.lst.innerHTML = D.ts.map(d => 
+                `<div class="l-item ${d.id===D.sel?'active':''}" onclick="event.stopPropagation();sel('${d.id}')">
+                    <span>${d.t.slice(0,10)}</span>
+                </div>`
+            ).join('');
+        }
+
+        let dragD = null;
+        function drag(e) {
+            e.stopPropagation();
+            if(e.type === 'touchstart') e.preventDefault();
+            const id = e.currentTarget.dataset.id;
+            sel(id);
+            
+            const t = e.touches ? e.touches[0] : e;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const pRect = D.el.lay.getBoundingClientRect();
+            
+            dragD = {
+                d: D.ts.find(x => x.id === id),
+                el: e.currentTarget,
+                offX: t.clientX - rect.left,
+                offY: t.clientY - rect.top,
+                pL: pRect.left,
+                pT: pRect.top
+            };
+            
+            document.addEventListener('mousemove', moving);
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchmove', moving, {passive: false});
+            document.addEventListener('touchend', endDrag);
+        }
+
+        function moving(e) {
+            if(!dragD) return;
+            if(e.type === 'touchmove') e.preventDefault();
+            const t = e.touches ? e.touches[0] : e;
+            
+            const nx = t.clientX - dragD.pL - dragD.offX;
+            const ny = t.clientY - dragD.pT - dragD.offY;
+            
+            dragD.el.style.left = nx + 'px';
+            dragD.el.style.top = ny + 'px';
+            dragD.d.x = nx;
+            dragD.d.y = ny;
+        }
+
+        function endDrag() {
+            dragD = null;
+            document.removeEventListener('mousemove', moving);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchmove', moving);
+            document.removeEventListener('touchend', endDrag);
+        }
+
+        function saveImg() {
+            const cvs = document.createElement('canvas');
+            const ctx = cvs.getContext('2d');
+            const bg = D.el.bg;
+            const w = bg.naturalWidth;
+            const h = bg.naturalHeight;
+            cvs.width = w; cvs.height = h;
+            
+            const rect = bg.getBoundingClientRect();
+            const sc = w / rect.width;
+            
+            ctx.drawImage(bg, 0, 0, w, h);
+            
+            D.ts.forEach(t => {
+                const fs = t.s * sc;
+                ctx.font = `${t.w} ${fs}px ${t.f}`;
+                ctx.fillStyle = t.c;
+                ctx.strokeStyle = t.str;
+                ctx.lineWidth = Math.max(2, fs * 0.03);
+                ctx.textBaseline = 'top';
+                
+                const ls = t.t.split('\n');
+                const lh = fs * t.l;
+                const sx = t.x * sc;
+                const sy = t.y * sc;
+                
+                ls.forEach((l, i) => {
+                    const ly = sy + (i * lh);
+                    ctx.textAlign = t.a;
+                    if(t.str) ctx.strokeText(l, sx, ly);
+                    ctx.fillText(l, sx, ly);
+                });
+            });
+            
+            const a = document.createElement('a');
+            a.download = 'cover-'+Date.now()+'.png';
+            a.href = cvs.toDataURL();
+            a.click();
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

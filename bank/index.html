@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大哥国际银行 (BBIB) - 您的尊贵首选</title>
+    <style>
+        /* --- 全局样式 --- */
+        :root {
+            --primary-color: #0a192f; /* 深蓝 */
+            --gold-color: #d4af37;     /* 土豪金 */
+            --gold-light: #f9ea8f;
+            --text-light: #e6f1ff;
+            --text-dark: #333;
+            --bg-light: #f4f7f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-light); color: var(--text-dark); transition: all 0.3s ease; }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; outline: none; transition: transform 0.2s; }
+        button:active { transform: scale(0.98); }
+
+        /* --- 工具类 --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .hidden { display: none !important; }
+        .text-gold { color: var(--gold-color); }
+                .btn-primary {
+            background: #fff);
+            color: #686868f3;
+            border:1px solid #686868f3;
+            padding: 10px 25px;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-color), var(--gold-light));
+            color: #000;
+            padding: 10px 25px;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .btn-gold:hover { box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); }
+
+        /* --- 门户主页样式 --- */
+        header { background-color: var(--primary-color); color: white; padding: 20px 0; position: sticky; top: 0; z-index: 100; }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; display: flex; align-items: center; }
+        .logo span { color: var(--gold-color); margin-right: 5px; font-size: 28px; }
+        
+        .hero {
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; color: #ccc; }
+
+        .features { padding: 80px 0; background: white; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card { padding: 30px; background: var(--bg-light); border-radius: 10px; text-align: center; border: 1px solid #eee; transition: transform 0.3s; }
+        .feature-card:hover { transform: translateY(-10px); border-color: var(--gold-color); }
+        .icon { font-size: 40px; margin-bottom: 20px; color: var(--gold-color); }
+
+        /* --- 大佬系统 (Dashboard) 样式 --- */
+        .dashboard-body { background-color: #1a1a2e; color: var(--text-light); min-height: 100vh; }
+        .dash-header { background: #16213e; padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        .dash-user { display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 50px; height: 50px; background: var(--gold-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; font-size: 20px; }
+        
+        .dash-container { padding: 40px; max-width: 1000px; margin: 0 auto; }
+        .balance-card {
+            background: linear-gradient(135deg, #0f3460, #16213e);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .balance-card::before {
+            content: "VIP";
+            position: absolute;
+            right: -20px;
+            top: 20px;
+            font-size: 150px;
+            opacity: 0.05;
+            font-weight: bold;
+            color: var(--gold-color);
+            transform: rotate(15deg);
+        }
+        
+        .balance-label { font-size: 1rem; color: #8892b0; margin-bottom: 10px; }
+        .balance-amount { font-size: 4rem; font-weight: bold; color: var(--gold-color); font-family: 'Courier New', monospace; }
+        .vip-badge { background: var(--gold-color); color: #000; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; vertical-align: middle; margin-left: 10px; }
+
+        .actions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .action-btn {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            transition: 0.3s;
+            border: 1px solid #333;
+        }
+        .action-btn:hover { background: #0f3460; border-color: var(--gold-color); }
+        
+        .transactions { background: #16213e; border-radius: 10px; padding: 20px; }
+        .trans-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #333; }
+        .trans-item:last-child { border-bottom: none; }
+        .trans-amount.negative { color: #ff6b6b; }
+        .trans-amount.positive { color: #51cf66; }
+
+        footer { background: #0a192f; color: #8892b0; text-align: center; padding: 20px; margin-top: auto; }
+
+        /* 弹窗样式 */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-content {
+            background: white; padding: 40px; border-radius: 10px; width: 400px; text-align: center;
+        }
+        .modal input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="portal-section">
+        <header>
+            <div class="container nav-wrapper">
+                <div class="logo"><span></span> 大哥国际银行</div>
+                <nav>
+                    <button class="btn-gold" onclick="showLogin()">登录</button>
+                </nav>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container">
+                <h1>大哥国际<br>走向全城</h1>
+                <p>全城首家滚木存储银行</p>
+                <button class="btn-gold" style="font-size: 1.2rem; padding: 15px 40px;" onclick="alert('对不起你不配')">立即开户</button>
+              <br>    <button class="btn-primary" style="margin-top:5px;font-size: 1.2rem; padding: 15px 40px;" onclick="window.location.href = './stock/';">股票市场</button>
+            
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 50px; font-size: 2rem;">为什么大哥都选我们？</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon">✈️</div>
+                        <h3>全成资产滚木</h3>
+                        <p>无论您在大哥家还是火星，我们都能确保您的资产像滚木一样，存在但是滚木。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">♾️</div>
+                        <h3>无限透支权</h3>
+                        <p>想要多少要多少，任你加</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🤵</div>
+                        <h3>114514H 贴身大爷</h3>
+                        <p>养一堆大爷伺候</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026-12000 大哥国际银行 (BBIB) 大哥国际厕所集团. All Rights Reserved. <br> 本网站能笑死你，更不要存钱。Gemini3创建。</p>
+        </footer>
+    </div>
+
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">大哥国际银行用户中心</h2>
+            <p style="margin-bottom: 20px; color: #666;">请输账户密码</p>
+            <input type="text" id="username" placeholder="书上写的账号是大哥" value="大哥">
+            <input type="password" placeholder="书上写的没有密码，你胡编一个就好" value="大哥是傻逼">
+            <button class="btn-gold" style="width: 100%; margin-top: 10px;" onclick="processLogin()">确认身份</button>
+            <p style="margin-top: 15px; font-size: 0.8rem; cursor: pointer;" onclick="hideLogin()">返回首页</p>
+        </div>
+    </div>
+
+    <div id="dashboard-section" class="dashboard-body hidden">
+        <div class="dash-header">
+            <div class="logo text-gold"> 大哥银行</div>
+            <div class="dash-user">
+                <span style="color: #ccc;"></span>
+                <span class="text-gold" style="font-weight: bold;" id="user-display-name"></span>
+                <div class="avatar"></div>
+                <button style="background:transparent; color:#fff; border:1px solid #666; padding: 5px 10px; border-radius: 4px;" onclick="logout()">退出</button>
+            </div>
+        </div>
+
+        <div class="dash-container">
+            <div class="balance-card">
+                <div class="balance-label">资产(DGNB)<span class="vip-badge">大哥会员V9</span></div>
+                <div class="balance-amount" id="balance-display">99,888,888,888.00</div>
+                <div style="margin-top: 20px; color: #8892b0;">
+                    <span style="margin-right: 20px;">今日收益: <span class="text-gold">+ $1.10</span></span>
+                    <span>股份: 51% (大哥国际厕所公司)</span>
+                </div>
+            </div>
+
+            <div class="actions-grid">
+                <div class="action-btn" onclick="addZero()">
+                    <div style="font-size: 24px; margin-bottom: 10px;">💰</div>
+                    <div>资产新增</div>
+                </div>
+                <div class="action-btn" onclick="buyIsland()">
+                    <div style="font-size: 24px; margin-bottom: 10px;">🏝️</div>
+                    <div>海岛奇兵</div>
+                </div>
+                <div class="action-btn" onclick="alert('您不配')">
+                    <div style="font-size: 24px; margin-bottom: 10px;">✈️</div>
+                    <div>呼叫专鸡</div>
+                </div>
+                <div class="action-btn" onclick="alert('')">
+                    <div style="font-size: 24px; margin-bottom: 10px;">🛡️</div>
+                    <div>滚木支持</div>
+                </div>
+            </div>
+
+            <div class="transactions">
+                <h3 style="margin-bottom: 20px; color: var(--gold-color);">流水</h3>
+                <div id="trans-list">
+                    <div class="trans-item">
+                        <div>
+                            <div style="font-weight: bold; color: white;">收购大哥国际厕所公司</div>
+                            <div style="font-size: 0.8rem; color: #888;">2025-12-15 14:30</div>
+                        </div>
+                        <div class="trans-amount negative">- $50,000,000,000.00</div>
+                    </div>
+                    <div class="trans-item">
+                        <div>
+                            <div style="font-weight: bold; color: white;">大哥家拆迁分红</div>
+                            <div style="font-size: 0.8rem; color: #888;">2025-12-14 09:15</div>
+                        </div>
+                        <div class="trans-amount positive">+ $3,200,000.00</div>
+                    </div>
+                    <div class="trans-item">
+                        <div>
+                            <div style="font-weight: bold; color: white;">购买全城</div>
+                            <div style="font-size: 0.8rem; color: #888;">2025-12-13 18:00</div>
+                        </div>
+                        <div class="trans-amount negative">- $20.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <footer>
+            <p>&copy; 2026-11515大哥国际银行用户中心 (BBIB) 大哥国际厕所集团. All Rights Reserved. <br> 本网站能笑死你，更不要存钱。Gemini3创建。</p>
+        </footer>
+    
+    </div>
+
+    <script>
+        // 页面元素引用
+        const portalSection = document.getElementById('portal-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const loginModal = document.getElementById('login-modal');
+        const balanceDisplay = document.getElementById('balance-display');
+        const transList = document.getElementById('trans-list');
+
+        let currentBalance = 99888888888.00;
+
+        // 显示登录框
+        function showLogin() {
+            loginModal.classList.remove('hidden');
+        }
+
+        // 隐藏登录框
+        function hideLogin() {
+            loginModal.classList.add('hidden');
+        }
+
+   // 处理登录逻辑
+function processLogin() {
+    const username = document.getElementById('username').value;
+
+    // 判断用户名是否为空
+    if (!username) {
+        alert("抱歉你不配进入系统，原因是眼瞎了没填用户名");
+        return;
+    }
+
+    // 判断用户名是否为“大哥”
+    if (username !== "大哥") {
+        alert("用户名错误，密码不错误");
+        return;
+    }
+
+    // 如果用户名是“大哥”，正常显示用户名和头像
+    document.getElementById('user-display-name').innerText = username;
+    document.querySelector('.avatar').innerText = username.charAt(0);
+
+    // 切换视图
+    loginModal.classList.add('hidden');
+    portalSection.classList.add('hidden');
+    document.body.style.backgroundColor = '#1a1a2e'; // 切换背景色
+    dashboardSection.classList.remove('hidden');
+
+    alert("大哥，登录成功");
+}
+        // 登出
+        function logout() {
+            dashboardSection.classList.add('hidden');
+            portalSection.classList.remove('hidden');
+            document.body.style.backgroundColor = '#f4f7f6'; // 恢复背景色
+        }
+
+        // 格式化货币
+        function formatMoney(amount) {
+            return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        // 功能：资产加零
+        function addZero() {
+            currentBalance = currentBalance * 10;
+            balanceDisplay.innerText = formatMoney(currentBalance);
+            
+            // 添加一条记录
+            addTransaction("资产多加个滚木", currentBalance * 0.1, true);
+            alert("操作成功！您的资产变 ");
+        }
+
+        // 功能：购买海岛
+        function buyIsland() {
+            const cost = 5000000;
+            if (currentBalance > cost) {
+                currentBalance -= cost;
+                balanceDisplay.innerText = formatMoney(currentBalance);
+                addTransaction("海岛奇兵体验", cost, false);
+                alert("恭喜！海岛奇兵参与券已发至滚木。");
+            }
+        }
+
+        // 添加交易记录到列表
+        function addTransaction(name, amount, isIncome) {
+            const div = document.createElement('div');
+            div.className = 'trans-item';
+            
+            const sign = isIncome ? '+' : '-';
+            const colorClass = isIncome ? 'positive' : 'negative';
+            const date = new Date().toLocaleString();
+
+            div.innerHTML = `
+                <div>
+                    <div style="font-weight: bold; color: white;">${name}</div>
+                    <div style="font-size: 0.8rem; color: #888;">${date}</div>
+                </div>
+                <div class="trans-amount ${colorClass}">${sign} $${formatMoney(amount)}</div>
+            `;
+            
+            // 插入到列表最前面
+            transList.insertBefore(div, transList.firstChild);
+        }
+    </script>
+</body>
+</html>

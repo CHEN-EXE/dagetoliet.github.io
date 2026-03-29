@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大哥国际银行-股票详情</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/element-plus"></script>
+    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+    <style>
+        :root {
+            --gold-color: #d4af37;
+            --gold-hover: #b8952d;
+            --bg-dark: #1a1a1a;
+        }
+        body {
+            margin: 0;
+            background-color: #f0f2f5;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+        #app {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        /* 头部样式 */
+        .header {
+            background-color: var(--gold-color);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+              .header-top {
+            background-color: #c7c7c7f3;
+            color: #000;
+            padding: 10px 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+  
+        /* 股票概览 */
+        .stock-header {
+            padding: 25px 15px;
+            text-align: center;
+            background: linear-gradient(to bottom, #fff, #fafafa);
+        }
+        .current-price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #f56c6c; /* 默认涨颜色 */
+            line-height: 1;
+        }
+        .stock-status {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        /* K线图容器 */
+        .chart-box {
+            flex: 1;
+            width: 100%;
+            min-height: 350px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #kline-container {
+            width: 100%;
+            height: 400px;
+        }
+        /* 底部按钮 */
+        .footer-action {
+            padding: 20px;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+        .btn-gold {
+            width: 100%;
+            height: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: var(--gold-color) !important;
+            border-color: var(--gold-color) !important;
+            color: white !important;
+        }
+            .btn-primary {
+            width: 100%;
+            height: 50px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    
+        .btn-gold:hover {
+            background-color: var(--gold-hover) !important;
+        }
+        /* 弹窗及加载样式自定义 */
+        .el-loading-mask {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .el-v-loading-spinner .path {
+            stroke: var(--gold-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+              <div class="header-top">
+          <p style=" margin:0;font-size:10px;font-weight:300;">
+            <el-avatar size="small"> 大 </el-avatar>
+ 
+ 你好，大哥
+ </div>
+
+        <div class="header">
+          <p style=" margin:0;font-size:24px;font-weight:300;">
+            
+大哥国际银行 股票市场</p>
+            {{ stockInfo.stockName || '加载中...' }}({{ stockInfo.symbol || '----' }})
+        </div>
+
+        <div class="stock-header">
+            <div class="current-price">¥ {{ stockInfo.currentPrice || '0.00' }}</div>
+            <div class="stock-status" :style="{ color: stockInfo.status === '上涨' ? '#f56c6c' : '#67c23a' }">
+                <span>{{ stockInfo.changeAmount }}</span>
+                <span style="margin-left: 10px;">{{ stockInfo.changePercent }}</span>
+                <span style="margin-left: 10px;">{{ stockInfo.status }}</span>
+               <br>    <span style="margin-left: 10px;">建议：{{ stockInfo.text }}</span>
+            
+     <br> <br>          <el-button size="small">换一个</el-button>
+            </div>
+        </div>
+
+        <div class="chart-box" v-loading="loading" element-loading-text="正在获取实时行情...">
+            <div id="kline-container"></div>
+        </div>
+
+        <div class="footer-action">
+            <el-button class="btn-gold" @click="dialogVisible = true">投股</el-button>
+            
+  <br> <el-button style="margin-top:5px;" class="btn-primary" @click="sellit = true">卖出</el-button>
+     <p style="text-align:center;color:#dcdcdcf3;font-size:15px;">数据来自{{stockInfo.pl}}<br>站点练习 仅供娱乐 请勿当真
+     <br>本站投资无风险因为不要钱</p>
+        </div>
+
+        <el-dialog v-model="dialogVisible" title="买入股票" width="90%" align-center>
+            <el-form label-position="top">
+                <el-form-item label="请输入买入金额 (CNY)">
+                    <el-input v-model="buyAmount" placeholder="请输入数字" type="text" clearable></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" color="#d4af37" @click="handleConfirmBuy">提交</el-button>
+            </template>
+        </el-dialog>
+        
+        <el-dialog v-model="sellit" title="卖出" width="90%" align-center>
+          <p>持有金额：{{moneys}}</p>
+            <el-form label-position="top">
+                <el-form-item label="请输入卖出金额 (CNY)">
+                    <el-input v-model="SellAmount" placeholder="请输入数字" type="text" clearable></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="sellit = false">取消</el-button>
+                <el-button type="primary" color="#d4af37" @click="handleConfirmSell">提交</el-button>
+            </template>
+        </el-dialog>
+    
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted, nextTick } = Vue;
+        const { ElMessage } = ElementPlus;
+
+        createApp({
+            setup() {
+              const moneys = ref('0');
+                const loading = ref(true);
+                const stockInfo = ref({});
+                const dialogVisible = ref(false);
+                const buyAmount = ref('');
+                  const sellit = ref(false);
+                const SellAmount = ref('');
+              
+                let chartInstance = null;
+
+                // 初始化ECharts K线图
+                const initChart = (rawData) => {
+                    const chartDom = document.getElementById('kline-container');
+                    chartInstance = echarts.init(chartDom);
+                    
+                    // 数据转换 [日期, 开盘, 收盘, 最低, 最高]
+                    const categoryData = rawData.map(item => item[0]);
+                    const values = rawData.map(item => [item[1], item[2], item[3], item[4]]);
+
+                    const option = {
+                        tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                        grid: { left: '10%', right: '5%', bottom: '15%' },
+                        xAxis: { 
+                            type: 'category', 
+                            data: categoryData, 
+                            scale: true, 
+                            boundaryGap: false,
+                            axisLine: { lineStyle: { color: '#999' } }
+                        },
+                        yAxis: { 
+                            scale: true, 
+                            splitArea: { show: true },
+                            axisLine: { lineStyle: { color: '#999' } }
+                        },
+                        series: [
+                            {
+                                type: 'candlestick',
+                                data: values,
+                                itemStyle: {
+                                    color: '#f56c6c',    // 阳线颜色
+                                    color0: '#67c23a',   // 阴线颜色
+                                    borderColor: '#f56c6c',
+                                    borderColor0: '#67c23a'
+                                }
+                            }
+                        ]
+                    };
+                    chartInstance.setOption(option);
+                };
+
+                // 获取数据
+                const loadData = async () => {
+                    loading.value = true;
+                    try {
+                        // 模拟请求延迟，更真实地看到 v-loading 效果
+                        const response = await fetch('gp.json');
+                        if (!response.ok) throw new Error();
+                        const data = await response.json();
+                        
+                        stockInfo.value = data;
+                        
+                        // 等待DOM渲染后初始化图表
+                        nextTick(() => {
+                            initChart(data.klineData);
+                            loading.value = false;
+                        });
+                    } catch (error) {
+                        loading.value = false;
+                        ElMessage.error('加载K线图失败');
+                    }
+                };
+
+                // 买入逻辑
+                const handleConfirmBuy = () => {
+                    const amount = buyAmount.value.trim();
+                    const reg = /^[0-9]+(.[0-9]{1,2})?$/; // 数字正则
+
+                    if (!amount) {
+                        ElMessage.warning('请输入买入金额');
+                        return;
+                    }
+                    if (!reg.test(amount)) {
+                        ElMessage.warning('金额格式不正确，请输入有效的数字');
+                        return;
+                    }
+moneys.value = moneys*amount;
+                    ElMessage.success({
+                        message: '买入成功！',
+                        offset: 100
+                    });
+                    dialogVisible.value = false;
+                    buyAmount.value = '';
+                };
+
+                const handleConfirmSell = () => {
+                    const amount = SellAmount.value.trim();
+                    const reg = /^[0-9]+(.[0-9]{1,2})?$/; // 数字正则
+
+                    if (!amount) {
+                        ElMessage.warning('请输入金额');
+                        return;
+                    }
+                    if (!reg.test(amount)) {
+                        ElMessage.warning('金额格式不正确，请输入有效的数字');
+                        return;
+                    }
+
+                    ElMessage.success({
+                        message: '卖出成功',
+                        offset: 100
+                    });
+                    sellit.value = false;
+                    SellAmount.value = '';
+                };
+                
+                onMounted(() => {
+                    loadData();
+                    // 窗口缩放自适应
+                    window.addEventListener('resize', () => chartInstance && chartInstance.resize());
+                });
+
+                return {
+                  moneys,
+                    loading,
+                    stockInfo,
+                    dialogVisible,
+                    buyAmount,
+                    handleConfirmBuy,
+                    SellAmount,
+                    sellit,
+                    handleConfirmSell
+                };
+            }
+        }).use(ElementPlus).mount('#app');
+    </script>
+</body>
+</html>

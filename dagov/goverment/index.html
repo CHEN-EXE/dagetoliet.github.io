@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全成大哥岛馆政府 | 全成大哥政务通</title>
+    <style>
+        /* --- 基础设置 --- */
+        :root {
+            --gov-blue: #003366;
+            --gov-dark: #1a1a1a;
+            --gov-red: #b31942;
+            --gov-bg: #f5f5f5;
+            --text-color: #333;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gov-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* --- 顶部通告栏 --- */
+        .usa-banner {
+            background-color: #e8e8e8;
+            padding: 4px 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .usa-banner-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 16px;
+            height: 11px;
+            background: linear-gradient(to bottom, #b31942 50%, #fff 50%);
+            display: inline-block;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+
+        /* --- 头部 --- */
+        header { background-color: #fff; border-bottom: 1px solid #ddd; }
+
+        .header-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gov-blue);
+        }
+
+        .logo-seal {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gov-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 24px;
+            margin-right: 15px;
+            border: 3px solid var(--gov-red);
+        }
+
+        .site-title { font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
+        .site-subtitle { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 导航 --- */
+        .nav-container { background-color: var(--gov-blue); }
+        .navbar { max-width: 1200px; margin: 0 auto; list-style: none; display: flex; }
+        .nav-link {
+            display: block; padding: 15px 25px; color: #fff;
+            text-decoration: none; font-weight: 600; font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .nav-link:hover { background-color: #004488; }
+
+        /* --- Hero / 业务大厅背景 --- */
+        .hero {
+            background: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.8)), 
+                        url('https://source.unsplash.com/random/1600x900/?office,building') no-repeat center center/cover;
+            background-color: var(--gov-blue); 
+            color: #fff;
+            padding: 60px 20px 100px;
+            text-align: center;
+            min-height: 600px;
+        }
+
+        .hero h1 { font-size: 2.2rem; margin-bottom: 15px; letter-spacing: 1px; }
+        .hero p { font-size: 1rem; max-width: 700px; margin: 0 auto 30px; color: #dceefb; }
+
+        /* --- 业务办理模块样式 --- */
+        .service-module {
+            background: #fff;
+            color: #333;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 550px;
+            margin: 0 auto;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .module-header {
+            background-color: #f8f9fa;
+            padding: 15px 25px;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            color: var(--gov-blue);
+            display: flex;
+            align-items: center;
+        }
+        
+        .module-header::before {
+            content: ''; display: inline-block; width: 4px; height: 16px;
+            background: var(--gov-red); margin-right: 10px;
+        }
+
+        .module-body { padding: 25px; }
+
+        .loading-text { text-align: center; color: #999; padding: 20px; }
+
+        /* 选项样式 */
+        .service-item {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .service-item input[type="radio"] {
+            position: absolute; opacity: 0;
+        }
+
+        .service-item label {
+            display: block;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            background: #fdfdfd;
+        }
+
+        .service-item label:hover {
+            border-color: var(--gov-blue);
+            background: #f0f7ff;
+        }
+
+        .service-item input[type="radio"]:checked + label {
+            background-color: var(--gov-blue);
+            color: #fff;
+            border-color: var(--gov-blue);
+        }
+
+        /* 提交按钮 */
+        .action-btn {
+            background-color: var(--gov-red);
+            color: #fff; border: none;
+            padding: 12px; width: 100%;
+            font-size: 1rem; font-weight: bold;
+            border-radius: 4px; cursor: pointer;
+            margin-top: 15px;
+        }
+        .action-btn:hover { background-color: #8a1232; }
+        .action-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        /* 成功提示 */
+        .success-view {
+            display: none; padding: 30px 20px; text-align: center;
+        }
+        .icon-check {
+            width: 60px; height: 60px; background: #28a745;
+            border-radius: 50%; margin: 0 auto 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .icon-check svg { width: 35px; height: 35px; stroke: #fff; stroke-width: 3; fill: none; }
+
+        /* --- 页脚 --- */
+        footer {
+            background-color: #e6e6e6; padding: 40px 20px;
+            border-top: 1px solid #ccc;
+        }
+        .footer-content { max-width: 1200px; margin: 0 auto; text-align: center; color: #444; }
+        .disclaimer { margin-top: 20px; font-size: 0.8rem; color: #888; border-top: 1px solid #ccc; padding-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="usa-banner">
+        <div class="usa-banner-inner">
+            <span class="flag-icon"></span>
+            <span class="usa-banner-text">
+                全成大哥政务+
+            </span>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-main">
+            <a href="#" class="logo-area">
+                <div class="logo-seal">78</div>
+                <div>
+                    <div class="site-title">全成大哥岛馆政府</div>
+                    <div class="site-subtitle">QuanChengDage🛫Gos</div>
+                </div>
+            </a>
+        </div>
+
+        <nav class="nav-container">
+            <ul class="navbar">
+                <li class="nav-item">
+                    <a onclick="window.history.go(-1);"  class="nav-link">返回首页</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>全成大哥政务+</h1>
+    
+        <div class="service-module">
+            <div class="module-header">全成政务通V1.0_1827891</div>
+            
+            <div class="module-body">
+                <form id="serviceForm">
+                    <p style="margin-bottom: 15px; font-size: 0.9rem; color: #666;">请选择您需要办理的业务事项：</p>
+                    
+                    <div id="list-container">
+                        <div class="loading-text">正在连接政务云数据...</div>
+                    </div>
+
+                    <button type="submit" class="action-btn" id="submitBtn" disabled>立即办理</button>
+                </form>
+
+                <div id="successView" class="success-view">
+                    <div class="icon-check">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <h3 style="color:#333; margin-bottom:5px;">申请已提交</h3>
+                    <p style="color:#666; font-size:0.9rem;">您的业务已进入后台审批流程。<br>办理编号：DGNB-666</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>大哥国际厕所集团  全成大哥岛馆政府监制</h3>
+            <div class="disclaimer">
+                <p><strong>严正声明</strong></p>
+                <p>这里不需要天天道馆也别路</p>
+                <p>站点坑你的根本没有这个地方</p>
+                <p>(平台仅供虚构)</p>
+            </div>
+        </div>
+    
+      </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const listContainer = document.getElementById('list-container');
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.getElementById('serviceForm');
+            const successView = document.getElementById('successView');
+
+            // 1. 读取JSON
+            fetch('inp.json')
+                .then(res => res.ok ? res.json() : Promise.reject('File Error'))
+                .then(data => {
+                    listContainer.innerHTML = '';
+                    if (!data.length) {
+                        listContainer.innerHTML = '<div class="loading-text">暂无服务事项</div>';
+                        return;
+                    }
+
+                    // 2. 生成列表
+                    data.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'service-item';
+                        
+                        const input = document.createElement('input');
+                        input.type = 'radio';
+                        input.name = 'service';
+                        input.id = 'svc_' + item.id;
+                        input.value = item.id;
+
+                        const label = document.createElement('label');
+                        label.htmlFor = input.id;
+                        label.textContent = item.name;
+
+                        // 点击逻辑
+                        input.addEventListener('change', () => {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = "下一步：等候审核";
+                        });
+
+                        div.appendChild(input);
+                        div.appendChild(label);
+                        listContainer.appendChild(div);
+                    });
+                })
+                .catch(() => {
+                    listContainer.innerHTML = '<div class="loading-text" style="color:red">数据加载失败 102</div>';
+                });
+
+            // 3. 提交逻辑
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitBtn.textContent = "处理中...";
+                submitBtn.disabled = true;
+
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    successView.style.display = 'block';
+                }, 800);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,762 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>全成智慧如厕</title>
+    <!-- 大哥国际厕所公司开发 -->
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <script src="https://res.weiunity.com/msg/msg.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+  <style>
+  body{
+    background-color: #eeeeee !important;
+  }
+    .login_content{
+      position: absolute;
+      top:20%;
+      bottom:50%;
+      text-align: center;
+      align-items:center;
+      align-self: center;
+      align-content: center;
+      width:100%;
+      height:100px;
+  font-size:40px;
+    }
+    .otto3_input{
+        border: 1px solid #e0e0e0;
+      border-radius:20px;
+  background-color: rgba(255,255,255,0.628);
+  width:300px;
+  margin-bottom:8px;
+ padding:10px;
+    }
+    /* From Uiverse.io by andrew-demchenk0 */ 
+.info {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 320px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  background: #509AF8;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px -3px #111;
+}
+
+.info__icon {
+  width: 20px;
+  height: 20px;
+  transform: translateY(-2px);
+  margin-right: 8px;
+}
+
+.info__icon path {
+  fill: #fff;
+}
+
+.info__title {
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+}
+
+.info__close {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.info__close path {
+  fill: #fff;
+}
+    .btn{width:160px;border:none;outline:none;background-color:rgb(52,143,232);color:#fff;height:40px;border-radius:100000px;font-size:15px
+    }
+    .btn:hover{
+      background-color:
+      rgba(52,143,232,0.899);
+    }
+    .otto3_input:hover{
+       border:1.5px solid rgba(52,143,232,0.899);
+    }
+    /* From Uiverse.io by Yaya12085 */ 
+.card {
+  width: auto;
+  border:none;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 1);
+  padding:10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  grid-gap: 1rem;
+  width:100%;
+
+}
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgba(96, 165, 250, 1);
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 1);
+}
+
+.icon svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.alert {
+  font-weight: 600;
+  color: rgba(107, 114, 128, 1);
+}
+
+.message {
+  margin-top: 1rem;
+  color: rgba(107, 114, 128, 1);
+}
+
+.actions {
+  margin-top: 1.5rem;
+  width:90%;
+}
+
+.actions a {
+  text-decoration: none;
+}
+
+.mark-as-read, .read {
+  display: inline-block;
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+
+.read {
+  background-color: rgba(59, 130, 246, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.mark-as-read {
+  margin-top: 0.5rem;
+  background-color: rgba(249, 250, 251, 1);
+  color: rgba(107, 114, 128, 1);
+  transition: all .15s ease;
+}
+
+.mark-as-read:hover {
+  background-color: rgb(230, 231, 233);
+}
+/* From Uiverse.io by reglobby */ 
+.container {
+  width: 100px;
+  height: 280px;
+  background-color: #343541;
+  border-radius: 8px;
+  
+  width: auto;
+  border:none;
+  padding:5px;
+  
+font-size:20px !important;
+  flex-direction: column;
+}
+
+.nav-bar {
+  width: 100%;
+  height: 40px;
+  background-color: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-bar a {
+  color: #6B6C7B;
+  white-space: nowrap;
+  margin-left: 10px;
+  user-select: none;
+}
+
+.close {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+#helper1{
+  border:none;
+  border-radius: 10px;
+  width:100%;
+  
+}
+.line {
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  background-color: #6B6C7B;
+  border-radius: 30px;
+}
+
+.line.one {
+  transform: rotate(45deg)
+}
+
+.line.two {
+  transform: rotate(135deg)
+}
+
+.messages-area {
+  background-color: #343541;
+  width: 100%;
+  height: 210px;
+}
+
+.sender-area {
+  background-color: #343541;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  border-radius: 8px;
+}
+
+.message {
+  width: 100%;
+  height: 40px;
+}
+
+.message.one,
+.message.three,
+.message.five {
+  background-color: #2E2F3A;
+}
+
+.message.two,
+.message.four,
+.message.six {
+  background-color: #343541;
+}
+
+.send-img {
+  width: 30px;
+}
+
+.send-input {
+  outline: none;
+  display: flex;
+  border: none;
+  background: none;
+  height: 40px;
+  width: 100%;
+  border-radius: 10px;
+  background: none;
+  color: white;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.send-input::placeholder {
+  color: #828E9E;
+}
+
+.input-place {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+
+  align-items: center;
+  background-color: #40414F;
+  border-radius: 7px;
+  height: 40px;
+  width: 100%;
+  gap: 5px;
+  border: 1px solid #2E2F3A;
+}
+
+.send {
+  width: 30px;
+  height: 30px;
+  background-color: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.send-icon {
+  width: 17px;
+}
+/* From Uiverse.io by lenin55 */ 
+.cl-toggle-switch {
+ position: relative;
+}
+
+.cl-switch {
+ position: relative;
+ display: inline-block;
+}
+/* Input */
+.cl-switch > input {
+ appearance: none;
+ -moz-appearance: none;
+ -webkit-appearance: none;
+ z-index: -1;
+ position: absolute;
+ right: 6px;
+ top: -8px;
+ display: block;
+ margin: 0;
+ border-radius: 50%;
+ width: 40px;
+ height: 40px;
+ background-color: rgb(0, 0, 0, 0.38);
+ outline: none;
+ opacity: 0;
+ transform: scale(1);
+ pointer-events: none;
+ transition: opacity 0.3s 0.1s, transform 0.2s 0.1s;
+}
+/* Track */
+.cl-switch > span::before {
+ content: "";
+ float: right;
+ display: inline-block;
+ margin: 5px 0 5px 10px;
+ border-radius: 7px;
+ width: 36px;
+ height: 14px;
+ background-color: rgb(0, 0, 0, 0.38);
+ vertical-align: top;
+ transition: background-color 0.2s, opacity 0.2s;
+}
+/* Thumb */
+.cl-switch > span::after {
+ content: "";
+ position: absolute;
+ top: 2px;
+ right: 16px;
+ border-radius: 50%;
+ width: 20px;
+ height: 20px;
+ background-color: #fff;
+ box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+ transition: background-color 0.2s, transform 0.2s;
+}
+/* Checked */
+.cl-switch > input:checked {
+ right: -10px;
+ background-color: #85b8b7;
+}
+
+.cl-switch > input:checked + span::before {
+ background-color: #85b8b7;
+}
+
+.cl-switch > input:checked + span::after {
+ background-color: #018786;
+ transform: translateX(16px);
+}
+/* Hover, Focus */
+.cl-switch:hover > input {
+ opacity: 0.04;
+}
+
+.cl-switch > input:focus {
+ opacity: 0.12;
+}
+
+.cl-switch:hover > input:focus {
+ opacity: 0.16;
+}
+/* Active */
+.cl-switch > input:active {
+ opacity: 1;
+ transform: scale(0);
+ transition: transform 0s, opacity 0s;
+}
+
+.cl-switch > input:active + span::before {
+ background-color: #8f8f8f;
+}
+
+.cl-switch > input:checked:active + span::before {
+ background-color: #85b8b7;
+}
+/* Disabled */
+.cl-switch > input:disabled {
+ opacity: 0;
+}
+
+.cl-switch > input:disabled + span::before {
+ background-color: #ddd;
+}
+
+.cl-switch > input:checked:disabled + span::before {
+ background-color: #bfdbda;
+}
+
+.cl-switch > input:checked:disabled + span::after {
+ background-color: #61b5b4;
+}
+
+/* From Uiverse.io by zanina-yassine */ 
+.modal {
+  width: 450px;
+  background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
+  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.banner {
+  width: 100%;
+  height: 30px;
+  margin: 0;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 21px;
+  text-align: center;
+  color: #2B2B2F;
+  margin-bottom: 15px;
+}
+
+.description {
+  max-width: 80%;
+  margin: auto;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  color: #5F5D6B;
+}
+
+.tab-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  padding: 2px;
+  background-color: #ebebec;
+  border-radius: 9px;
+  margin: 10px 20px 0px 20px;
+}
+
+.indicator {
+  content: "";
+  width: 50%;
+  height: 28px;
+  background: #FFFFFF;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  z-index: 9;
+  border: 0.5px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 7px;
+  transition: all 0.2s ease-out;
+}
+
+.tab {
+  width: 50%;
+  height: 28px;
+  position: relative;
+  z-index: 99;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  flex: none;
+  align-self: stretch;
+  flex-grow: 1;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tab--1:hover ~ .indicator {
+  left: 2px;
+}
+
+.tab--2:hover ~ .indicator {
+  left: calc(50% - 2px);
+}
+
+.benefits {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.benefits > span {
+  font-size: 15px;
+  color: #2B2B2F;
+  font-weight: 700;
+}
+
+.benefits ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.benefits ul li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.benefits ul li span {
+  font-weight: 600;
+  font-size: 12px;
+  color: #5F5D6B;
+}
+
+.modal--footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-top: 1px solid #ebebec;
+}
+
+.price {
+  position: relative;
+  font-size: 32px;
+  color: #2B2B2F;
+  font-weight: 900;
+}
+
+.price sup {
+  font-size: 13px;
+}
+
+.price sub {
+  width: fit-content;
+  position: absolute;
+  font-size: 11px;
+  color: #5F5D6B;
+  bottom: 5px;
+  display: inline-block;
+}
+
+.upgrade-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 215px;
+  height: 40px;
+  background: #0bdd12;
+  box-shadow: 0px 0.5px 0.5px #EFEFEF, 0px 1px 0.5px rgba(239, 239, 239, 0.5);
+  border-radius: 7px;
+  border: 0;
+  outline: none;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.upgrade-btn:hover {
+  background-color: #07b90d;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+  </style>
+  <body>
+    <div class="login_content">
+      <p><svg style="margin-bottom:-5px" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path fill="none" stroke="#333333" d="M5.5 8v7.5h.25s1.016-1.152 1.5-2c.62-1.087 1.125-2.5 1.125-2.5h.25s.505 1.413 1.125 2.5c.484.848 1.5 2 1.5 2h.25V8m7 2.5v-1a1 1 0 0 0-1-1H15a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-1m-6.5 10C5.649 23.5.5 18.351.5 12S5.649.5 12 .5S23.5 5.649 23.5 12S18.351 23.5 12 23.5Z"/></svg>全成智慧如厕</p>
+        <p id="content" style="margin-top:-30px;font-size:20px;">一人一坑 扫码登陆后自动开门</p>
+
+<!-- 扫码 -->
+        <div id="otto1_c">
+      <img style="border-radius:10px;" src="./author.png" onerror="alert('二维码加载失败！')" alt="加载失败"></img>
+    <p style="margin-top:5px;margin:0;font-size:20px;">有问题? <a style="color:blue" onclick="helper1.showModal()">在线客服</a></p>
+  <br>  
+  <img src="./text.jpg"/>
+  <input placeholder="输入如上文本以完成验证。"></input>
+  <button>OK</button>
+  <p style="margin-bottom:5px;font-size:17px; color:rgba(0,0,0,0.601)">更多方式</p><button class="btn" onclick="otto1()">登陆</button>
+  </div>
+  
+<!-- 支付 -->
+        <div style="display:none;" id="otto2_c">
+          <input id="otto3_input"  class="otto3_input" placeholder="输入占坑时间（分钟）"/>
+          
+          <button class="btn" onclick="otto2()">结算</button>
+  </div>
+  <!-- 大哥牛逼 -->
+  <div style="display:none;" id="otto3"><p id="dage6">大哥牛逼</p>
+  <p style="font-size:20px;margin-top:3px;color:rgba(0,0,0,0.473)">*如厕请注意时间限制</p>
+   <button class="btn" onclick="otto3()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#fff" d="M9.001 14.278a.73.73 0 0 1-.97-.296l-2.05-4.5a.367.367 0 0 1 .551-.448l2.363 1.683a1.1 1.1 0 0 0 .977.111l11.113-4.946C18.993 3.534 15.713 2 12 2C5.925 2 1 6.104 1 11.167c0 2.762 1.482 5.248 3.8 6.929a.73.73 0 0 1 .27.83l-.496 1.85c-.023.087-.059.177-.059.268c0 .202.164.367.367.367c.08 0 .144-.03.212-.069l2.408-1.39a1.15 1.15 0 0 1 .584-.17q.169.001.323.05a13 13 0 0 0 3.591.502c6.075 0 11-4.104 11-9.167c0-1.534-.454-2.978-1.253-4.248L9.081 14.232z"/></svg></button>
+  </div>
+  
+  
+  <!-- 马桶启动 -->
+  <div style="display:none;" id="otto4"><p style="color:red">
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><path fill="#333333" d="M22.072 6.66c.126 1.058-.063 1.734-.309 2.133c2.029.56 3.879 1.974 4.743 3.82c.625 1.532.66 3.359.192 5.027C29.18 18.847 31 21.547 31 24.429c0 3.722-2.723 6.399-6.574 6.624v.016H9.03v-.004C4.26 30.95 2 27.75 2 24.023c0-2.494 2.149-5.47 4.549-6.49c-.002-.22.02-.387.056-.512c-.929-1.88.021-3.78.618-4.5l.183-.237l.044-.057l.01-.013c.83-1.083 1.331-1.736 4.895-3.279c3.887-1.683 5.269-3.336 5.8-4.006c.146-.184.28-.424.42-.67v-.002c.366-.652.763-1.358 1.478-1.245c.987.156 1.761 1.465 2.02 3.647M11.1 24.103a4.485 4.485 0 1 0 0-8.97a4.485 4.485 0 0 0 0 8.97m15.384-4.485a4.485 4.485 0 1 0-8.97 0a4.485 4.485 0 0 0 8.97 0M12.015 22.13a2.483 2.483 0 1 0 0-4.967a2.483 2.483 0 0 0 0 4.967m9.011 0a2.483 2.483 0 1 0 0-4.967a2.483 2.483 0 0 0 0 4.967m-4.448 6.946c2.183 0 3.953-1.54 3.953-3.918h-7.906c0 2.442 1.77 3.918 3.953 3.918"/></svg><br>00:00:00</p>
+  <!-- From Uiverse.io by andrew-demchenk0 --> 
+<center>
+<a href="./" class="info">
+    <div class="info__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none"><path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"></path></svg>
+    </div>
+    <div class="info__title">感谢本次服务！点此处终结</div>
+</a>
+<div style="margin-top:9px" class="info">
+    <div class="info__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none"><path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"></path></svg>
+    </div>
+    <div class="info__title">请在规定时间内完成如厕</div>
+    <div class="info__close"><svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37"></path></svg></div>
+</div>
+</center><br>
+  <button style="background-color:rgba(0,0,0,0.521)" class="btn">续费</button>
+  <button class="btn" onclick="a666.showModal()" >不拉了</button>
+  
+  </div>
+  
+  <!-- From Uiverse.io by reglobby --> 
+	<dialog id="helper1" >
+	<div class="modal">
+	  <button style="background:none;" onclick="helper1.close()">X</button>
+	  <!-- From Uiverse.io by zanina-yassine --> 
+  <div class="form">
+    <div class="banner"></div>
+    <label class="title">大哥拉屎计划(智慧厕所的S VIP以及VIP。)</label>
+    <p class="description">2026年3月拉屎计划订阅 面向全城</p>
+    <div class="tab-container">
+      <button class="tab tab--1">月度</button>
+      <button class="tab tab--2">1000年订阅</button>
+      <div class="indicator"></div>
+    </div>
+
+    <div class="benefits">
+      <span>你享受什么？</span>
+      <ul>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="16" width="16">
+            <rect fill="black" rx="8" height="16" width="16"></rect>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="white" d="M5 8.5L7.5 10.5L11 6"></path>
+          </svg>
+          <span>获得多年客服的24小时对话能力以及对话还有交谈。</span>
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" height="16" width="16">
+            <rect fill="black" rx="8" height="16" width="16"></rect>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="white" d="M5 8.5L7.5 10.5L11 6"></path>
+          </svg>
+          <span>预付费要求1000支出然后完成后回退账户。</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="modal--footer">
+      <label class="price"><sup>$</sup>9<sub>/大哥</sub></label>
+      <button class="upgrade-btn">立即订阅</button>
+    </div>
+  </div>
+  </div>
+   </dialog>
+  
+  <p style="color:rgb(189,189,189);font-size:10px;">大哥国际厕所公司开发 仅供娱乐</p>
+  <br>
+      </div>
+    <p style="color:rgb(189,189,189)">版本号：version2.00dp^64</p>
+          
+<dialog class="card" id="a666">
+  <div class="header">
+    <span class="icon">
+      <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" fill-rule="evenodd"></path>
+      </svg>
+    </span>
+    <p class="alert">提示</p>
+  </div>
+
+  <p class="message">
+    确定不拉了？<br>此操作不会浪费一分钱，同时也不回退回到您的账户中。
+  </p>
+
+  <div class="actions">
+    <a class="read" href="">
+      不拉了
+    </a>
+
+    <a class="mark-as-read"  onclick="a666.close()">
+      还是继续吧
+    </a>
+</div>
+
+  </dialog>
+  </body>
+  <script>
+ // 一站式如厕解决方案
+    function otto1(){
+   msg.info('你好，User.');
+         document.getElementById("otto1_c").style.display ="none";
+         document.getElementById("content").innerHTML ="(C114_1919)欢迎如厕！请支付后继续。";
+ 
+         document.getElementById("otto2_c").style.display ="block";
+    }
+function otto2() {
+
+document.getElementById("content").innerHTML = "请核实信息";
+
+var inputValue = document.getElementById("otto3_input").value;
+
+if (inputValue.trim() !== "" && !isNaN(inputValue)) {
+
+document.getElementById("otto2_c").style.display = "none";
+
+document.getElementById("otto3").style.display = "block";
+
+document.getElementById("dage6").innerHTML = "共计支付 ¥" + inputValue;
+
+} else {
+
+msg.error('非法字符');
+
+}
+
+}
+    function otto3(){
+      msg.success('支付完成');
+      document.getElementById("content").innerHTML="请耐心等待马桶响应...";
+         document.getElementById("otto3").style.display ="none";
+          document.getElementById("otto4").style.display ="block";
+     }
+ 
+  </script>
+</html>
