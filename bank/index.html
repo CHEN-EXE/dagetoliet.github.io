@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大哥国际银行 (BBIB) - 您的尊贵首选</title>
+    <title id="tit">大哥国际银行 (BBIB) - 您的尊贵首选</title>
     <style>
         /* --- 全局样式 --- */
         :root {
@@ -75,9 +75,9 @@
         .dashboard-body { background-color: #1a1a2e; color: var(--text-light); min-height: 100vh; }
         .dash-header { background: #16213e; padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
         .dash-user { display: flex; align-items: center; gap: 15px; }
-        .avatar { width: 50px; height: 50px; background: var(--gold-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; font-size: 20px; }
+        .avatar { width: 30px; height: 30px; background: var(--gold-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; font-size: 15px; }
         
-        .dash-container { padding: 40px; max-width: 1000px; margin: 0 auto; }
+        .dash-container { padding: 10px; max-width: 1000px; margin: 0 auto; }
         .balance-card {
             background: linear-gradient(135deg, #0f3460, #16213e);
             border-radius: 20px;
@@ -141,41 +141,45 @@
     <div id="portal-section">
         <header>
             <div class="container nav-wrapper">
-                <div class="logo"><span></span> 大哥国际银行</div>
+                <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" viewBox="0 0 24 24"><path fill="#ffffff" d="M12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8s-8-3.6-8-8s3.6-8 8-8m0-2C6.5 2 2 6.5 2 12s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2m5 15H7v-2h10zm-9-3v-3h2v3zm3 0v-3h2v3zm3 0v-3h2v3zm3-4H7V8.5L12 6l5 2.5z"/></svg>  大哥国际银行</div>
                 <nav>
                     <button class="btn-gold" onclick="showLogin()">登录</button>
                 </nav>
             </div>
         </header>
-
-        <section class="hero">
+        <p style="padding:5px;background-color:var(--gold-light);color:var(--gold-color);text-align:center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 14 14"><path fill="#d4af3d" fill-rule="evenodd" d="M7.933.767a.75.75 0 0 0-1.5 0v.754a.75.75 0 0 0 1.5 0zM6.595 2.928a.75.75 0 0 1 1.024.275l3.858 6.681a.75.75 0 0 1-1.299.75l-.055-.096l-3.092.718a2.171 2.171 0 0 1-3.97 1.664l-.002-.003l-.376-.651l-1.454.337a.5.5 0 0 1-.546-.237l-.609-1.055a.5.5 0 0 1 .068-.591l6.235-6.67l-.057-.097a.75.75 0 0 1 .275-1.025M4.21 11.911l1.357-.315a.671.671 0 0 1-1.21.57zm9.78-5.088a.75.75 0 0 1-.75.75h-.754a.75.75 0 0 1 0-1.5h.753a.75.75 0 0 1 .75.75Zm-12.108.75a.75.75 0 1 0 0-1.5h-.754a.75.75 0 1 0 0 1.5zm2.182-3.868a.75.75 0 0 1-1.06 0l-.634-.634a.75.75 0 1 1 1.06-1.06l.635.633a.75.75 0 0 1 0 1.061Zm7.932-.634a.75.75 0 0 0-1.06-1.06l-.642.64a.75.75 0 1 0 1.061 1.061z" clip-rule="evenodd"/></svg> 投资有风险 选择需谨慎 </p>
+      <section class="hero">
             <div class="container">
-                <h1>大哥国际<br>走向全城</h1>
-                <p>全城首家滚木存储银行</p>
+                <h1>国际银行<br>全成世界</h1>
+                <p>服务安更放心</p>
                 <button class="btn-gold" style="font-size: 1.2rem; padding: 15px 40px;" onclick="alert('对不起你不配')">立即开户</button>
               <br>    <button class="btn-primary" style="margin-top:5px;font-size: 1.2rem; padding: 15px 40px;" onclick="window.location.href = './stock/';">股票市场</button>
             
             </div>
         </section>
 
+<img style="height:100%;width:100%;margin-bottom:-9px" src="./image/fzxc.png">
+      </img> 
+  
         <section class="features">
             <div class="container">
-                <h2 style="text-align: center; margin-bottom: 50px; font-size: 2rem;">为什么大哥都选我们？</h2>
+                <h2 style="text-align: center; margin-bottom: 50px; font-size: 2rem;">为什选我们</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="icon">✈️</div>
-                        <h3>全成资产滚木</h3>
-                        <p>无论您在大哥家还是火星，我们都能确保您的资产像滚木一样，存在但是滚木。</p>
+                        <h3>资产起飞</h3>
+                        <p>您的资产可控</p>
                     </div>
                     <div class="feature-card">
                         <div class="icon">♾️</div>
                         <h3>无限透支权</h3>
-                        <p>想要多少要多少，任你加</p>
+                        <p>随意支配</p>
                     </div>
                     <div class="feature-card">
                         <div class="icon">🤵</div>
-                        <h3>114514H 贴身大爷</h3>
-                        <p>养一堆大爷伺候</p>
+                        <h3>贴身服务</h3>
+                        <p>給</p>
                     </div>
                 </div>
             </div>
@@ -188,20 +192,21 @@
 
     <div id="login-modal" class="modal hidden">
         <div class="modal-content">
-            <h2 style="margin-bottom: 20px;">大哥国际银行用户中心</h2>
+            <h2 style="margin-bottom: 20px;">会员登陆</h2>
             <p style="margin-bottom: 20px; color: #666;">请输账户密码</p>
-            <input type="text" id="username" placeholder="书上写的账号是大哥" value="大哥">
-            <input type="password" placeholder="书上写的没有密码，你胡编一个就好" value="大哥是傻逼">
-            <button class="btn-gold" style="width: 100%; margin-top: 10px;" onclick="processLogin()">确认身份</button>
-            <p style="margin-top: 15px; font-size: 0.8rem; cursor: pointer;" onclick="hideLogin()">返回首页</p>
+            <input type="text" id="username" placeholder="大哥" value="大哥">
+            <input type="password" placeholder="password" value="大哥是傻逼">
+            <button class="btn-gold" style="width: 100%; margin-top: 10px;" onclick="processLogin()">确认</button>
+            <p style="margin-top: 15px; font-size: 0.8rem; cursor: pointer;" onclick="hideLogin()">返回</p>
         </div>
     </div>
 
     <div id="dashboard-section" class="dashboard-body hidden">
         <div class="dash-header">
-            <div class="logo text-gold"> 大哥银行</div>
+            <div class="logo text-gold"> <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#d4af3d" d="M12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8s-8-3.6-8-8s3.6-8 8-8m0-2C6.5 2 2 6.5 2 12s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2m5 15H7v-2h10zm-9-3v-3h2v3zm3 0v-3h2v3zm3 0v-3h2v3zm3-4H7V8.5L12 6l5 2.5z"/></svg>
+            </div>
             <div class="dash-user">
-                <span style="color: #ccc;"></span>
+                <span style="color: #ccc;">SVIP3</span>
                 <span class="text-gold" style="font-weight: bold;" id="user-display-name"></span>
                 <div class="avatar"></div>
                 <button style="background:transparent; color:#fff; border:1px solid #666; padding: 5px 10px; border-radius: 4px;" onclick="logout()">退出</button>
@@ -210,35 +215,36 @@
 
         <div class="dash-container">
             <div class="balance-card">
-                <div class="balance-label">资产(DGNB)<span class="vip-badge">大哥会员V9</span></div>
+                <div class="balance-label">总资产<span class="vip-badge">Svip3</span></div>
                 <div class="balance-amount" id="balance-display">99,888,888,888.00</div>
                 <div style="margin-top: 20px; color: #8892b0;">
                     <span style="margin-right: 20px;">今日收益: <span class="text-gold">+ $1.10</span></span>
-                    <span>股份: 51% (大哥国际厕所公司)</span>
+                    <span>股份: 51% (大哥国际厕所集团)</span>
                 </div>
             </div>
-
+<h2>尊享服务</h2><br>
             <div class="actions-grid">
+    
                 <div class="action-btn" onclick="addZero()">
                     <div style="font-size: 24px; margin-bottom: 10px;">💰</div>
-                    <div>资产新增</div>
+                    <div>支配资产</div>
                 </div>
                 <div class="action-btn" onclick="buyIsland()">
                     <div style="font-size: 24px; margin-bottom: 10px;">🏝️</div>
-                    <div>海岛奇兵</div>
+                    <div>私人岛屿</div>
                 </div>
-                <div class="action-btn" onclick="alert('您不配')">
+                <div class="action-btn" onclick="alert('DG7001号斐济正在飞来。')">
                     <div style="font-size: 24px; margin-bottom: 10px;">✈️</div>
-                    <div>呼叫专鸡</div>
+                    <div>呼叫专机</div>
                 </div>
-                <div class="action-btn" onclick="alert('')">
+                <div class="action-btn" onclick="alert('预约成功')">
                     <div style="font-size: 24px; margin-bottom: 10px;">🛡️</div>
-                    <div>滚木支持</div>
+                    <div>预约服务</div>
                 </div>
             </div>
 
+<h2>资金流水</h2><br>
             <div class="transactions">
-                <h3 style="margin-bottom: 20px; color: var(--gold-color);">流水</h3>
                 <div id="trans-list">
                     <div class="trans-item">
                         <div>
@@ -315,11 +321,12 @@ function processLogin() {
     portalSection.classList.add('hidden');
     document.body.style.backgroundColor = '#1a1a2e'; // 切换背景色
     dashboardSection.classList.remove('hidden');
-
-    alert("大哥，登录成功");
-}
+document.getElementById("tit").innerHTML = "大哥国际银行账户平台 - 尊享服务";
+   }
         // 登出
         function logout() {
+          document.getElementById("tit").innerHTML = "大哥国际银行 (BBIB) - 您的尊贵首选";
+  
             dashboardSection.classList.add('hidden');
             portalSection.classList.remove('hidden');
             document.body.style.backgroundColor = '#f4f7f6'; // 恢复背景色

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园网络验证</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:#eeeeee;
+        }
+        .container {
+            padding: 20px;
+    background-color: #ffffff32;
+    color:#000;
+    
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"]{
+            width: 100%;
+            padding: 5px;
+            height:20px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 100px;
+        }
+         
+        input[type="submit"]:hover {
+            background-color: #6de5f0;
+        }
+        .button-container {
+            text-align: center;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            background-color: #0cc0df;
+            color: white;
+            border: none;
+            
+            border-radius: 100px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color:  #6de5f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <svg xmlns="http://www.w3.org/2000/svg" style="text-align:center;" width="30" height="30" viewBox="0 0 24 24"><g fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 1a4 4 0 0 0-4 4v14a4 4 0 0 0 4 4h14a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5zm6.994 5c-3.202 0-6.122 1.348-8.29 3.569a1 1 0 1 1-1.431-1.397C4.787 5.597 8.21 4 11.994 4c3.783 0 7.207 1.597 9.721 4.172a1 1 0 1 1-1.43 1.397C18.115 7.349 15.196 6 11.995 6zm0 5c-2.023 0-3.883.78-5.335 2.095a1 1 0 1 1-1.342-1.483C7.11 9.99 9.44 9 11.994 9c2.554 0 4.885.99 6.677 2.612a1 1 0 1 1-1.342 1.483C15.877 11.78 14.017 11 11.994 11zm0 5a4.3 4.3 0 0 0-2.511.814a1 1 0 1 1-1.162-1.628A6.3 6.3 0 0 1 11.994 14c1.363 0 2.627.44 3.673 1.186a1 1 0 1 1-1.162 1.628a4.3 4.3 0 0 0-2.51-.814zm-1 3a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1z" fill="#0cc0df"/></g></svg>
+      
+        <h1>连接到"wcdx-edu"</h1>
+        <p>该操作需要认证身份</p>
+       <div id="login">
+                <label for="business">ID</label>
+            <input type="text" id="business" name="business" required placeholder="请输ID">
+
+    
+    
+        <form id="networkForm">
+            <label for="phone">密码*</label>
+            <input type="text" id="phone" name="phone" required placeholder="请输入手机号">
+
+       <br>
+
+<div class="button-container">
+            <button type="submit">认证</button>
+            </div>
+        </form>
+        <p>联网提醒: wcdx@of.edu.kg</p>
+            
+      
+    </div>
+       <div id="ok" style="display:none;">
+           <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="#0cc0df" d="M12 0a12 12 0 1 0 12 12A12 12 0 0 0 12 0M7.5 7a2 2 0 1 1-2 2a2 2 0 0 1 2-2m-.44 8.71a.43.43 0 0 1 .38-.22h9.12a.43.43 0 0 1 .38.22a.43.43 0 0 1 0 .44a5.71 5.71 0 0 1-9.88 0a.43.43 0 0 1 0-.44M16.5 11a2 2 0 1 1 2-2a2 2 0 0 1-2 2"/></svg>
+        <br>   网络验证成功!
+         </div>
+<p style="text-align:center;color:#fff;">Copyright Tech</p>
+    <script>
+        // 模拟发送验证码
+        function sendSMS() {
+            const phone = document.getElementById('phone').value;
+            if (phone) {
+                alert("验证码已发送至手机号：" + phone);
+            } else {
+                alert("请输入手机号！");
+            }
+        }
+
+        // 表单提交的模拟处理
+        document.getElementById('networkForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const phone = document.getElementById('phone').value;
+            if (phone) {
+                alert("验证成功");
+                const logins = document.getElementById('login');
+                logins.style="display:none;";
+                
+                const oks = document.getElementById('ok');
+                oks.style="display:block ;";
+            } else {
+                alert("请输入手机号和验证码！");
+            }
+        });
+    </script>
+</body>
+</html>

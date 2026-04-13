@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>武成大学  校园网</title>
+  
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <style>
+        /* 基础样式 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Georgia", "Times New Roman", serif; line-height: 1.6; color: #333; }
+        
+        /* 康奈尔红主题色 */
+        :root { --wcu-red: #B31B1B; --wcu-dark: #222; --wcu-gray: #f5f5f5; }
+        
+        /* 顶部导航 */
+        header { background: var(--wcu-red); color: white; position: sticky; top: 0; z-index: 1000; }
+        .nav-top { background: rgba(0,0,0,0.2); padding: 8px 0; font-size: 14px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav-top a { color: white; text-decoration: none; margin-right: 20px; opacity: 0.9; }
+        .nav-top a:hover { opacity: 1; text-decoration: underline; }
+        
+        /* 主导航 */
+        .nav-main { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        .logo { font-size: 28px; font-weight: bold; letter-spacing: 1px; }
+        .logo span { font-weight: normal; opacity: 0.9; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; font-size: 16px; font-weight: 500; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 0.8; }
+        
+        /* Hero区域 */
+        .hero { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23666" width="1200" height="600"/><text fill="%23999" font-size="40" x="50%" y="50%" text-anchor="middle">滚木</text></svg>'); background-size: cover; background-position: center; height: 600px; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+        .hero-content h1 { font-size: 56px; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero-content p { font-size: 24px; margin-bottom: 30px; font-style: italic; }
+        .btn { display: inline-block; padding: 15px 40px; background: var(--wcu-red); color: white; text-decoration: none; border-radius: 3px; font-size: 18px; transition: transform 0.3s, box-shadow 0.3s; border: 2px solid white; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,0,0,0.3); background: white; color: var(--wcu-red); }
+        
+        /* 特色区域 */
+        .features { padding: 80px 0; background: white; }
+        .section-title { text-align: center; font-size: 36px; margin-bottom: 50px; color: var(--wcu-dark); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .card { background: var(--wcu-gray); padding: 40px; border-radius: 5px; text-align: center; transition: transform 0.3s; border-top: 4px solid var(--wcu-red); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .card h3 { color: var(--wcu-red); font-size: 24px; margin-bottom: 15px; }
+        .card p { color: #666; line-height: 1.8; }
+        
+        /* 新闻区域 */
+        .news { padding: 20px 0; background: var(--wcu-gray); }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .news-item { width:auto;background: white; overflow: hidden; border-radius: 5px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+        .news-content { padding: 25px; }
+        .news-content h4 { color: var(--wcu-red); font-size: 20px; margin-bottom: 10px; }
+        .news-content .date { color: #999; font-size: 14px; margin-bottom: 10px; }
+        
+        /* Footer */
+        footer { background: var(--wcu-dark); color: white; padding: 60px 0 30px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-section h4 { color: var(--wcu-red); margin-bottom: 20px; font-size: 18px; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 10px; }
+        .footer-section a { color: #aaa; text-decoration: none; transition: color 0.3s; }
+        .footer-section a:hover { color: white; }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid #444; color: #777; font-size: 14px; }
+        .disclaimer { background: rgba(179, 27, 27, 0.2); border: 1px solid var(--wcu-red); padding: 15px; margin-top: 20px; border-radius: 5px; color: #ff9999; font-weight: bold; }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 36px; }
+            .hero { height: 400px; }
+        }
+        
+        input{
+          padding:15px;
+          border: none ;
+          border-radius:20px;
+        margin-bottom:5px;
+        width:60%;
+        }
+        .prbtn{
+          padding:10px;
+          border:none;
+          border-radius:20px;
+          width:90px;
+        }
+        .prbtn:hover{
+          background-color: #B31B1B;
+          color:#fff;
+        }
+        a{
+          color:#ff2d2ddf;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="nav-top">
+            <div class="container">
+                <a href="#">学生</a>
+                <a href="#">教职工</a>
+                <a href="#">校友</a>
+                <a href="#">访客</a>
+             <a href="#">校园网</a>
+               </div>
+        </div>
+        <div class="container">
+            <nav class="nav-main">
+                <div class="logo">武成大学</div>
+                <ul class="nav-links">
+                    <li><a href="#">关于我们</a></li>
+                    <li><a href="#">学术</a></li>
+                    <li><a href="#">招生录取</a></li>
+                    <li><a href="#">校园生活</a></li>
+                    <li><a href="#">新闻中心</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>智慧校园登陆</h1>
+          
+            <form>
+              <input placeholder="ID/学号"/><br>
+                   <input type="password" placeholder="密码"/><br>
+         <button class="prbtn">登陆</button>
+         <br>
+         <span>*2025年新生已记录账号信息，请在录取通知书上查看初始密码。<br>*第一次登陆后需要修改密码，如果忘记密码，请找教务部重置密码。或通过历年录取通知书扉页上的重置密码密钥重置。<a href="./pwd.html">重置密码</a></span>
+            </form>
+        </div>
+    </section>
+
+   
+   
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="#">图书馆</a></li>
+                        <li><a href="#">校园地图</a></li>
+                        <li><a href="#">教务处</a></li>
+                        <li><a href="#">招聘就业</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>联系方式</h4>
+                    <ul>
+                        <li>地址：全成大哥岛馆全成大道北路120号</li>
+                        <li>电话：(078) 9191-9191</li>
+                        <li>邮箱：wcdx@of.edu.kg</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>关注我们</h4>
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 武成大学 WCUniversity 保留所有权利。 大哥国际厕所集团开发</p>
+                <div class="disclaimer">⚠️ 该网站仅供娱乐</div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

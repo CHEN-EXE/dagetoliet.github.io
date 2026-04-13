@@ -1,0 +1,201 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<title id="ct">在线客服服务窗</title>
+<style>
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+background-color:#f5f5f5;
+}
+.header{
+background-color:#07c160;
+color:#fff;
+padding:15px 20px;
+box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+.header h1{
+margin:0;
+font-size:18px;
+font-weight:500;
+}
+.status{
+display:flex;
+align-items:center;
+gap:6px;
+margin-top:5px;
+font-size:13px;
+}
+.dot{
+width:8px;
+height:8px;
+background-color:#00ff00;
+border-radius:50%;
+animation:pulse 2s infinite;
+}
+@keyframes pulse{
+0%{opacity:1;}
+50%{opacity:0.5;}
+100%{opacity:1;}
+}
+.chat-container{
+height:calc(100vh - 140px);
+overflow-y:auto;
+padding:20px;
+background-color:#f5f5f5;
+}
+.message{
+margin-bottom:15px;
+display:flex;
+align-items:flex-start;
+}
+.message.user{
+justify-content:flex-end;
+}
+.message.service{
+justify-content:flex-start;
+}
+.avatar{
+width:36px;
+height:36px;
+border-radius:200px;
+flex-shrink:0;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+color:#fff;
+}
+.message.user .avatar{
+background-color:#07c160;
+margin-left:10px;
+order:2;
+}
+.message.service .avatar{
+background-color:#999;
+margin-right:10px;
+order:1;
+}
+.bubble{
+max-width:60%;
+padding:10px 14px;
+border-radius:10px;
+font-size:14px;
+line-height:1.4;
+word-wrap:break-word;
+}
+.message.user .bubble{
+background-color:#95ec69;
+order:1;
+}
+.message.service .bubble{
+background-color:#fff;
+border:1px solid #e0e0e0;
+order:2;
+}
+.input-area{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background-color:#f7f7f7;
+border-top:1px solid #e0e0e0;
+padding:10px 15px;
+display:flex;
+gap:10px;
+align-items:center;
+}
+input{
+flex:1;
+padding:10px 15px;
+border:1px solid #e0e0e0;
+border-radius:4px;
+font-size:14px;
+outline:none;
+}
+input:focus{
+border-color:#07c160;
+}
+button{
+padding:10px 25px;
+background-color:#07c160;
+color:#fff;
+border:none;
+border-radius:4px;
+font-size:14px;
+cursor:pointer;
+}
+button:active{
+background-color:#06ad56;
+}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>大哥国际厕所集团</h1>
+<div class="status">
+<span class="dot"></span>
+<span>AI在线</span>
+
+<span style="background-color:red;" class="dot"></span>
+<span>人工不在线</span>
+
+<span>24H服务热线：null</span>
+
+</div>
+</div>
+<div class="chat-container" id="chatBox">
+
+<div class="message service">
+  
+<div class="avatar">AI</div>
+<div class="bubble">您好，请问有什么可以帮您？<a>大哥国际厕所集团为您服务。</a></div>
+</div>
+</div>
+
+<div class="input-area">
+  
+<input type="text" id="msgInput" placeholder="输入内容" maxlength="500"/>
+<button onclick="send()">发送</button>
+</div>
+<script>
+const chatBox=document.getElementById('chatBox');
+const msgInput=document.getElementById('msgInput');
+const triggerWords=['你好','转人工','在吗','测试','1'];
+function send(){
+const text=msgInput.value.trim();
+if(!text)return;
+addMessage(text,'user');
+msgInput.value='';
+setTimeout(()=>{
+if(triggerWords.some(w=>text.includes(w))){
+  document.getElementById("ct").innerHTML = "有新消息";
+addMessage('你好！欢迎接入大哥国际厕所集团客服服务窗！','service');
+}
+else if (msgInput.value === "转人工"){
+  document.getElementById("ct").innerHTML = "有新消息";
+addMessage('你好！欢迎接入大哥国际厕所集团客服服务窗！','service');
+}
+},500);
+
+}
+function addMessage(text,type){
+const div=document.createElement('div');
+div.className='message '+type;
+const avatar=document.createElement('div');
+avatar.className='avatar';
+avatar.textContent=type==='user'?'我':'AI';
+const bubble=document.createElement('div');
+bubble.className='bubble';
+bubble.textContent=text;
+div.appendChild(avatar);
+div.appendChild(bubble);
+chatBox.appendChild(div);
+chatBox.scrollTop=chatBox.scrollHeight;
+}
+msgInput.addEventListener('keypress',(e)=>{
+if(e.key==='Enter')send();
+});
+</script>
+</body>
+</html>

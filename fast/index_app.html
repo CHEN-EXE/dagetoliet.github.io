@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="mdui-theme-light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>大哥好人加速Plus++++</title>
+    <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.3/mdui.css">
+    <script src="https://unpkg.com/mdui@2.0.3/mdui.global.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root { --mdui-color-primary: #0053da; }
+        body { background-color: #f6f8fa; color: #1b1b1f; font-family: sans-serif; margin: 0; padding-top: 112px; -webkit-tap-highlight-color: transparent; }
+        .hero-card { margin: 20px 16px; padding: 40px 16px; text-align: center; border-radius: 28px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .hero-card.active { background-color: #0053da; color: #ffffff; }
+        #power-btn { width: 100px; height: 100px; border-radius: 50px; --mdui-color-secondary-container: #eef0f5; color:#000; }
+        .status-area { margin-top: 24px; }
+        .speed-box { display: flex; justify-content: center; gap: 15px; font-family: 'Roboto Mono', monospace; font-size: 14px; margin-top: 12px; opacity: 0.9; }
+        .node-section { padding: 0 16px 40px; }
+        .section-title { font-size: 12px; font-weight: bold; color: #757575; margin-bottom: 12px; padding-left: 4px; }
+        .node-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .node-item { background: #ffffff; border: 1.5px solid #ececec; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; position: relative; min-height: 64px; cursor: pointer; }
+        .node-item.selected { border-color: #0053da; background-color: rgba(0, 83, 218, 0.05); }
+        .node-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #1b1b1f; }
+        .node-meta { font-size: 11px; color: #757575; margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .node-ping { font-family: monospace; color: #4caf50; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+  <mdui-top-app-bar
+    variant="medium"
+    scroll-behavior="shrink elevate"
+  >
+    <mdui-button-icon icon="menu"></mdui-button-icon>
+    <mdui-top-app-bar-title>大哥加速器</mdui-top-app-bar-title>
+    <mdui-top-app-bar-title slot="label-large">这是展开状态的标题</mdui-top-app-bar-title>
+    <div style="flex-grow: 1"></div>
+    <mdui-button-icon icon="more_vert"></mdui-button-icon>
+  </mdui-top-app-bar>
+
+  <div id="main-card" class="hero-card example-scroll-behavior-shrink-elevate">
+        <mdui-button id="power-btn" variant="filled">
+            <mdui-icon name="power_settings_new" style="font-size: 40px;"></mdui-icon>
+        </mdui-button>
+        <div class="status-area">
+            <div id="status-text" style="font-size: 18px; font-weight: 500;">开启加速</div>
+            <div id="speed-display" class="speed-box" style="visibility: hidden;">
+                <span>↑ <small id="up-speed">0.0</small> KB/s</span>
+                <span>↓ <small id="down-speed">0.0</small> KB/s</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="node-section">
+        <div class="section-title">节点</div>
+        <div id="node-grid" class="node-grid">
+            <div style="grid-column: 1/-1; text-align: center; padding: 20px;">正在加载</div>
+        </div>
+    </div>
+    
+<p style=" color:#dcdcdcf3;font-size:10px;text-align:center;">
+      <mdui-button-icon icon="flash_on"></mdui-button-icon><br>
+get Camera...<br>©DGVPN Notanaccelerator,for entertainmentonly, pleasedonottakeitseriously</p>
+    <script>
+        const powerBtn = document.getElementById('power-btn');
+        const mainCard = document.getElementById('main-card');
+        const statusText = document.getElementById('status-text');
+        const speedDisplay = document.getElementById('speed-display');
+        let isConnected = false;
+        let speedTimer;
+        const JSON_URL = './fast_dage.json'; 
+
+        powerBtn.onclick = () => {
+            isConnected = !isConnected;
+            if (isConnected) {
+                mainCard.classList.add('active');
+                statusText.innerText = '强力加速中，请不要断网';
+                speedDisplay.style.visibility = 'visible';
+                runSpeed();
+            } else {
+                mainCard.classList.remove('active');
+                statusText.innerText = '点击继续加速';
+                speedDisplay.style.visibility = 'hidden';
+                clearInterval(speedTimer);
+            }
+        };
+
+        function runSpeed() {
+            clearInterval(speedTimer);
+            speedTimer = setInterval(() => {
+                if (!isConnected) {
+                    clearInterval(speedTimer);
+                    return;
+                }
+                document.getElementById('up-speed').innerText = (Math.random() * 50).toFixed(1);
+                document.getElementById('down-speed').innerText = (Math.random() * 800).toFixed(1);
+            }, 1500);
+        }
+
+        async function initNodes() {
+            const grid = document.getElementById('node-grid');
+            try {
+                const response = await fetch(JSON_URL);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                
+                grid.innerHTML = '';
+                data.forEach((node, index) => {
+                    const item = document.createElement('div');
+                    item.className = `node-item ${index === 0 ? 'selected' : ''}`;
+                    item.innerHTML = `
+                        <div class="node-name">${node.name} | ${node.tag}</div>
+                        <div class="node-meta">
+                            <span>${node.protocol || node.type}</span>
+                            <span class="node-ping">${node.ping}</span>
+                        </div>
+                    `;
+                    item.onclick = function() {
+                        document.querySelectorAll('.node-item').forEach(el => el.classList.remove('selected'));
+                        this.classList.add('selected');
+                    };
+                    grid.appendChild(item);
+                });
+            } catch (error) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #ff5252;">加载失败，原因: ${error.message}</div>`;
+            }
+        }
+
+        initNodes();
+    </script>
+</body>
+</html>

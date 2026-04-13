@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全成大哥岛馆政府 | 2026年全成大哥岛馆政府委员选举 在线投票</title>
+    <title>全成大哥岛馆政府 | 2026年全成大哥岛馆政府委员选举结果公示</title>
     <style>
         /* --- 基础设置 --- */
         :root {
@@ -313,7 +313,7 @@
         <div class="usa-banner-inner">
             <span class="flag-icon"></span>
             <span class="usa-banner-text">
-                全成大哥岛馆政府 / 2026年全成大哥岛馆政府委员选举 在线投票
+                全成大哥岛馆政府 / 政务公示 / 2026年全成大哥岛馆政府委员选举
             </span>
         </div>
     </div>
@@ -339,9 +339,9 @@
     </header>
 
     <section class="hero">
-        <h1>2026年全成大哥岛馆政府委员选举</h1>
+        <h1>2026年全成大哥岛馆政府委员选举 公示</h1>
         <p>选举已于2026.1.30结束<br>
-            <small>将在2026.2.20发布选举结果</small>
+            <small>公示信息</small>
         </p>
 
         <div class="vote-container">
@@ -349,14 +349,14 @@
             <form id="voteForm">
                 <p
                     style="margin-bottom: 20px; font-size: 0.9rem; opacity: 0.9; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom:10px;">
-                    * 单选项（必填）<br>被投票者名称部分屏蔽
+                  公示名单
                 </p>
 
                 <div id="options-wrapper">
                     <div class="vote-loading">加载。。</div>
                 </div>
 
-                <button type="submit" class="submit-btn" id="submitBtn" disabled>提交选票</button>
+        <!--        <button type="submit" class="submit-btn" id="submitBtn" disabled>提交选票</button>-->
             </form>
 
             <div id="successMessage" class="success-wrapper">
@@ -442,10 +442,12 @@
                 .catch(error => {
                     console.error('Fetch error:', error);
                     optionsWrapper.innerHTML = `
-                        <div class="vote-loading" style="color:#ff6b6b">
-                           选举已于2026.1.30结束<br>
-                            <small>将在2026.2.20发布选举结果</small>
+                        <div class="vote-loading" style="color:#ff6b6b;font-size:20px;">
+                     政府委员      <br>
+                            <small>武全成 同志</small>
+          
                         </div>
+                          <br>     <a>对此次公示有疑问？</a>
                     `;
                 });
 

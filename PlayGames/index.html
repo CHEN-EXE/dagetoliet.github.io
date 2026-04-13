@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>大哥游戏</title>
+    <title>大哥Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
@@ -160,33 +160,47 @@
             margin-top: 10px;
             font-size: 20px;
         }
-
+        img{
+            transition: transform 0.2s;
+        }  
+img:active{
+  transform: scale(0.98);
+}
         a { text-decoration: none; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>大哥游戏</h1>
-        <button class="signin">登录</button>
+        <h1>
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m9 15l-2.968 2.968A2.362 2.362 0 0 1 2 16.298V15l1.357-6.784A4 4 0 0 1 7.279 5h9.442a4 4 0 0 1 3.922 3.216L22 15v1.297a2.362 2.362 0 0 1-4.032 1.67L15 15z"/><path d="m9 5l1 2h4l1-2"/></g></svg>
+        </h1>
+        <button class="signin">成为会员</button>
     </header>
 
+
+    <p class="section-title">当下最新</p>
+    <img
+     style="height:135px; border-radius:20px"
+    src="./assets/dageisland.png"/>
     <p class="section-title">重磅推荐</p>
 
     <div class="carousel-container">
         
         <div class="card">
             <div class="card-content">
-                <p class="card__title">Gb</p>
+                <p class="card__title">大哥幻想岛</p>
                 <div class="rating-stars">
                     <svg width="14" height="14" viewBox="0 0 17 17"><path d="M8.5 1.6l2 3.8 4.2.6-3 3 1 4.2-4.2-2.2-4.2 2.2 1-4.2-3-3 4.2-.6z" fill="#00B9AE"/></svg>
                     <svg width="14" height="14" viewBox="0 0 17 17"><path d="M8.5 1.6l2 3.8 4.2.6-3 3 1 4.2-4.2-2.2-4.2 2.2 1-4.2-3-3 4.2-.6z" fill="#00B9AE"/></svg>
+                <svg width="14" height="14" viewBox="0 0 17 17"><path d="M8.5 1.6l2 3.8 4.2.6-3 3 1 4.2-4.2-2.2-4.2 2.2 1-4.2-3-3 4.2-.6z" fill="#00B9AE"/></svg>
+             <svg width="14" height="14" viewBox="0 0 17 17"><path d="M8.5 1.6l2 3.8 4.2.6-3 3 1 4.2-4.2-2.2-4.2 2.2 1-4.2-3-3 4.2-.6z" fill="#00B9AE"/></svg>   
                 </div>
-                <p class="episode__type">开发者：BigBrotherToliet.Co.LTD</p>
+                <p class="episode__type">开发者：GamePlayer.dageTolietTech<br>采用React+WebGL技术享受最快游戏体验！创造属于你自己的岛</p>
             </div>
             <div class="card__btns">
-                <span class="add-btn">0K 赞</span>
-                <a href="./regames/to_2.html" class="watch-btn">游玩</a>
+                <span class="add-btn">3K 赞</span>
+                <a href="./d/dageisland/" class="watch-btn">下载软体</a>
             </div>
         </div>
 

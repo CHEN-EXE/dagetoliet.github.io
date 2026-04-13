@@ -22,10 +22,9 @@
       background-color: var(--mdui-color-surface);
       color: var(--mdui-color-on-surface);
       margin: 0;
-      padding-bottom: 80px;
+      padding-bottom: 0px;
       /* 底部导航高度 */
-      height: 100vh;
-      overflow: hidden;
+      height: auto;
       /* 防止 Body 滚动，交由子容器滚动 */
       display: flex;
       flex-direction: column;
@@ -219,9 +218,7 @@
     }
 
     /* 在视频页隐藏顶部栏 */
-    body.mode-video mdui-top-app-bar {
-      transform: translateY(-100%);
-    }
+  
 
     body.mode-video .page-container {
       padding-top: 0;
@@ -240,15 +237,16 @@
 
   <mdui-top-app-bar variant="center-aligned">
     <mdui-tooltip placement="bottom-start" content="新增图文">
-      <mdui-button-icon id="updates" icon="add"></mdui-button-icon>
+    
+      <mdui-button-icon variant="tonal" id="updates" icon="add"></mdui-button-icon>
     </mdui-tooltip>
     <mdui-top-app-bar-title>
       <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-        <img style="height:24px;" src="./大哥传媒.png" onerror="this.style.display='none'" />
-        <span>大哥传媒</span>
+        <span>大哥传媒 PRO</span>
       </div>
     </mdui-top-app-bar-title>
-    <mdui-avatar style="margin-right: 12px;">大</mdui-avatar>
+ <mdui-button-icon variant="tonal" icon="search"></mdui-button-icon>
+ 
   </mdui-top-app-bar>
 
   <main id="home" class="page-container active mdui-container">
@@ -263,9 +261,9 @@
     <mdui-card clickable style="width: 100%;height: auto;margin-bottom:16px;">
       <div style="padding: 16px;">
         <p style="font-size:10px; opacity:0.6; margin:0 0 4px 0;">Ads•广告</p>
-        <h2 style="margin:0 0 8px 0;">免费送你大哥智慧厕所使用权</h2>
-        <p style="margin:0 0 16px 0;">大哥国际厕所公司</p>
-        <mdui-button href="./../" target="_blank" variant="tonal">查看详情</mdui-button>
+        <h2 style="margin:0 0 8px 0;">大哥幻想岛</h2>
+        <p style="margin:0 0 16px 0;">打造属于你自己的大哥岛</p>
+        <mdui-button href="./../" target="_blank" variant="tonal">下载</mdui-button>
       </div>
     </mdui-card>
 
@@ -324,15 +322,15 @@
 
 
   <mdui-navigation-bar value="home" style="z-index: 1001;">
-    <mdui-navigation-bar-item value="home" icon="home">首页</mdui-navigation-bar-item>
-    <mdui-navigation-bar-item value="video" icon="movie">视频</mdui-navigation-bar-item>
-    <mdui-navigation-bar-item value="about" icon="info">关于</mdui-navigation-bar-item>
+    <mdui-navigation-bar-item value="home" icon="home"></mdui-navigation-bar-item>
+    <mdui-navigation-bar-item value="video" icon="movie"></mdui-navigation-bar-item>
+    <mdui-navigation-bar-item value="about" icon="info"></mdui-navigation-bar-item>
   </mdui-navigation-bar>
 
 
   <mdui-snackbar id="snackbars" class="example-snackbar"></mdui-snackbar>
 
-  <mdui-dialog close-on-overlay-click headline="切换板块提醒" class="media-p" description="您正在切换的板块可能存在逆天的内容，请注意辨别！"
+  <mdui-dialog close-on-overlay-click headline="切换板块" class="media-p" description="确认切换分区吗？请注意辨别内容！"
     icon="warning">
     <mdui-button slot="action" variant="tonal">明白</mdui-button>
   </mdui-dialog>
@@ -473,7 +471,8 @@
           const videos = data['video_feed'] || []; // 假设 JSON key 是 video_feed
 
           if (videos.length === 0) {
-            videoFeed.innerHTML = '<div style="color:white;text-align:center;padding-top:50%;">暂无视频</div>';
+            videoFeed.innerHTML = `<div style="color:white;text-align:center;font-size:20px;height:100vh;padding-top:50%;">
+      <mdui-icon name='error_outline'></mdui-icon> <br>没有视频</div>`;
             return;
           }
 

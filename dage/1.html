@@ -1,203 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>大哥同志简历</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            width: 300px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid white;
-            margin-bottom: 20px;
-            object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .sidebar .name {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .sidebar .title {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-
-        .contact-info {
-            text-align: left;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        .contact-icon {
-            width: 30px;
-            height: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 14px;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 40px;
-        }
-
-        .section {
-            margin-bottom: 40px;
-            padding: 30px;
-            border-left: 4px solid #667eea;
-            background: #fafafa;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .section-title {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .info-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .info-label {
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-
-        .skill-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-tag {
-            background: #667eea;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #667eea;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -36px;
-            top: 25px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #667eea;
-            border: 3px solid white;
-        }
-
-        .timeline-date {
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .project-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .project-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-    </style>
-
-
+    <base target="_blank">
     <style>
         * {
             margin: 0;
@@ -210,7 +17,6 @@
             background: #000;
             min-height: 100vh;
             padding: 20px;
-
             color: #fff;
             overflow-x: hidden;
             position: relative;
@@ -218,7 +24,7 @@
 
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -238,47 +44,41 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            flex-direction: row;
             overflow: hidden;
             position: relative;
         }
 
-        .header {
-            background: linear-gradient(45deg, rgba(255, 107, 107, 0.7), rgba(78, 205, 196, 0.7));
-            color: white;
-            padding: 50px;
+        .sidebar {
+            width: 320px;
+            padding: 40px 30px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.1) 10deg, transparent 20deg);
-            animation: rotate 20s linear infinite;
-            z-index: -1;
+        #modes {
+            padding: 8px 16px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
         }
 
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+        #modes:hover {
+            transform: scale(1.05);
         }
 
         .profile-img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            border: 5px solid white;
+            border: 5px solid rgba(255, 255, 255, 0.8);
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             object-fit: cover;
@@ -287,23 +87,68 @@
         }
 
         .name {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .title {
-            font-size: 20px;
+            font-size: 16px;
             opacity: 0.9;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 30px;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            color: #4ecdc4;
         }
 
-        .content {
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            word-break: break-all;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .contact-icon {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #ff6b6b;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+
+        .main-content {
+            flex: 1;
             padding: 40px;
         }
 
@@ -314,48 +159,16 @@
             background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             border-left: 5px solid;
-            animation: slideIn 0.6s ease-out;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .section:nth-child(1) {
-            border-left-color: #ff6b6b;
-            animation-delay: 0.1s;
-        }
-
-        .section:nth-child(2) {
-            border-left-color: #4ecdc4;
-            animation-delay: 0.2s;
-        }
-
-        .section:nth-child(3) {
-            border-left-color: #45b7d1;
-            animation-delay: 0.3s;
-        }
-
-        .section:nth-child(4) {
-            border-left-color: #f9ca24;
-            animation-delay: 0.4s;
-        }
-
-        .section:nth-child(5) {
-            border-left-color: #6c5ce7;
-            animation-delay: 0.5s;
-        }
+        .section:nth-child(1) { border-left-color: #ff6b6b; }
+        .section:nth-child(2) { border-left-color: #4ecdc4; }
+        .section:nth-child(3) { border-left-color: #45b7d1; }
+        .section:nth-child(4) { border-left-color: #f9ca24; }
+        .section:nth-child(5) { border-left-color: #6c5ce7; }
 
         .section-title {
             font-size: 24px;
@@ -377,7 +190,7 @@
 
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
 
@@ -385,7 +198,6 @@
             background: rgba(255, 255, 255, 0.12);
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -393,20 +205,13 @@
         .info-item:hover {
             transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.18);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .info-label {
-            font-weight: bold;
-            color: #ff6b6b;
-            margin-bottom: 5px;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         }
 
         .skill-list {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            margin-bottom: 15px;
         }
 
         .skill-tag {
@@ -418,11 +223,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .skill-tag:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
         }
 
         .timeline {
@@ -431,7 +232,6 @@
         }
 
         .timeline::before {
-            /** 加班搞你这jb东西你玛斯了 **/
             content: '';
             position: absolute;
             left: 0;
@@ -447,7 +247,6 @@
             padding: 20px;
             background: rgba(255, 255, 255, 0.12);
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -468,7 +267,6 @@
             color: #4ecdc4;
             font-weight: bold;
             margin-bottom: 5px;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         }
 
         .project-card {
@@ -477,7 +275,6 @@
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
@@ -485,6 +282,7 @@
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.7), rgba(245, 87, 108, 0.7));
         }
 
         .project-title {
@@ -493,383 +291,115 @@
             margin-bottom: 10px;
         }
 
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .contact-icon {
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+        .footer-text {
+            text-align: center;
+            opacity: 0.7;
             font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 30px 20px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
-    <base target="_blank">
 </head>
-
 <body id="xiasren">
-
-
-    <!--新年大哥牛逼-->
-    <meta charset="utf-8">
-    <div class="deng-box2">
-        <div class="deng">
-            <div class="xian">
-            </div>
-            <div class="deng-a">
-                <div class="deng-b">
-                    <div class="deng-t">牛</div>
-                </div>
-            </div>
-            <div class="shui shui-a">
-                <div class="shui-c">
-                </div>
-                <div class="shui-b"></div>
-            </div>
-        </div>
-    </div>
-    <div class="deng-box3">
-        <div class="deng">
-            <div class="xian">
-            </div>
-            <div class="deng-a">
-                <div class="deng-b">
-                    <div class="deng-t">大</div>
-                </div>
-            </div>
-            <div class="shui shui-a">
-                <div class="shui-c"></div>
-                <div class="shui-b">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="deng-box1">
-        <div class="deng">
-            <div class="xian">
-            </div>
-            <div class="deng-a">
-                <div class="deng-b">
-                    <div class="deng-t">哥</div>
-                </div>
-            </div>
-            <div class="shui shui-a">
-                <div class="shui-c"></div>
-                <div class="shui-b"></div>
-            </div>
-        </div>
-    </div>
-    <div class="deng-box">
-        <div class="deng">
-            <div class="xian">
-            </div>
-            <div class="deng-a">
-                <div class="deng-b">
-                    <div class="deng-t">逼</div>
-                </div>
-            </div>
-            <div class="shui shui-a">
-                <div class="shui-c">
-                </div>
-                <div class="shui-b"></div>
-            </div>
-        </div>
-    </div>
-
-
-    <style type="text/css">
-        .deng-box {
-            position: fixed;
-            top: -40px;
-            right: 150px;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        .deng-box1 {
-            position: fixed;
-            top: -30px;
-            right: 10px;
-            z-index: 9999;
-            pointer-events: none
-        }
-
-        .deng-box2 {
-            position: fixed;
-            top: -40px;
-            left: 150px;
-            z-index: 9999;
-            pointer-events: none
-        }
-
-        .deng-box3 {
-            position: fixed;
-            top: -30px;
-            left: 10px;
-            z-index: 9999;
-            pointer-events: none
-        }
-
-        .deng-box1 .deng,
-        .deng-box3 .deng {
-            position: relative;
-            width: 120px;
-            height: 90px;
-            margin: 50px;
-            background: #d8000f;
-            background: rgba(216, 0, 15, .8);
-            border-radius: 50% 50%;
-            -webkit-transform-origin: 50% -100px;
-            -webkit-animation: swing 5s infinite ease-in-out;
-            box-shadow: -5px 5px 30px 4px #fc903d
-        }
-
-        .deng {
-            position: relative;
-            width: 120px;
-            height: 90px;
-            margin: 50px;
-            background: #d8000f;
-            background: rgba(216, 0, 15, .8);
-            border-radius: 50% 50%;
-            -webkit-transform-origin: 50% -100px;
-            -webkit-animation: swing 3s infinite ease-in-out;
-            box-shadow: -5px 5px 50px 4px #fa6c00
-        }
-
-        .deng-a {
-            width: 100px;
-            height: 90px;
-            background: #d8000f;
-            background: rgba(216, 0, 15, .1);
-            margin: 12px 8px 8px 8px;
-            border-radius: 50% 50%;
-            border: 2px solid #dc8f03
-        }
-
-        .deng-b {
-            width: 45px;
-            height: 90px;
-            background: #d8000f;
-            background: rgba(216, 0, 15, .1);
-            margin: -4px 8px 8px 26px;
-            border-radius: 50% 50%;
-            border: 2px solid #dc8f03
-        }
-
-        .xian {
-            position: absolute;
-            top: -20px;
-            left: 60px;
-            width: 2px;
-            height: 20px;
-            background: #dc8f03
-        }
-
-        .shui-a {
-            position: relative;
-            width: 5px;
-            height: 20px;
-            margin: -5px 0 0 59px;
-            -webkit-animation: swing 4s infinite ease-in-out;
-            -webkit-transform-origin: 50% -45px;
-            background: orange;
-            border-radius: 0 0 5px 5px
-        }
-
-        .shui-b {
-            position: absolute;
-            top: 14px;
-            left: -2px;
-            width: 10px;
-            height: 10px;
-            background: #dc8f03;
-            border-radius: 50%
-        }
-
-        .shui-c {
-            position: absolute;
-            top: 18px;
-            left: -2px;
-            width: 10px;
-            height: 35px;
-            background: orange;
-            border-radius: 0 0 0 5px
-        }
-
-        .deng:before {
-            position: absolute;
-            top: -7px;
-            left: 29px;
-            height: 12px;
-            width: 60px;
-            content: " ";
-            display: block;
-            z-index: 999;
-            border-radius: 5px 5px 0 0;
-            border: solid 1px #dc8f03;
-            background: orange;
-            background: linear-gradient(to right, #dc8f03, orange, #dc8f03, orange, #dc8f03)
-        }
-
-        .deng:after {
-            position: absolute;
-            bottom: -7px;
-            left: 10px;
-            height: 12px;
-            width: 60px;
-            content: " ";
-            display: block;
-            margin-left: 20px;
-            border-radius: 0 0 5px 5px;
-            border: solid 1px #dc8f03;
-            background: orange;
-            background: linear-gradient(to right, #dc8f03, orange, #dc8f03, orange, #dc8f03)
-        }
-
-        .deng-t {
-            font-family: 黑体, Arial, Lucida Grande, Tahoma, sans-serif;
-            font-size: 3.2rem;
-            color: #dc8f03;
-            font-weight: 700;
-            line-height: 85px;
-            text-align: center
-        }
-
-        .night .deng-box,
-        .night .deng-box1,
-        .night .deng-t {
-            background: 0 0 !important
-        }
-
-        @-moz-keyframes swing {
-            0% {
-                -moz-transform: rotate(-10deg)
-            }
-
-            50% {
-                -moz-transform: rotate(10deg)
-            }
-
-            100% {
-                -moz-transform: rotate(-10deg)
-            }
-        }
-
-        @-webkit-keyframes swing {
-            0% {
-                -webkit-transform: rotate(-10deg)
-            }
-
-            50% {
-                -webkit-transform: rotate(10deg)
-            }
-
-            100% {
-                -webkit-transform: rotate(-10deg)
-            }
-        }
-    </style>
-
     <div class="container">
         <div class="sidebar">
-            <button id="modes" onclick="toggleMode()" style="
-    padding: 6px;
-    margin-bottom: 20px;
-">切换到冥间模式</button><br>
-            <img src="./dagesb.jpg" alt="入照片" class="profile-img">
-            <h1 id="username" class="name">五群臣</h1>
-            <p class="title">大哥国际厕所集团老板</p>
+            <button id="modes" onclick="toggleMode()">切换冥间模式</button><br>
+            <img onclick="reAvatar()" id="Avatar" src="./dagesb.jpg" alt="入照片" class="profile-img">
+            <h1 onclick="reName()" id="username" class="name">五群臣</h1>
+            <p  onclick="reCompany()" id="companys" class="title">大哥国际厕所集团老板</p>
             <div class="contact-info">
                 <div class="contact-item">
                     <div class="contact-icon">📱</div>
+                    
                     <div>
                         <div class="info-label">电话</div>
-                        <div>7891</div>
+                        <input placeholder="Null" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="7891"></input>
                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">📧</div>
                     <div>
                         <div class="info-label">邮箱</div>
-                        <div>wcdx@of.edu.kg</div>
+                      
+                                <input placeholder="wcdx@of.edu.kg" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="wcdx@of.edu.kg"></input>
+                
                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">📍</div>
                     <div>
                         <div class="info-label">地址</div>
-                        <div>中国</div>
-                    </div>
+                       <input placeholder="中国" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="中国"></input>
+                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                            <path fill="#ffffff"
-                                d="M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02" />
+                            <path fill="#ffffff" d="M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02" />
                         </svg>
-
                     </div>
                     <div>
                         <div class="info-label">Facebook</div>
-                        <div id="username2">武全成</div>
+                                <input id="username2"  placeholder="PrimaryName" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="大 哥"></input>
+                
                     </div>
                 </div>
             </div>
         </div>
+        
         <div class="main-content">
             <div class="section">
-             <h2 class="section-title">神人信息</h2>
+                <h2 class="section-title">神人信息</h2>
                 <div class="info-grid">
                     <div class="info-item">
                         <div class="info-label">姓</div>
-                        <div>武</div>
+                        <input placeholder="武" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="武"></input>
                     </div>
                     <div class="info-item">
                         <div class="info-label">年龄</div>
-                        <div>1500+100*100-200</div>
-                    </div>
+                  <input placeholder="Ages" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="15Null"></input>
+                          </div>
                     <div class="info-item">
                         <div class="info-label">学历</div>
-                        <div>初中</div>
-                    </div>
+                     <input placeholder="Study" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="初中"></input>
+                       </div>
                     <div class="info-item">
                         <div class="info-label">专业</div>
-                        <div>没有</div>
-                    </div>
+                       <input placeholder="课程" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="厕所平台构建课程"></input>
+                     </div>
                     <div class="info-item">
                         <div class="info-label">工作年限</div>
-                        <div>Null 年</div>
+                   <input placeholder="1990.07.08" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="2099.07.08"></input>
+                
                     </div>
                     <div class="info-item">
                         <div class="info-label">期望职位</div>
-                        <div>法人</div>
-                    </div>
+              <input placeholder="大帝" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="保洁"></input>
+                              </div>
                 </div>
             </div>
 
@@ -877,28 +407,28 @@
                 <h2 class="section-title">技能特长</h2>
                 <div class="skill-list">
                     <span class="skill-tag">活着</span>
-                       <span class="skill-tag">Roblox</span>
-                          <span class="skill-tag">G&B</span>
-                             <span class="skill-tag">看篇</span>
-                       </div>
-              <br> 多么诱人呐，可是我却不知道你晚上在哪里😍😍😍
+                    <span class="skill-tag">Roblox</span>
+                    <span class="skill-tag">G&B</span>
+                    <span class="skill-tag">看篇</span>
+                </div>
+                多么诱人呐，可是我却不知道你晚上在哪里😍😍😍
             </div>
 
             <div class="section">
                 <h2 class="section-title">工作经历</h2>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-date"> 公元 两千零二十五年</div>
+                        <div class="timeline-date">公元 两千零二十五年</div>
                         <h3>专研公共粪便排出供应技术</h3>
                         <p>简称公共厕所</p>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-date"> 公元 两千零二十六年</div>
+                        <div class="timeline-date">公元 两千零二十六年</div>
                         <h3>多领域</h3>
                         <p>公共厕所收费，唱片音乐，大是哥，酒店文化，餐饮，教培行业，传媒，集团，游戏，QuanChengUI，银行，股票，大哥岛政府运营，大哥全成网络科技，全成移动。</p>
                     </div>
-                         <div class="timeline-item">
-                        <div class="timeline-date"> 将来</div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">将来</div>
                         <h3>？</h3>
                         <p style="text-decoration: line-through">漂唱</p>
                     </div>
@@ -915,20 +445,54 @@
             </div>
 
             <div class="section">
-                <h2 class="section-title">吓人吗</h2>
-                实在不好意思吓到你们，这是我做的恶搞朋友的站点，千万别在晚上看不然会害怕到时候别追究我责任。
-                想正常看？点切换模式就可以了
-            </div>
-            <p>Powered By 大哥做的冥间简历</p>
+                <h2 class="section-title">🤯</h2>
+                   <input placeholder="Null" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="
+           多么诱人呐，可是我却不知道你晚上在哪里😍😍😍 "></input>
+                </div>
+            
+            <p>
+                    <input  class="footer-text" placeholder="Null" style="background:0;border:0;color:#fff;outline:none;font-size:15px" value="Powered By 大哥做的冥间简历 （点击任意框架支持修改文字）"></input>
+                </p>
         </div>
     </div>
 
     <script>
+      function reAvatar(){
+      
+let ava = prompt("修改头像地址", "0");
+if (ava !== null && ava !== "") {
+   document.getElementById("Avatar").src = ava
+} else {
+   alert("你没有输入任何内容！");
+}
+      }
+      
+          function reName(){
+      
+let ava = prompt("叫什么名字？", "大哥");
+if (ava !== null && ava !== "") {
+   document.getElementById("username").textContent = ava
+} else {
+   alert("你没有输入任何内容！");
+}
+      }
+  
+      function reCompany(){
+      
+let ava = prompt("修改身份数据", "大哥国际厕所集团老板");
+if (ava !== null && ava !== "") {
+   document.getElementById("companys").textContent = ava;
+} else {
+   alert("你没有输入任何内容！");
+}
+      }
+  
+      
         const params = new URLSearchParams(window.location.search);
         document.getElementById("username").textContent = params.get('dagename') || "大 哥";
-         document.getElementById("username2").textContent = params.get('dagename') || "大 哥";
+        document.getElementById("username2").textContent = params.get('dagename') || "大 哥";
+        
         const sections = document.querySelectorAll('.section');
-
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -960,51 +524,22 @@
             });
         });
 
-        const projectCards = document.querySelectorAll('.project-card');
-        projectCards.forEach(card => {
-            card.addEventListener('mouseenter', function () {
-                this.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
-            });
-
-            card.addEventListener('mouseleave', function () {
-                this.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            });
-        });
-
         const results = { value: 0 };
         function toggleMode() {
             if (results.value == 0) {
-             
-                if (confirm('是否要切换到冥间模式？\n吓死你我可不管')) {
-                    document.getElementById('modes').textContent = '切换到正常模式';
-                    document.getElementById('xiasren').style = `
-            filter: grayscale(100%);
-            -webkit-filter: grayscale(100%);
-            -moz-filter: grayscale(100%);
-            -ms-filter: grayscale(100%);
-            -o-filter: grayscale(100%);
-        `;
+                if (confirm('是否切换？')) {
+                    document.getElementById('modes').textContent = '切换正常模式';
+                    document.getElementById('xiasren').style.filter = 'grayscale(100%)';
+                    document.getElementById('xiasren').style.webkitFilter = 'grayscale(100%)';
                     results.value = 1;
                 }
-
-
-            } else if (results.value == 1) {
-                document.getElementById('modes').textContent = '切换到冥间模式';
-                document.getElementById('xiasren').style = `
-            filter: none;
-            -webkit-filter: none;
-            -moz-filter: none;
-            -ms-filter: none;
-            -o-filter: none;
-        `;
+            } else {
+                document.getElementById('modes').textContent = '切换冥间模式';
+                document.getElementById('xiasren').style.filter = 'none';
+                document.getElementById('xiasren').style.webkitFilter = 'none';
                 results.value = 0;
             }
         }
-
-
-
-
     </script>
 </body>
-
 </html>

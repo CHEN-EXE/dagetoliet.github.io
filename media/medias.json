@@ -31,19 +31,5 @@
     }
   ],
    "video_feed": [
-        {
-            "url": "./video/d1.mp4",
-            "title": "全成··牛逼",
-            "author": "大哥传媒",
-            "avatar": "https://via.placeholder.com/150",
-            "description": "这是视频简介..."
-        },
-        {
-            "url": "https://www.w3schools.com/html/mov_bbb.mp4",
-            "title": "测试视频 2",
-            "author": "用户R91",
-            "avatar": "https://via.placeholder.com/150",
-            "description": "测试描述"
-        }
-    ]
+        ]
 }
