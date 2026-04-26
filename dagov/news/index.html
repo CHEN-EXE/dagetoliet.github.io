@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全成新闻网</title>
+    <style>
+        :root {
+            --gov-blue: #1a5c3a;
+            --gov-dark: #1a1a1a;
+            --gov-red: #2e7d32;
+            --gov-bg: #f0f0f0;
+            --text-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gov-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .usa-banner {
+            background-color: #f0f0f0;
+            padding: 4px 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .usa-banner-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 16px;
+            height: 11px;
+            background: linear-gradient(to bottom, #2e7d32 50%, #fff 50%);
+            display: inline-block;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+
+        .usa-banner-text {
+            color: #555;
+        }
+
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gov-blue);
+        }
+
+        .logo-seal {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gov-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 24px;
+            margin-right: 15px;
+            border: 3px solid var(--gov-red);
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .site-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-container {
+            background-color: var(--gov-blue);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 25px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #2e7d32;
+            text-decoration: underline;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+            border-top: 4px solid var(--gov-red);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--gov-blue);
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown a:hover {
+            background-color: #f9f9f9;
+            color: var(--gov-red);
+        }
+
+        .nav-item:hover .dropdown {
+            display: block;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(26, 92, 58, 0.8), rgba(26, 92, 58, 0.8)), 
+                        url("./img/c1.png") no-repeat center center/cover;
+            background-color: var(--gov-blue); 
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .search-box {
+            display: inline-flex;
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            padding: 2px;
+        }
+
+        .search-box input {
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            width: 300px;
+            outline: none;
+        }
+
+        .search-box button {
+            background-color: var(--gov-red);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .banner-carousel {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: 4px solid var(--gov-blue);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a5c3a 0%, #2e7d32 100%);
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: #fff;
+        }
+
+        .carousel-content h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .carousel-content p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .indicator.active {
+            background: #fff;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .carousel-btn.prev {
+            left: 20px;
+        }
+
+        .carousel-btn.next {
+            right: 20px;
+        }
+
+        .hot-news {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: 4px solid var(--gov-blue);
+            padding: 25px;
+            border-radius: 4px;
+        }
+
+        .hot-news h2 {
+            color: var(--gov-blue);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .news-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+
+        .news-item:hover {
+            background: #f9f9f9;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-number {
+            width: 30px;
+            height: 30px;
+            background: var(--gov-blue);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .news-number.hot {
+            background: #e53935;
+        }
+
+        .news-content {
+            flex: 1;
+        }
+
+        .news-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .news-title:hover {
+            color: var(--gov-blue);
+        }
+
+        .news-meta {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: 4px solid var(--gov-blue);
+            padding: 25px;
+            border-radius: 4px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--gov-blue);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .btn-link {
+            color: var(--gov-blue);
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #e6e6e6;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid #ccc;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            color: #444;
+        }
+        
+        .disclaimer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #888;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            .dropdown {
+                position: static;
+                border-top: none;
+                background-color: #1a5c3a;
+            }
+            .dropdown a {
+                color: #ccc;
+                padding-left: 40px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .search-box input {
+                width: 100%;
+            }
+            .banner-carousel {
+                height: 300px;
+            }
+            .carousel-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="usa-banner">
+        <div class="usa-banner-inner">
+            <span class="usa-banner-text">
+                全成 大哥岛馆政府/全成新闻网
+                
+                </span>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-main">
+            <a href="#" class="logo-area">
+                <div>
+                    <div class="site-title">全成大哥岛 # 全成新闻网</div>
+                    <div class="site-subtitle">www.qcnews/qcdgisland</div>
+                </div>
+            </a>
+        </div>
+
+        <nav class="nav-container">
+            <ul class="navbar">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">导航</a>
+                    <div class="dropdown">
+                        <a href="./../index.html">返回大哥岛政府</a>
+                        <a href="#post_gift">在线拉票</a>
+                       </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>全成的事就是大哥的事</h1>
+        
+        <div class="search-box">
+            <input type="text" placeholder="搜索热门话题.">
+            <button>搜索</button>
+        </div>
+        <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">热门搜索：-</p>
+    </section>
+
+    <section class="main-content">
+        <div class="banner-carousel">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a5c3a 0%, #2e7d32 100%);">
+                        <div class="carousel-content">
+                            <h2>全成大哥岛馆政府最新政策发布</h2>
+                            <p>2026年度重点工程全面启动，助力岛馆高质量发展</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);">
+                        <div class="carousel-content">
+                            <h2>春日好菜节盛大开幕</h2>
+                            <p>品尝地道美食，感受全成独特魅力</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1b5e20 0%, #388e3c 100%);">
+                        <div class="carousel-content">
+                            <h2>2026年青年招募计划启动</h2>
+                            <p>全成大哥岛馆诚邀有志青年加入</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" onclick="changeSlide(-1)">‹</button>
+                <button class="carousel-btn next" onclick="changeSlide(1)">›</button>
+                <div class="carousel-indicators">
+                    <span class="indicator active" onclick="goToSlide(0)"></span>
+                    <span class="indicator" onclick="goToSlide(1)"></span>
+                    <span class="indicator" onclick="goToSlide(2)"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hot-news">
+            <h2>热点新闻</h2>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-number hot">1</div>
+                    <div class="news-content">
+                        <div class="news-title">2026年全成大哥岛馆政府选举结果公示</div>
+                        <div class="news-meta">2026-04-20 | 政务公开</div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-number hot">2</div>
+                    <div class="news-content">
+                        <div class="news-title">春日好菜节活动圆满落幕，游客创新高</div>
+                        <div class="news-meta">2026-04-18 | 文旅活动</div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-number">3</div>
+                    <div class="news-content">
+                        <div class="news-title">全成大哥岛馆青年招募计划正式启动</div>
+                        <div class="news-meta">2026-04-15 | 人才招聘</div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-number">4</div>
+                    <div class="news-content">
+                        <div class="news-title">岛馆基础设施升级改造工程全面开工</div>
+                        <div class="news-meta">2026-04-12 | 城市建设</div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-number">5</div>
+                    <div class="news-content">
+                        <div class="news-title">2026年度宜居岛馆评选活动启动</div>
+                        <div class="news-meta">2026-04-10 | 民生资讯</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+        <div class="card">
+            <h2>下载</h2>
+            <p>岛上全成新闻网 应用程序</p>
+            <a class="btn-link">获取指南 &rarr;</a>
+        </div>
+    </section>
+
+    <footer>
+      
+        <div class="footer-content">
+            <h3>全成大哥岛馆政府</h3>
+        
+        
+<div class="lang-switch">
+  <button onclick="setLang('zh')">中文</button>
+  <button onclick="setLang('en')">QUANCHENG</button>
+</div>
+
+
+            <p>地址：道馆</p>
+            <p>电话：123-78大哥</p>
+            <img alt="全成大哥岛馆政府授权"></img>
+            <div class="disclaimer">
+                <p><strong>严正声明 / Disclaimer：</strong></p>
+                <p>这里不需要天天道馆也别路</p>
+                <p>站点坑你的根本没有这个地方</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        let autoPlayInterval;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                indicators[i].classList.remove('active');
+            });
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        function changeSlide(direction) {
+            let newIndex = currentSlide + direction;
+            if (newIndex >= slides.length) newIndex = 0;
+            if (newIndex < 0) newIndex = slides.length - 1;
+            showSlide(newIndex);
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                changeSlide(1);
+            }, 5000);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        document.querySelector('.banner-carousel').addEventListener('mouseenter', stopAutoPlay);
+        document.querySelector('.banner-carousel').addEventListener('mouseleave', startAutoPlay);
+
+        startAutoPlay();
+    </script>
+
+</body>
+</html>

@@ -9,18 +9,18 @@
 
 <style>
 :root{
-  --bg:#7a0000;
-  --card:#b30000;
-  --gold:#ffd700;
+  --bg:rgb(18,120,225);
+  --card:rgb(18,120,225);
+  --gold:#fff;
   --text:#fff;
-  --radius:26px;
+  --radius:10px;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
   font-family:'Noto Sans SC';
-  background:radial-gradient(circle,#b30000,#5a0000);
+  background:rgb(18,120,225);
   color:var(--text);
   min-height:100vh;
 }
@@ -48,9 +48,9 @@ header h1{
 }
 
 .card{
-  background:linear-gradient(145deg,#c40000,#8b0000);
+  background:0;
   border-radius:var(--radius);
-  padding:30px;
+  padding:20px;
   text-align:center;
   box-shadow:0 15px 40px rgba(0,0,0,.4);
 }
@@ -82,7 +82,7 @@ header h1{
 
 #form{
   display:none;
-  background:linear-gradient(145deg,#c40000,#8b0000);
+  background:linear-gradient();
   padding:35px;
   border-radius:var(--radius);
   max-width:450px;
@@ -105,7 +105,7 @@ input{
   transform:translateX(-50%);
   background:var(--gold);
   color:#7a0000;
-  padding:14px 30px;
+  padding:10px 30px;
   border-radius:12px;
   font-weight:700;
 }
@@ -137,10 +137,10 @@ input{
 </head>
 
 <body>
-<a href="./rules.html" class="cover">活动规则</a>
-<button onclick="cluser()" class="cover2">清除Cookie</button>
+<a href="./rules.html" class="cover">活動規則</a>
+<button onclick="cluser()" class="cover2">Cookie</button>
 <header>
-  <h1>大哥国际</h1>
+  <h2>大哥國際廁所集團 活動</h2>
   <p id="hello"></p>
 </header>
 
@@ -148,29 +148,29 @@ input{
 
   <div id="gift-container">
     <div class="card">
-      <h3>📅 每日签到</h3>
-      <p>每日可领取一次金币</p>
-      <button class="btn" id="signBtn" onclick="signIn()">立即签到</button>
+      <h3>📅 每日簽到</h3>
+      <p>領取金幣</p>
+      <button class="btn" id="signBtn" onclick="signIn()">立即簽到</button>
     </div>
 
     <div class="card">
-      <h3>🎁 幸运抽奖</h3>
-      <p>签到100金币后可抽一次</p>
-      <button class="btn" id="lotteryBtn" onclick="lottery()">开始抽奖</button>
+      <h3>🎁 幸運抽獎</h3>
+      <p>簽到100金幣後可抽獎一次</p>
+      <button class="btn" id="lotteryBtn" onclick="lottery()">抽獎</button>
     </div>
 
     <div class="card">
-      <h3>🛒 福利自动设</h3>
-      <p>全成网路 100MB 大流量计把</p>
-      <button class="btn" onclick="openForm()">立即购买</button>
+      <h3>🛒 最新福利</h3>
+      <p>全程科技研發 智能5GHz路由器</p>
+      <button class="btn" onclick="openForm()">預約購買</button>
     </div>
   </div>
 
   <div id="form">
-    <h3 style="color:var(--gold);margin-bottom:20px">填写收货信息</h3>
-    <input id="user" placeholder="收货人">
-    <input id="addr" placeholder="收货地址">
-    <button class="btn" onclick="buy()">确认支付</button>
+    <h3 style="color:var(--gold);margin-bottom:20px">填寫收貨信息</h3>
+    <input id="user" placeholder="收貨人">
+    <input id="addr" placeholder="收貨地址">
+    <button class="btn" onclick="buy()">確認</button>
   </div>
 
 </div>
@@ -240,9 +240,8 @@ function buy(){
     alert("请填写完整")
     return
   }
-  show("支付成功，物流码：null")
-  form.innerHTML = `<h3>支付成功</hh3
-  <br><h2>物流码:null<br>货物名称：大哥一斤</h2>`;
+  show("支付成功")
+  form.innerHTML = `<h3>申領成功</h3> `;
 }
 
 function show(msg){
@@ -256,9 +255,9 @@ if(localStorage.signDate === today) signBtn.disabled = true
 if(localStorage.lottery === today) lotteryBtn.disabled = true
 
    function cluser(){
-        if (confirm("清除Cookie可解决签到问题。是否继续？")) { 
+        if (confirm("Clean the cookie?")) { 
 localStorage.clear();
-show("清除完成 重启网页生效");
+show("OK! Reload the browser.");
  }
     }
     

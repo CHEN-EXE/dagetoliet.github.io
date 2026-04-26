@@ -4,18 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文档阅读器</title>
-    
-    
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
-    <!-- 引入Prism.js用于代码高亮 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
-    
     <style>
         * {
             margin: 0;
@@ -30,24 +25,152 @@
             line-height: 1.6;
         }
         
-        .container {
-            max-width: 100vh;
-            margin: 0 auto;
-            padding: 20px;
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background-color: #fff;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .sidebar-header h1 {
+            color: #2c3e50;
+            font-size: 18px;
+            display: flex;
+            align-items: right;
+            gap: 10px;
+        }
+        
+        .doc-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+        
+        .doc-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .doc-list li {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .doc-list li[data-file] {
+            padding: 10px 20px;
+            border-left: 3px solid transparent;
+        }
+        
+        .doc-list li[data-file]:hover {
+            background-color: #f5f5f5;
+            border-left-color: #1976d2;
+        }
+        
+        .doc-list li[data-file].active {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border-left-color: #1976d2;
+        }
+        
+        .doc-list li.has-children > .menu-title {
+            display: block;
+            padding: 10px 20px;
+            font-weight: 600;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+        }
+        
+        .doc-list .submenu {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .doc-list .submenu li {
+            padding: 8px 20px 8px 36px;
+            border-left: 3px solid transparent;
+            font-size: 14px;
+        }
+        
+        .doc-list .submenu li:hover {
+            background-color: #f5f5f5;
+            border-left-color: #1976d2;
+        }
+        
+        .doc-list .submenu li.active {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border-left-color: #1976d2;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 101;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
         }
         
         .header {
             background-color: #fff;
-            padding: 10px;
-          
+            padding: 15px 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .header h1 {
             color: #2c3e50;
+            font-size: 20px;
+        }
         
-            font-size:20px;
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
         .loading {
@@ -61,37 +184,37 @@
             background-color: #fee;
             color: #c33;
             padding: 20px;
-            border-radius: 20px;
+            border-radius: 8px;
             margin: 20px 0;
         }
         
         .content {
             background-color: #fff;
-            padding: 20px;
-            border-radius: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 32px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             min-height: 400px;
         }
         
-        /* Markdown样式 */
         .markdown-content h1, .markdown-content h2, .markdown-content h3, 
         .markdown-content h4, .markdown-content h5, .markdown-content h6 {
-            margin-top: 24px;
+            margin-top: 32px;
             margin-bottom: 16px;
             font-weight: 600;
             line-height: 1.25;
+            color: #1a1a1a;
         }
         
         .markdown-content h1 {
             font-size: 2em;
-            border-bottom: 1px solid #eaecef;
-            padding-bottom: 10px;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 12px;
         }
         
         .markdown-content h2 {
             font-size: 1.5em;
             border-bottom: 1px solid #eaecef;
-            padding-bottom: 8px;
+            padding-bottom: 10px;
         }
         
         .markdown-content h3 {
@@ -100,6 +223,7 @@
         
         .markdown-content p {
             margin-bottom: 16px;
+            color: #444;
         }
         
         .markdown-content ul, .markdown-content ol {
@@ -108,47 +232,57 @@
         }
         
         .markdown-content li {
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         
         .markdown-content blockquote {
-            border-left: 4px solid #dfe2e5;
-            padding-left: 16px;
+            border-left: 4px solid #1976d2;
+            padding: 12px 16px;
             margin: 16px 0;
-            color: #6a737d;
+            color: #555;
+            background-color: #f8f9fa;
+            border-radius: 0 4px 4px 0;
         }
         
         .markdown-content code {
-            background-color: #f6f8fa;
-            padding: 2px 4px;
+            background-color: #f1f3f4;
+            padding: 2px 6px;
             border-radius: 3px;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 85%;
+            color: #d63384;
         }
         
         .markdown-content pre {
-            background-color: #f6f8fa;
+            background-color: #1e1e1e;
             padding: 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             overflow-x: auto;
             margin-bottom: 16px;
+            position: relative;
         }
         
         .markdown-content pre code {
             background-color: transparent;
             padding: 0;
+            color: #d4d4d4;
+            font-size: 14px;
+            line-height: 1.6;
         }
         
         .markdown-content table {
             border-collapse: collapse;
             width: 100%;
             margin-bottom: 16px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px #dfe2e5;
         }
         
         .markdown-content table th,
         .markdown-content table td {
             border: 1px solid #dfe2e5;
-            padding: 8px 12px;
+            padding: 10px 14px;
         }
         
         .markdown-content table th {
@@ -156,89 +290,154 @@
             font-weight: 600;
         }
         
+        .markdown-content table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        
+        .markdown-content table tr:hover {
+            background-color: #f0f4f8;
+        }
+        
         .markdown-content img {
             max-width: 100%;
             height: auto;
-            border-radius: 4px;
+            border-radius: 6px;
             margin: 16px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .markdown-content a {
             color: #0366d6;
             text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
         }
         
         .markdown-content a:hover {
-            text-decoration: underline;
+            border-bottom-color: #0366d6;
         }
         
-        .doc-list {
-            background-color: rgba(255,255,255,0.883);
-            padding: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            border-bottom-left-radius:30px;
-                border-bottom-right-radius:30px;
-        
+        .markdown-content hr {
+            border: none;
+            border-top: 1px solid #e1e4e8;
+            margin: 24px 0;
         }
         
-        .doc-list h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        
-        .doc-list ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .doc-list li {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            border-radius:10000px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .doc-list li:hover {
-            background-color: #f5f5f5;
-        }
-        
-        .doc-list li.active {
-            background-color: #e3f2fd;
-            color: #1976d2;
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
+            
+            .header {
+                padding-left: 60px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-   <div class="header">
-            <h1>
-            <img style="height:25px;" alt="大哥科技" src="../大哥科技.png"/>  
-            </h1>
+    <button class="menu-toggle" id="menuToggle">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="layout">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+          <br> <br>      <h1 style="text-align:right;">
+                  <img style="height:25px;" alt="大哥科技" src="../大哥科技.png"/>  
+                </h1>
+            </div>
+            <div class="doc-list" id="docList"></div>
         </div>
-   
-    <div class="doc-list">
-            <ul id="docList">
-                <li data-file="doc.md">前言</li>
-<li data-file="developer-全成唱片.md">全成唱片开发平台</li>
-                <li data-file="toliet_helper.md">教程</li>
-                  <li data-file="howtolashi.md">如何拉屎</li>
-            </ul>
-        </div>
-           
-    <div class="container">
         
-        
-        <div id="content" class="content">
-            <div class="loading"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="#333333"><circle cx="12" cy="3.5" r="1.5"><animateTransform attributeName="transform" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="0 12 12;90 12 12;180 12 12;270 12 12"/><animate attributeName="opacity" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle><circle cx="12" cy="3.5" r="1.5" transform="rotate(30 12 12)"><animateTransform attributeName="transform" begin="0.2s" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="30 12 12;120 12 12;210 12 12;300 12 12"/><animate attributeName="opacity" begin="0.2s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle><circle cx="12" cy="3.5" r="1.5" transform="rotate(60 12 12)"><animateTransform attributeName="transform" begin="0.4s" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="60 12 12;150 12 12;240 12 12;330 12 12"/><animate attributeName="opacity" begin="0.4s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle></g></svg></div>
+        <div class="main-content">
+            <br><br>
+            <div class="container">
+                <div id="content" class="content">
+                    <div class="loading"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="#333333"><circle cx="12" cy="3.5" r="1.5"><animateTransform attributeName="transform" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="0 12 12;90 12 12;180 12 12;270 12 12"/><animate attributeName="opacity" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle><circle cx="12" cy="3.5" r="1.5" transform="rotate(30 12 12)"><animateTransform attributeName="transform" begin="0.2s" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="30 12 12;120 12 12;210 12 12;300 12 12"/><animate attributeName="opacity" begin="0.2s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle><circle cx="12" cy="3.5" r="1.5" transform="rotate(60 12 12)"><animateTransform attributeName="transform" begin="0.4s" calcMode="discrete" dur="2.4s" repeatCount="indefinite" type="rotate" values="60 12 12;150 12 12;240 12 12;330 12 12"/><animate attributeName="opacity" begin="0.4s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></circle></g></svg></div>
+                </div>
+                <br>
+                <p style="color:#e0e0e0;text-align:center;font-size:14px;">大哥国际集团开发 | 仅供娱乐请勿当真</p>
+            </div>
         </div>
-        <br>
-  <p style="color:#e0e0e0;text-align:center;font-size:14px;">大哥国际集团开发 | 仅供娱乐请勿当真</p>
     </div>
 
     <script>
-      // 由于是ai开发 这里就不加密了（
-        // 配置marked选项
+        const docsData = [
+            {name: "产品前言", file: "doc.md"},
+            {
+                name: "应用程序",
+                children: [
+                    {name: "全成唱片", file: "developer-全成唱片.md"},
+                  {name: "大哥幻想岛", file: "dev-dageisland.md"}
+                
+                ]
+            },
+            {
+                name: "教学",
+                children: [
+                    {name: "大哥国际厕所集团产业", file: "toliet_helper.md"}
+                ]
+            },
+            {name: "如何拉屎", file: "howtolashi.md"}
+        ];
+        
+        function renderMenu(data, container) {
+            const ul = document.createElement('ul');
+            data.forEach(item => {
+                if (item.children) {
+                    const li = document.createElement('li');
+                    li.className = 'has-children';
+                    li.innerHTML = `<span class="menu-title">${item.name}</span>`;
+                    const submenu = document.createElement('ul');
+                    submenu.className = 'submenu';
+                    item.children.forEach(child => {
+                        const childLi = document.createElement('li');
+                        childLi.setAttribute('data-file', child.file);
+                        childLi.textContent = child.name;
+                        submenu.appendChild(childLi);
+                    });
+                    li.appendChild(submenu);
+                    ul.appendChild(li);
+                } else {
+                    const li = document.createElement('li');
+                    li.setAttribute('data-file', item.file);
+                    li.textContent = item.name;
+                    ul.appendChild(li);
+                }
+            });
+            container.appendChild(ul);
+        }
+        
         marked.setOptions({
             highlight: function(code, lang) {
                 if (Prism.languages[lang]) {
@@ -250,14 +449,12 @@
             gfm: true
         });
 
-        // 文档加载函数
         async function loadMarkdown(filePath) {
             const contentDiv = document.getElementById('content');
             
             try {
-                contentDiv.innerHTML = '<div class="loading"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path fill="none" stroke="#333333" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c4.97 0 9 4.03 9 9"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="16;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg></div> <p style="margin-top:-40px;font-size:12px;text-align:center;">加载阅览组件...</p>';
+                contentDiv.innerHTML = '<div class="loading"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path fill="none" stroke="#333333" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c4.97 0 9 4.03 9 9"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="16;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg></div> <p style="margin-top:-40px;font-size:12px;text-align:center;">LOADING ..</p>';
                 
-                // 从服务器加载Markdown文件
                 const response = await fetch(`./${filePath}`);
                 
                 if (!response.ok) {
@@ -265,14 +462,8 @@
                 }
                 
                 const markdownText = await response.text();
-                
-                // 将Markdown转换为HTML
                 const htmlContent = marked.parse(markdownText);
-                
-                // 更新页面内容
                 contentDiv.innerHTML = `<div class="markdown-content">${htmlContent}</div>`;
-                
-                // 重新初始化代码高亮
                 Prism.highlightAll();
                 
             } catch (error) {
@@ -280,37 +471,40 @@
                     <div class="error">
                         <h3>出错了</h3>
                         <p>无法加载文档: ${error.message}</p>
-                        
                     </div>
                 `;
             }
         }
 
-        // 文档列表点击事件
         document.getElementById('docList').addEventListener('click', function(e) {
-            if (e.target.tagName === 'LI') {
-                // 更新活动状态
-                document.querySelectorAll('.doc-list li').forEach(li => {
-                    li.classList.remove('active');
-                });
-                e.target.classList.add('active');
-                
-                // 加载对应的文档
-                const fileName = e.target.getAttribute('data-file');
-                loadMarkdown(fileName);
+            const li = e.target.closest('li[data-file]');
+            if (!li) return;
+            
+            document.querySelectorAll('.doc-list li').forEach(item => {
+                item.classList.remove('active');
+            });
+            li.classList.add('active');
+            
+            const fileName = li.getAttribute('data-file');
+            loadMarkdown(fileName);
+            
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('overlay').classList.remove('active');
             }
         });
 
-        // 页面加载时自动加载第一个文档
         window.addEventListener('DOMContentLoaded', function() {
-            // 默认加载第一个文档
-            const firstDoc = document.querySelector('.doc-list li');
+            const docList = document.getElementById('docList');
+            renderMenu(docsData, docList);
+            
+            const firstDoc = document.querySelector('.doc-list li[data-file]');
             if (firstDoc) {
-                firstDoc.click();
+                firstDoc.classList.add('active');
+                loadMarkdown(firstDoc.getAttribute('data-file'));
             }
         });
 
-        // 可选：添加键盘导航
         document.addEventListener('keydown', function(e) {
             const activeItem = document.querySelector('.doc-list li.active');
             if (!activeItem) return;
@@ -323,9 +517,19 @@
                 nextItem = activeItem.previousElementSibling;
             }
             
-            if (nextItem && nextItem.tagName === 'LI') {
+            if (nextItem && nextItem.getAttribute('data-file')) {
                 nextItem.click();
             }
+        });
+        
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        });
+        
+        document.getElementById('overlay').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
         });
     </script>
 </body>
