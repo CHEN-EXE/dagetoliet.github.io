@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>大是哥集团收银台</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://res.weiunity.com/msg/msg.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/naive-ui/dist/index.prod.js"></script>
+  
+    </head>
+    <body>
+      <div style="margin:10px;" id="app">
+        <h1>¥10.00</h1>
+        <n-steps vertical v-model:current="current">
+    <n-step
+      title="扫码支付"
+      description=""
+    >
+      <n-alert title="未支付" type="warning">
+      您还有¥10.00未支付。
+    </n-alert>
+          <n-qr-code value="https://chen-exe.github.io/dagetoliet.github.io/restaurant/foods/pay/getPay.html" type="canvas" size="250" error-correction-level="M"
+        ></n-qr-code>
+   <br>
+        <n-button>检查支付状态</n-button>
+     
+    </n-step>
+ 
+ 
+ 
+    <n-step
+      title="取走取餐码"
+      description=""
+    >
+      
+      <n-result
+    status="info"
+    title="未支付"
+    description="支付后获取取餐码"
+  >
+    <template #footer>
+      门店打印设备未连接
+    </template>
+  </n-result>
+  
+    </n-step>
+ 
+ 
+  </n-steps>
+  
+        
+        </div>
+        
+    <script>
+      const { createApp, ref, computed, onUnmounted } = Vue;
+      
+      const app = createApp({
+        setup() {
+          onUnmounted(() => {
+          });
+
+          return {
+          };
+        }
+      });
+      app.use(naive);
+      app.mount('#app');
+    </script>
+  </body>
+</html>
