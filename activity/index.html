@@ -9,7 +9,7 @@
 
 <style>
 :root{
-  --bg:rgb(18,120,225);
+  --bg:#d46037f7;
   --card:rgb(18,120,225);
   --gold:#fff;
   --text:#fff;
@@ -20,7 +20,7 @@
 
 body{
   font-family:'Noto Sans SC';
-  background:rgb(18,120,225);
+  background:var(--bg);
   color:var(--text);
   min-height:100vh;
 }
@@ -137,8 +137,10 @@ input{
 </head>
 
 <body>
+    <img style="height:515px;" src="./sg.png"/>
+
 <a href="./rules.html" class="cover">活動規則</a>
-<button onclick="cluser()" class="cover2">Cookie</button>
+<button onclick="cluser()" class="cover2">Cookies</button>
 <header>
   <h2>大哥國際廁所集團 活動</h2>
   <p id="hello"></p>
@@ -255,9 +257,9 @@ if(localStorage.signDate === today) signBtn.disabled = true
 if(localStorage.lottery === today) lotteryBtn.disabled = true
 
    function cluser(){
-        if (confirm("Clean the cookie?")) { 
+        if (confirm("是否要删除Cookies")) { 
 localStorage.clear();
-show("OK! Reload the browser.");
+show("完成");
  }
     }
     

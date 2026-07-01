@@ -1,11 +1,13 @@
-CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00{
+* DGJ.Config.
+DGJ.CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00{
+    PIN-A:"DGJ.base64",
     PNT-1:CGI_BIN,
     PNT0:Assets,
     PNT1:DAGEWIFI6,
     PNT2:2022-05-11_16-30-00,
     PNT3:CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00,
     PNT4:CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00,
-    PNT5:CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00,
+    PNT5:CGI_BIN_Assets_DGJUpdate_2026-05-12_16-30-00,
     DNS:"chen-exe.github.io/dagetoliet.github.io/cgi_bin/BH64/JDNS_DOM/ASSETS.BAT",
     TELNET:1,
     USER:root,
@@ -20,7 +22,7 @@ CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00{
     SERIAL:DAWIFI6_PNSPLUS_V1.0.0.1,
     HARDWARE:DAWIFI6_PNSPLUS_V1.0.0.1,
     OS:HDAGENB666OS_64_32V1.0.0.1_debug,
-    STATUS:DAWIFI6_PNSPLUS_V1.0.0.1,
+    STATUS:RUNNER.BIN,
     TIME:2022-05-11_16-30-00,
     SITE:{
         SITE1:"/index.html",
@@ -42,7 +44,7 @@ CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00{
         ------- DAGE TECH --------
         MAKE FROM WUQUANCHENG.
         64%86-2029-DAWIFI6_PNSPLUS
-        DAGE NB??~!!!!!
+        ** TIS KNOW  Fn
         BIN DONE;
         BIN;
         ------- VIRUS 000 --------
@@ -56,4 +58,5 @@ CGI_BIN_Assets_DAGEWIFI6_2022-05-11_16-30-00{
         The content of this document is for entertainment purposes only and is not real data; please be aware and distinguish accordingly!
         BIN;
     }
+    RUN:IPUPDATE.DGJ.MSG.Bin
 }

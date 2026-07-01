@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>大哥国际银行-股票详情</title>
-    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="https://unpkg.com/element-plus"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.13.3/dist/index.css" />
+   <script src="https://unpkg.com/vue@3.5.29/dist/vue.global.prod.js"></script>
+
+  <!-- Element Plus（全量全局构建） -->
+
+  <script src="https://cdn.jsdelivr.net/npm/element-plus@2.13.3/dist/index.full.min.js"></script>
+
+  <!-- Element Plus 简体中文语言包（官方 i18n CDN 用法） -->
+
+  <script src="https://unpkg.com/element-plus@2.13.3/dist/locale/zh-cn"></script>
+
+  <!-- Axios -->
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.13.6/dist/axios.min.js"></script>
     <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
     <style>
         :root {
@@ -116,13 +127,12 @@
               <div class="header-top">
           <p style=" margin:0;font-size:10px;font-weight:300;">
         
- 大哥国际银行 （DageGuoji.Bank.）股票平台
+ 大哥国际银行 （DGJ.Bank.）股票平台
  </div>
 
         <div class="header">
           <p style=" margin:0;font-size:24px;font-weight:300;">
-            
-股票跌涨查看</p>
+            股票交易市场</p>
             {{ stockInfo.stockName || '加载中...' }}({{ stockInfo.symbol || '----' }})
         </div>
 
@@ -134,7 +144,15 @@
                 <span style="margin-left: 10px;">{{ stockInfo.status }}</span>
                <br>    <span style="margin-left: 10px;">建议：{{ stockInfo.text }}</span>
             
-     <br> <br>          <el-button size="small">换一个</el-button>
+     <br> <br>           <el-tag type="warning">经营异常 20</el-tag>
+    <el-tag type="danger">法律纠纷 10</el-tag>
+        <el-tag type="info">法人变更次数 3</el-tag>
+        <br><br>
+     <el-alert     
+     title="风险提醒" description="该股票掌控集团（大哥国际厕所集团 股票代码：DGJPlus）近日产权纠纷较多，请您谨慎投资。" type="warning" show-icon :closable="false" >
+</el-alert>
+ 
+ 
             </div>
         </div>
 

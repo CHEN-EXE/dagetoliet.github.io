@@ -23,6 +23,13 @@
       "title": "大哥出海",
       "description": "助力厕所走向世界",
       "buttonText": "大哥国际厕所"
+    }
+    ],
+  "dghub": [
+    {
+      "title": "😍",
+      "description": "120kg无趣啊女成在线",
+      "buttonText": "大哥国"
     },
     {
       "title": "全球厕所",
@@ -31,5 +38,21 @@
     }
   ],
    "video_feed": [
+         {
+            "url": "./video/d1.mp4",
+            "title": "无",
+            "author": "DAGE Tech",
+            "avatar": "https://via.placeholder.com/150",
+            "description": "无视频"
+        },
+             {
+            "url": "./video/d2.mp4",
+            "title": "大哥牛逼666",
+            "author": "DAGE Tech",
+            "avatar": "https://via.placeholder.com/150",
+            "description": "无视频"
+        }
+   
+    
         ]
 }

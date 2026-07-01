@@ -519,8 +519,6 @@
   </nav>
 
   <div class="baike-background">
-    <!-- 预留交接位
-    大是哥系列将于2026.06.16正式完成存档操作。如果Github Pages 不丝，账户没被封 那大哥国际就一直在。-->
     <h2 class="baike-title">大哥国际厕所集团</h2>
     <p class="baike-subtitle">大哥岛五百强企业<br>大哥国际，走向全城</p>
     <button onclick="otto1.showModal()" class="play_btn">
@@ -529,6 +527,17 @@
   </div>
 
   <div class="container">
+        <div class="section-title">
+      <span id="otto4" style="display:flex; align-items:center;">
+        <div class="section-title-line"></div>点击跳转到服务器版
+      </span>
+    </div>
+    <div class="section-title">
+      <span id="otto4" style="display:flex; align-items:center;">
+        <div class="section-title-line"></div>点击跳转GitHub仓库
+      </span>
+    </div>
+
     <div class="section-title">
       <span id="otto4" style="display:flex; align-items:center;">
         <div class="section-title-line"></div>企业介绍
@@ -536,7 +545,7 @@
     </div>
 
     <div id="otto6" class="intro-box">
-     <!-- 感谢各位对大哥国际 大是哥系列的支持！2022级大哥已离开 但大是哥永远不灭！大哥国际站点将一直存档。 以下是介绍： --> 大哥国际厕所集团创始于1999，是一家民营全成企业，该企业发展多样化业务，创办全成科技公司和大是哥公司，成功的为当地UDP拉到最高等级。
+     大哥国际厕所集团创始于1999，是一家民营全成企业，该企业发展多样化业务，创办全成科技公司和大是哥公司，成功的为当地UDP拉到最高等级。
     </div>
 
     <div class="section-title">
@@ -696,8 +705,71 @@
       <button class="dialog-btn" onclick="otto2.close()">Close Terminal</button>
     </div>
   </dialog>
+<dialog id="welcomeDialog" style="
+  background: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 340px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  color: #333333;
+  box-sizing: border-box;
+">
+  <h3 style="margin: 0 0 12px 0; font-size: 18px; font-weight: 600; color: #111111; letter-spacing: 0.5px;">大哥系列结束</h3>
+  <p style="margin: 0 0 20px 0; font-size: 14px; color: #666666; line-height: 1.5;"> 大哥系列 大哥国际 Github仓库将在2026.06.16推送最后版本并进行存档操作，之后不再支持推送更新。其中“全成唱片”“大哥传媒”等json数据加载平台将从仓库转移到服务器并使用数据库继续维护。
+ </p>
+  
+  <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #888888;">
+    <input type="checkbox" id="dontShowAgain" style="cursor: pointer; margin: 0; width: 14px; height: 14px;">
+    <label for="dontShowAgain" style="cursor: pointer; user-select: none;">以后不再显示</label>
+  </div>
+  
+  <button onclick="closeWelcomeDialog()" style="
+    width: 100%;
+    padding: 10px;
+    background: #111111;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: opacity 0.2s;
+  " onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">我知道了</button>
+</dialog>
 
+<style>
+  #welcomeDialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+  }
+</style>
   <script>
+    // 获取新增弹窗的相关 DOM 元素
+const welcomeDialog = document.getElementById('welcomeDialog');
+const dontShowAgainCheck = document.getElementById('dontShowAgain');
+
+// 页面加载完成后自动判断是否弹窗
+window.addEventListener('DOMContentLoaded', () => {
+  // 检查本地存储中是否存在“不再显示”的标记
+  const isHide = localStorage.getItem('hideWelcomeDialog');
+  
+  if (!isHide) {
+    // 如果没有标记，则使用 showModal() 弹出模态框
+    welcomeDialog.showModal();
+  }
+});
+
+// 关闭弹窗的函数
+function closeWelcomeDialog() {
+  // 如果用户勾选了“以后不再显示”
+  if (dontShowAgainCheck.checked) {
+    // 在本地存储中存入标记
+    localStorage.setItem('hideWelcomeDialog', 'true');
+  }
+  welcomeDialog.close();
+}
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
 

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toliet Demo</title>
+    <style>
+        :root {
+            --primary-color: #1677ff; /* 大厂常用的科技蓝 */
+            --primary-hover: #4096ff;
+            --bg-color: #f5f7fa;      /* 干净的内网背景底色 */
+            --card-bg: #ffffff;
+            --text-main: #1f2329;     /* 字节/飞书风格的深色文本 */
+            --text-muted: #646a73;
+            --border-color: #dee0e3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 顶部微型导航条，营造内网系统氛围 */
+        .internal-header {
+            background: #ffffff;
+            height: 48px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .header-logo {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #1f2329;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-logo::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .header-tag {
+            font-size: 11px;
+            background: #edf5ff;
+            color: var(--primary-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* 登录主体容器 */
+        .main-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 32px;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(31, 35, 41, 0.04), 0 1px 2px rgba(31, 35, 41, 0.02);
+            border: 1px solid rgba(31, 35, 41, 0.08);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        /* 现代化的表单布局 */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .form-input {
+            width: 100%;
+            height: 40px;
+            padding: 0 12px;
+            font-size: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            background-color: #fff;
+        }
+
+        .form-input:hover {
+            border-color: #bbbfc4;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(22, 119, 255, 0.15);
+        }
+
+        /* 大厂规范的极简按钮 */
+        .submit-btn {
+            width: 100%;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 12px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .submit-btn:active {
+            background-color: #0958d9;
+        }
+
+        /* 安全审计提示框 */
+        .security-notice {
+            margin-top: 24px;
+            padding: 12px;
+            background-color: #fafafa;
+            border: 1px dashed var(--border-color);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* 页脚安全声明 */
+        .internal-footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(31, 35, 41, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="internal-header">
+        <div class="header-logo">
+            大哥国际厕所 <span class="header-tag">普通版管理系统</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="login-card">
+            <h1 class="card-title">欢迎回来</h1>
+            <p class="card-subtitle">账户密码或NFC卡片验证</p>
+            
+            <form name="loginForm" >
+                <div class="form-group">
+                    <label class="form-label">用户名</label>
+                    <input type="text" name="username" class="form-input" placeholder="请输入工号/邮箱前缀" required autocomplete="username">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <input type="password" name="password" class="form-input" placeholder="请输入密码" required autocomplete="current-password">
+                </div>
+           <p id="not" style="color:red;display:none;">Database Not Found!</p>     
+                <button onclick="login()" class="submit-btn">登 录</button>
+            </form>
+
+            <div class="security-notice">
+                <strong>DEMO信息：</strong> 
+         <br>       Username: demo123
+           <br>     Password: demodagenb
+            </div>
+        </div>
+    </main>
+
+    <footer class="internal-footer">
+        <p>© 2026 DGJ.Tech Inc. All Rights Reserved. <br>智慧厕所基础版 | 系统：Windows | 运行状态：正常</p>
+    </footer>
+</body>
+
+<script>
+    const styles = {
+        title: "font-size: 20px; color: #00ff00; text-shadow: 0 0 10px #00ff00;",
+        header: "font-size: 14px; color: #00ff00; background: #003300; padding: 5px;",
+        warning: "font-size: 14px; color: #ff0000; background: #330000; padding: 5px;",
+        content: "font-size: 12px; color: #00ff00; font-family: monospace; white-space: pre;",
+        hex: "font-size: 12px; color: #ffff00; background: #333300;", 
+        footer: "font-size: 12px; color: #666; font-style: italic;"
+    };
+function login(){
+  document.getElementById("not").style.display ="block";
+}
+    // 保留原始的彩蛋/调试数据
+</script>
+
+</html>

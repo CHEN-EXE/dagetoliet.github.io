@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>网页走丢了(⁠*⁠_⁠*⁠)</title>
+<style type="text/css">
+  /* 2011年流行：清爽底色与现代字体栈（全面启用微软雅黑） */
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding-top: 60px; /* 为固定导航栏留出空间 */
+  }
+
+  /* Bootstrap 经典黑色顶部导航栏 */
+  .navbar {
+    background-color: #1b1b1b;
+    background-image: linear-gradient(to bottom, #222222, #111111);
+    background-repeat: repeat-x;
+    border-bottom: 1px solid #000000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    position: fixed;
+    top: 0; right: 0; left: 0;
+    z-index: 1030;
+    height: 40px;
+  }
+  .navbar-inner {
+    width: 740px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 20px;
+  }
+  .navbar .brand {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+  }
+  .navbar .brand img { height: 16px; margin-right: 8px; border-radius: 2px; }
+  .navbar .nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .navbar .nav a {
+    color: #999999;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 13px;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  }
+  .navbar .nav a:hover {
+    color: #ffffff;
+  }
+
+  /* 主容器 */
+  .container {
+    width: 740px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* 2011年标配：Hero Unit 巨幕组件 */
+  .hero-unit {
+    padding: 30px;
+    margin-bottom: 30px;
+    background-color: #eeeeee;
+    border-radius: 6px;
+    position: relative;
+  }
+  .hero-unit h1 {
+    font-size: 38px;
+    line-height: 1;
+    color: #333333;
+    margin: 0 0 15px 0;
+    letter-spacing: -1px;
+  }
+  .hero-unit p {
+    font-size: 16px;
+    font-weight: 200;
+    line-height: 25px;
+    color: #555555;
+    margin: 0;
+  }
+  .hero-unit .logo-right {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    height: 40px;
+    opacity: 0.8;
+  }
+
+  /* Bootstrap 经典 Alert 警告框（红色错误款） */
+  .alert {
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    border-radius: 4px;
+  }
+  .alert-error {
+    background-color: #f2dede;
+    border: 1px solid #eed3d7;
+    color: #b94a48;
+  }
+
+  /* 2011年流行组件：Well 面板 */
+  .well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+  }
+  .well h2 {
+    font-size: 16px;
+    margin: 0 0 10px 0;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+  }
+
+  /* 列表与标签组件 */
+  .news-list { list-style: none; padding: 0; margin: 0; }
+  .news-list li { padding: 6px 0; border-bottom: 1px dashed #eee; display: flex; align-items: center; }
+  .news-list li:last-child { border-bottom: none; }
+  
+  /* 2011年超流行的 Badge/Label 标签 */
+  .label {
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #999999;
+    border-radius: 3px;
+    margin-right: 8px;
+  }
+  .label-info { background-color: #3a87ad; }
+
+  /* 栅格系统与内容卡片 (Thumbnails) */
+  .row { display: flex; margin-left: -20px; margin-bottom: 30px; }
+  .span4 { width: 233px; margin-left: 20px; }
+  .thumbnail {
+    display: block;
+    padding: 15px;
+    line-height: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+    text-align: center;
+    background-color: #ffffff;
+  }
+  .thumbnail img { width: 32px; height: 32px; margin-bottom: 10px; }
+  .thumbnail caption { display: block; padding: 0; color: #555; }
+
+  /* Bootstrap 经典微光渐变按钮 */
+  .btn {
+    display: inline-block;
+    padding: 4px 12px;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #333333;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+    background-color: #f5f5f5;
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    background-repeat: repeat-x;
+    border: 1px solid #cccccc;
+    border-bottom-color: #b3b3b3;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);
+    text-decoration: none;
+  }
+  .btn:hover { background-position: 0 -15px; transition: background-position 0.1s linear; color: #333; }
+  .btn-primary {
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #006dcc;
+    background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+    background-repeat: repeat-x;
+    border-color: #0044cc #0044cc #002a80;
+  }
+  .btn-primary:hover { color: #ffffff; }
+
+  /* 2011年推崇的页脚设计 */
+  footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #e5e5e5;
+    text-align: center;
+    font-size: 12px;
+    color: #777777;
+  }
+  footer p { margin: 5px 0; }
+  .disclaimer { font-size: 11px; color: #b94a48; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#">
+      <img src="./ltd.jpg" alt="Logo"> 大哥国际厕所公司
+      
+    </a>
+    <ul class="nav">
+      <li><a href="./router.htm">导航(N)</a></li>
+      <li><a href="#">集团介绍(I)</a></li>
+      <li><a href="#">联系我们(C)</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero-unit">
+    <img  class="logo-right" alt="走丢了">
+    <h1>OOPS! 网页走丢了！</h1>
+    <p>
+   你访问的界面可能是不存在。  </p>
+  </div>
+
+
+
+  <footer>
+    <p>
+      <a onclick="window.print()" class="btn" style="margin-top:0;">
+        🖨️ 打印此页
+      </a>
+    </p>
+    <p>本站点已采用 2011年先进的 HTML5 & CSS3 响应式组件标准构建</p>
+    <p>建议使用 Google Chrome 或 Internet Explorer 9 核心浏览器浏览</p>
+    <p class="disclaimer">1900-2013 大哥国际 | 本站点仅供娱乐 请勿当真</p>
+    <p style="color:#aaa; font-size:11px;">2005.04:Mr.Wuquancheng  Update:2013.05 Mr.Wuquancheng</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

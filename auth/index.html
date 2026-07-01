@@ -95,11 +95,17 @@
      
     <div class="login_content">
       <h1 style="font-weight:300;">DaGE</h1>
-      <p style="margin-top:9px;color:#8b8b8b">0万大哥已选择大哥Auth登陆应用</p>
+      <p style="margin-top:9px;color:#8b8b8b">0万大哥已选择全成唱片登陆应用</p>
       <button onclick="login()" id="loginname" class="btn">一键登录</button>
+     <button onclick="daoshangdage()" id="loginname" class="btn">通过 岛上大哥 登录</button>
+   
     </div>
   </body>
   <script>
+    function daoshangdage(){
+      msg.info("岛上大哥未安装");  
+    
+    }
     function login(){
       document.getElementById("loginname").textContent = "正在拉起全成唱片...";
       

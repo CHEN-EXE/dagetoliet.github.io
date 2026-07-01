@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>全成唱片_Ver1.5.2(AppClient)</title>
+    <title>全成唱片_Ver2.0.0(AppClient)</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
     <style>
@@ -474,14 +474,14 @@
 
         .floating-player {
             position: fixed;
-            bottom: 85px;
+            bottom: 90px;
             left: 15px;
             right: 15px;
             height: 60px;
             background: var(--player-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-radius: 14px;
+            border-radius: 100px;
             display: flex;
             align-items: center;
             padding: 0 15px;
@@ -512,7 +512,7 @@
         .mini-cover {
             width: 40px;
             height: 40px;
-            border-radius: 6px;
+            border-radius: 20px;
             margin-right: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             object-fit: cover;
@@ -1059,14 +1059,18 @@
 
         <div class="header-left">
             <div class="logo">
-        <img style="height:25px;" src="./pc.png"> </img>  <span
-                    style="font-size: 10px; color: var(--text-sub); margin-left: 5px; border: 1px solid currentColor; padding: 0 3px; border-radius: 3px;">Ver1.5.2</span>
-               </div>
+        <img style="height:20px;" src="./pc.png"> </img>  </div>
         </div>
 
         <div id="header-title" class="header-title-center">首页</div>
 
         <div class="header-controls">
+         
+                     <button class="icon-btn theme-btn" onclick="toggleTheme()" data-tooltip="面对面传歌">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M11.175 18.825Q10 17.65 10 16t1.175-2.825T14 12q.575 0 1.063.138t.937.412V5q0-.425.288-.712T17 4h4q.425 0 .713.288T22 5v1q0 .425-.288.713T21 7h-3v9q0 1.65-1.175 2.825T14 20t-2.825-1.175M5 11.663q-.75 1.537-.95 3.287q-.05.425-.337.738T3 16t-.712-.325t-.238-.75q.2-2.175 1.113-4.062t2.362-3.338t3.338-2.363t4.062-1.112q.425-.05.75.238T14 5t-.312.713t-.738.337q-1.75.2-3.275.938T6.95 8.925T5 11.663m3.675 1.575q-.45.837-.6 1.787q-.075.425-.362.7T7 16t-.7-.312t-.225-.738q.175-1.35.763-2.512T8.35 10.35t2.088-1.512t2.512-.763q.425-.05.738.225T14 9t-.275.713t-.7.362q-.95.15-1.775.588T9.775 11.75t-1.1 1.488"/></svg>
+            </button>
+
+ 
             <button class="icon-btn theme-btn" onclick="toggleTheme()" data-tooltip="切换主题">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                     <path fill="currentColor"
@@ -1097,9 +1101,12 @@
                         <ul class="glide__slides">
                             <img id="dagepic" src="./img/p1.png" alt="Featured"
                             onerror="this.src='https://via.placeholder.com/600x250?text=App+Music'">
-                        <img src="./img/cover/light.png" alt="Featured"
+                        <img src="./img/cover/pic3.png" alt="Featured"
                             onerror="this.src='https://via.placeholder.com/600x250?text=App+Music'">
-                        <img src="./img/p1.png" alt="Featured"
+                  <img src="./img/cover/pic4.png" alt="Featured"
+                            onerror="this.src='https://via.placeholder.com/600x250?text=App+Music'">
+                       
+                        <img src="./img/cover/ads1.gif" alt="Featured"
                             onerror="this.src='https://via.placeholder.com/600x250?text=App+Music'">
                     </ul>
                     </div>
@@ -1126,7 +1133,7 @@
             </div>
 
             <div id="play-view" class="view-hidden">
-                <h1 style="margin-top:10px;">库里</h1>
+                <h1 style="margin-top:10px;">音乐库</h1>
                 <div class="section-title">推荐库</div>
                 <div id="rec-lib-container"></div>
                 <div class="section-title">播放列表</div>
@@ -1169,17 +1176,19 @@
                     <h3>关于</h3>
                     <div onclick="tools()" class="ios-card submit-card">
                         <div class="submit-info">
-                            <h4>全成唱片 1.5.2</h4>
+                            <h4>全成唱片 2.0.0(维护版)</h4>
                             <p>开发者：NaOH.<br>鸣谢: SPACEDLS<br><strong>本次更新:</strong>
-                     调整用户页主体样式，删除一部分无用功能。支持检查更新
+                    用户您好，全成唱片从2.0.0版本将进入永久维护，不再推送新版本。<br>最后一个版本更新日志： 调整用户页主体样式，删除一部分无用功能。支持检查更新
                             <div style="display:none;" id="loader">
 
 
              
-                        QCDev     无功能。<br>
+                                 <p id="settings"
+                    style="font-size:12px;color:var(--text-sub); text-align:center; opacity: 0.7;"></p>
+           <br>
                                 <label>硬件加速:</label>
                                 <input type="radio" name="gender" value="open" checked>
-                                <label for="o">默认开</label>
+                                <label for="o">开</label>
                                 </input>
                             </div>
                             </p>
@@ -1227,8 +1236,6 @@
 
                 </div>
 
-                <p id="settings"
-                    style="font-size:12px;color:var(--text-sub); text-align:center; margin-top:50px; opacity: 0.7;"></p>
             </div>
         </div>
 
@@ -1257,15 +1264,8 @@
                 <span>搜索</span>
             </div>
 
-            <div class="tab-item" id="tab-play" onclick="switchTab('play')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M19.345 5.993c.278-.103.61-.19.97-.125c.442.08.836.329 1.1.692c.215.296.28.634.308.93c.027.287.027.646.027 1.055v.11c0 .3.002.62-.106.915a1.75 1.75 0 0 1-.392.623c-.22.225-.509.363-.78.492l-.068.033l-1.785.857c-.369.177-.692.332-.964.432c-.261.097-.57.18-.905.136v4.286c0 1.814-1.435 3.321-3.25 3.321s-3.25-1.507-3.25-3.321s1.435-3.322 3.25-3.322a3.2 3.2 0 0 1 1.75.522V10h.003q-.004-.254-.003-.545v-.11c0-.3-.002-.62.106-.915a1.75 1.75 0 0 1 .392-.623c.22-.225.509-.363.78-.492l.068-.033l1.785-.857c.369-.177.692-.332.964-.432" />
-                    <path fill="currentColor" fill-rule="evenodd"
-                        d="M2.25 5A.75.75 0 0 1 3 4.25h12a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 5m0 4A.75.75 0 0 1 3 8.25h10a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 9m0 4a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75m0 4a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75"
-                        clip-rule="evenodd" />
-                </svg>
-                <span>库里</span>
+            <div class="tab-item" id="tab-play" onclick="switchTab('play')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.384 13.793c-.447-3.164-.67-4.745.278-5.77C3.61 7 5.298 7 8.672 7h6.656c3.374 0 5.062 0 6.01 1.024s.724 2.605.278 5.769l-.422 3c-.35 2.48-.525 3.721-1.422 4.464s-2.22.743-4.867.743h-5.81c-2.646 0-3.97 0-4.867-.743s-1.072-1.983-1.422-4.464z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 17a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0m0 0v-6.5c0 1.657 1.895 3 3 3"/><path d="M19.562 7a2.132 2.132 0 0 0-2.1-2.5H6.538a2.132 2.132 0 0 0-2.1 2.5M17.5 4.5c.028-.26.043-.389.043-.496a2 2 0 0 0-1.787-1.993C15.65 2 15.52 2 15.26 2H8.74c-.26 0-.391 0-.497.011a2 2 0 0 0-1.787 1.993c0 .107.014.237.043.496"/></g></svg>
+                <span>库</span>
             </div>
 
 
@@ -1314,10 +1314,14 @@
             </div>
             <div class="fp-info-area">
                 <div class="fp-title" id="fp-title">歌曲标题</div>
-                <div class="fp-artist" id="fp-artist">歌手名</div>
+            <div class="fp-artist" id="fp-artist">歌手名</div>
+            <span
+                    style="font-size: 10px; color: var(--text-sub); margin-left: 0px; border: 1px solid currentColor; padding: 0 3px; border-radius: 3px;">全成音质</span>
+            <br>    
                 <div class="fp-lyrics">暂无歌词~</div>
 
-                <div data-tooltip="1" class="control-btn-side-chat" onclick="toggleComments()"><svg
+                <div data-tooltip="1" class="control-btn-side-chat" onclick="toggleComments()"
+       data-tooltip="评论"         ><svg
                         xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                         <g fill="none">
                             <path
@@ -1405,9 +1409,14 @@
     <div id="update-dialog-overlay" onclick="closeUpdateDialog(event)">
 
             <div class="ios-dialog-box" >
-                <div class="ios-dialog-title">内核更新</div>
+              
+                <div class="ios-dialog-title">
+          
+                  检查更新</div>
+                  
                 <div class="ios-dialog-desc">未查询到当前软件内核版本，但你可以自助更新到最新的软件内核。</div>
-<p id="update-ver">最新的版本：0</p>
+                
+<p id="update-ver">最新版本：0</p>
              <div class="ios-dialog-desc">点击“复制到剪贴板”按钮复制下载链接到浏览器下载安装。</div>   
 
                 <div class="ios-dialog-btns">
@@ -1525,6 +1534,7 @@
         const ICON_PAUSE = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m8 0h-2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2"/></svg>`;
 
         function loadmus() {
+          showToast("请等待音乐封面加载好后播放音乐");
             init();
         }
 
@@ -1571,7 +1581,7 @@
                 const libSongs = allSongs.filter(s => songTitles.includes(s.title));
                 const songsHtml = libSongs.map(s => `
                 <div class="song-item" onclick="selectSong(${JSON.stringify(s).replace(/"/g, '&quot;')})">
-                    <img class="song-cover" src="${s.cover}">
+                    <img class="song-cover" src="${s.cover}" onerror="showToast('封面加载出错，不影响正常播放')">
                     <div class="song-info">
                         <div class="song-name">${s.title}</div>
                         <div class="song-artist">${s.artist}</div>
@@ -1718,7 +1728,7 @@
             const titles = {
                 'home': '首页',
                 'search': '搜索',
-                'play': '库里',
+                'play': '乐库',
                 'user': '我的'
             };
             const titleEl = document.getElementById('header-title');
@@ -1993,7 +2003,8 @@
 function updateCheck(ver){
 
 showToast("正在检查新版本");
-
+showToast("功能暂停服务");
+/**
 fetch('./update/lib.json')
 
 .then(response => {
@@ -2024,8 +2035,8 @@ console.log(
 
 document.getElementById('update-dialog-overlay').classList.add('active');
 
-document.getElementById("update-ver").textContent = 
-`最新版本：${item.NewVersion}`;
+document.getElementById("update-ver").innerHTML = 
+`<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M20.245 14.75c.935.614.892 2.037-.129 2.576l-7.181 3.796a2 2 0 0 1-1.87 0l-7.181-3.796c-1.02-.54-1.064-1.962-.129-2.576l.063.04l7.247 3.832a2 2 0 0 0 1.87 0l7.181-3.796a2 2 0 0 0 .13-.076Zm0-4a1.5 1.5 0 0 1 0 2.501l-.129.075l-7.181 3.796a2 2 0 0 1-1.707.077l-.162-.077l-7.182-3.796c-1.02-.54-1.064-1.962-.129-2.576l.063.04l7.247 3.832a2 2 0 0 0 1.708.077l.162-.077l7.181-3.796a2 2 0 0 0 .13-.076Zm-7.31-7.872l7.181 3.796c1.066.563 1.066 2.09 0 2.652l-7.181 3.797a2 2 0 0 1-1.87 0L3.884 9.326c-1.066-.563-1.066-2.089 0-2.652l7.181-3.796a2 2 0 0 1 1.87 0"/></g></svg>${item.NewVersion}`;
 
 window.VerDown = item.Download;
 
@@ -2077,7 +2088,7 @@ showToast('复制失败，请手动复制');
 return false;
 
 }
-
+**/
 }
 
 function confirmUpdate(){
@@ -2159,8 +2170,9 @@ showToast('复制失败，请手动复制');
          </img>       <div class="cmt-user">${c.user}</div>
                 <div class="cmt-content">${c.content}</div>
                 <div style="font-size:10px; color:#888; margin-top:5px;">${c.time}</div>
+         <svg style="margin-top:4px; xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21V8l7-7l1.85 1.85L14.55 8H23v4.4L19.35 21zm2-2h9l3-7v-2h-9l1.35-5.5L9 8.85zM9 8.85V19zM2 21V8h5v2H4v9h3v2z"/></svg>    
             </div>
-        `).join('') : '<div style="text-align:center;color:#888;">暂无评论</div>';
+        `).join('') : '<div style="text-align:center;color:#888;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="m7.2 4l-2-2H20a2 2 0 0 1 2 2v12c0 .76-.43 1.41-1.05 1.75L19.2 16h.8V4zm14.91 17.46l-1.27 1.27L16.11 18H13.9l-3.7 3.71c-.2.19-.45.29-.7.29H9c-.55 0-1-.45-1-1v-3H4a2 2 0 0 1-2-2V3.9L1.11 3l1.28-1.27zm-8-5.46L4 5.89V16h6v3.08L13.08 16z"/></svg><br>暂无评论</div>';
             } catch (e) {
                 list.innerHTML = '无法加载评论';
             }

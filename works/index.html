@@ -8,198 +8,184 @@
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 </head>
-<style>
-    :root {
-        --primary-blue: rgb(1, 126, 184);
-        --border-color: #e0e0e0;
-        --transition-speed: 0.3s;
-    }
-
-    body {
-        padding: 0;
-        margin: 0;
-        font-family: 'Inter', 'PingFang SC', sans-serif;
-        background-color: #f9f9f9;
-    }
-
-    header {
-        z-index: 2000;
-        padding: 0 15px;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #000;
-        border-bottom: 1px solid #333;
-        box-sizing: border-box;
-    }
-
-    .header-content {
-        width: 100%;
-        max-width: 1200px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .menu-toggle {
-        cursor: pointer;
-        padding: 5px;
-        display: flex;
-        align-items: center;
-    }
-
-    /* 移动端菜单层 */
-    .mobile-nav {
-        position: fixed;
-        top: -100%;
-        left: 0;
-        width: 100%;
-        background: #000;
-        padding: 80px 20px 30px;
-        box-sizing: border-box;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1500;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-    }
-
-    .mobile-nav.active {
-        top: 0;
-    }
-
-    .mobile-nav a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 18px;
-        padding: 10px;
-        border-bottom: 1px solid #222;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-
-    .baike-background {
-        margin-top: 60px;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://cdn.pixabay.com/photo/2013/08/09/05/58/kuala-lumpur-170985_1280.jpg');
-        background-size: cover;
-        background-position: center;
-        height: 250px;
-        position: relative;
-    }
-
-    .play_btn {
-        outline: none;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        width: 50px;
-        height: 50px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(5px);
-        border-radius: 50%;
-        cursor: pointer;
-        transition: var(--transition-speed);
-    }
-
-    .play_btn:hover {
-        background-color: var(--primary-blue);
-        transform: scale(1.1);
-    }
-
-    .section-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 20px 0 10px 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .grid-menu {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 12px;
-    }
-
-    .regeng-cards {
-        padding: 15px 10px;
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        background: #fff;
-        text-align: center;
-        transition: all var(--transition-speed);
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .regeng-cards:hover {
-        background-color: var(--primary-blue);
-        color: #fff;
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(1, 126, 184, 0.3);
-    }
-
-    .regeng-cards svg {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 10px;
-        fill: currentColor;
-    }
-
-    .member-card {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 15px;
-        background: #fff;
-        border-radius: 12px;
-        border: 1px solid var(--border-color);
-    }
-
-    .footer {
-        text-align: center;
-        padding: 40px 20px;
-        color: #999;
-        font-size: 13px;
-    }
-
-    .footer a {
-        color: var(--primary-blue);
-        margin: 0 10px;
-        text-decoration: none;
-    }
-
-
-    .otto1dialog {
-        border: none;
-        border-radius: 20px;
-        padding: 20px;
-        max-width: 90vw;
-        width: 400px;
-    }
-
-    @media (min-width: 768px) {
-        .baike-background {
-            height: 350px;
+ <style>
+        :root {
+            --primary-color: #1677ff; /* 大厂常用的科技蓝 */
+            --primary-hover: #4096ff;
+            --bg-color: #f5f7fa;      /* 干净的内网背景底色 */
+            --card-bg: #ffffff;
+            --text-main: #1f2329;     /* 字节/飞书风格的深色文本 */
+            --text-muted: #646a73;
+            --border-color: #dee0e3;
         }
 
-        .grid-menu {
-            grid-template-columns: repeat(3, 1fr);
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-    }
-</style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 顶部微型导航条，营造内网系统氛围 */
+        .internal-header {
+            background: #ffffff;
+            height: 48px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .header-logo {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #1f2329;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-logo::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .header-tag {
+            font-size: 11px;
+            background: #edf5ff;
+            color: var(--primary-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* 登录主体容器 */
+        .container {
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 32px;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(31, 35, 41, 0.04), 0 1px 2px rgba(31, 35, 41, 0.02);
+            border: 1px solid rgba(31, 35, 41, 0.08);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        /* 现代化的表单布局 */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .form-input {
+            width: 100%;
+            height: 40px;
+            padding: 0 12px;
+            font-size: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            background-color: #fff;
+        }
+
+        .form-input:hover {
+            border-color: #bbbfc4;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(22, 119, 255, 0.15);
+        }
+
+        /* 大厂规范的极简按钮 */
+      button {
+            width: 100%;
+            height: 40px;
+            background-color:#1677ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 12px;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:active {
+            background-color: #0958d9;
+        }
+
+        /* 安全审计提示框 */
+        .security-notice {
+            margin-top: 24px;
+            padding: 12px;
+            background-color: #fafafa;
+            border: 1px dashed var(--border-color);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* 页脚安全声明 */
+        .internal-footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(31, 35, 41, 0.05);
+        }
+    </style>
 
 <body>
     <style type="text/css">
@@ -211,17 +197,24 @@
 
 
 
+  <header class="internal-header">
+        <div class="header-logo">
+            大哥国际厕所集团<span class="header-tag">应聘在线填报系统</span>
+        </div>
+    </header>
 
     <div class="container">
-        <h1 style="text-align: center; margin-top: 20px;">大哥国际厕所集团应聘在线填报系统</h1>
+        <h1 style="text-align: center; margin-top: 20px;">大哥国际厕所集团 2026 年度招聘</h1>
 
         <div id="otto6"
             style="line-height:1.8; padding:15px; background:#fff; border-radius:12px; margin-bottom:20px; margin-top: 20px;">
             欢迎申请我们的岗位！请认真填写下方信息。<br>
             * 所有标有红色星号(*)的字段为必填项<br>
             * 请确保提供的联系方式正确，方便我们与您联系<br>
-            * 提交后我们将在5个工作日内进行审核<br><br>
+            * 提交后我们将在-5个工作日内进行审核<br><br>
             感谢您的关注和支持！
+            <br>
+            人事部联系：rs@
         </div>
 
         <form id="recruitmentForm" style="background:#fff; padding:20px; border-radius:12px; margin-bottom:20px;">
@@ -295,8 +288,8 @@
             </div>
 
             <div style="text-align: center;">
-                <button type="button" onclick="submitForm()"
-                    style="background-color: var(--primary-blue); color: white; padding: 12px 40px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold;">提交</button>
+                <button class="submit-btn" type="button" onclick="submitForm()"
+                    style="">提交</button>
             </div>
         </form>
 

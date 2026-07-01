@@ -2,6 +2,7 @@
 <html lang="zh-CN" data-theme="light">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>全成唱片网页版</title>
@@ -827,17 +828,21 @@
             </header>
 
             <div class="content-wrapper">
+        <br>  <div style="background-color:rgb(247,247,247);padding:9px; border-radius:15px;color:var(--text-main);display:flex;"> <p style="color:var(--text-main);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path fill="#0284c7" fill-rule="evenodd" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10m-10 5.75a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75M12 7a1 1 0 1 1 0 2a1 1 0 0 1 0-2" clip-rule="evenodd"/></svg>网页端效果不佳，建议使用全成唱片移动版。</p>
+              </div>
                 <div id="browse-view">
                     <h1 style="border-bottom: 1px solid var(--divider-color); padding-bottom: 10px;">现在就听</h1>
 
                     <div class="featured-banner">
-                        <img id="dagepic" src="./img/cover/light.png" alt="Featured"
+                        <img id="dagepic" src="./img/cover/pic4.png" alt="Featured"
                             onerror="showtoast('加载头图失败。')">
-                        <h3 style="margin:0;margin-top:5px;">精选好曲子</h3>
+                        <h3 style="margin:0;margin-top:5px;">新歌速览</h3>
                         <p style="margin:0;">全成唱片</p>
                     </div>
 
-                    <div class="section-title">新歌推荐 <span class="title-more-btn" onclick="enterSearch()">查看全部 ›</span>
+
+                    <div class="section-title">新歌推荐 <span class="title-more-btn" onclick="enterSearch()">搜索 ›</span>
                     </div>
                     <div class="song-list" id="song-container"></div>
 
@@ -967,8 +972,71 @@
         </svg>
         <div class="toast-text">提示</div>
     </div>
+    <dialog id="welcomeDialog" style="
+  background: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 340px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  color: #333333;
+  box-sizing: border-box;
+">
+  <h3 style="margin: 0 0 12px 0; font-size: 18px; font-weight: 600; color: #111111; letter-spacing: 0.5px;">公告</h3>
+  <p style="margin: 0 0 20px 0; font-size: 14px; color: #666666; line-height: 1.5;">大哥系列 Github仓库将在2026.06.16推送最后版本并进行存档操作，之后不再支持推送更新。其中“全成唱片”“大哥传媒”等json数据加载平台将从仓库转移到服务器并使用数据库继续维护。</p>
+  
+  <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #888888;">
+    <input type="checkbox" id="dontShowAgain" style="cursor: pointer; margin: 0; width: 14px; height: 14px;">
+    <label for="dontShowAgain" style="cursor: pointer; user-select: none;">以后不再显示</label>
+  </div>
+  
+  <button onclick="closeWelcomeDialog()" style="
+    width: 100%;
+    padding: 10px;
+    background: #111111;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: opacity 0.2s;
+  " onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">我知道了</button>
+</dialog>
+
+<style>
+  #welcomeDialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+  }
+</style>
 
     <script>
+      // 获取新增弹窗的相关 DOM 元素
+const welcomeDialog = document.getElementById('welcomeDialog');
+const dontShowAgainCheck = document.getElementById('dontShowAgain');
+
+// 页面加载完成后自动判断是否弹窗
+window.addEventListener('DOMContentLoaded', () => {
+  // 检查本地存储中是否存在“不再显示”的标记
+  const isHide = localStorage.getItem('hideWelcomeDialog');
+  
+  if (!isHide) {
+    // 如果没有标记，则使用 showModal() 弹出模态框
+    welcomeDialog.showModal();
+  }
+});
+
+// 关闭弹窗的函数
+function closeWelcomeDialog() {
+  // 如果用户勾选了“以后不再显示”
+  if (dontShowAgainCheck.checked) {
+    // 在本地存储中存入标记
+    localStorage.setItem('hideWelcomeDialog', 'true');
+  }
+  welcomeDialog.close();
+}
         // 保留原始变量声明
         const audio = document.getElementById('main-audio');
         const miniPlayBtn = document.getElementById('mini-play-btn');

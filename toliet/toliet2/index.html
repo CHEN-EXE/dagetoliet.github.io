@@ -211,7 +211,8 @@
     <div class="container">
         <!-- 登录页面 -->
         <div id="loginPage" class="login-section">
-            <h1>大哥智慧厕所系统</h1>
+            <h1>智慧如厕</h1>
+            <p>站点：-</p>
             <div class="qr-code">
                 <div class="qr-pattern">卡在这里了</div>
             </div>
@@ -224,9 +225,9 @@
         <div id="toiletSelection" class="toilet-selection">
             <h1>请选择如厕坑位</h1>
             <div class="toilet-grid">
-                <div class="toilet-item" onclick="selectToilet(1)">9527</div>
-                <div class="toilet-item" onclick="selectToilet(2)">7881</div>
-                <div class="toilet-item" onclick="selectToilet(3)">9001</div>
+                <div class="toilet-item" onclick="selectToilet(1)">A01</div>
+                <div class="toilet-item" onclick="selectToilet(2)">A02</div>
+                <div class="toilet-item" onclick="selectToilet(3)">A03</div>
                 <div class="toilet-item" onclick="selectToilet(4)">9691</div>
                 <div class="toilet-item" onclick="selectToilet(5)">7888</div>
                 <div class="toilet-item" onclick="selectToilet(6)">大哥专属</div>
@@ -268,7 +269,7 @@
         
         <!-- 如厕中页面 -->
         <div id="usingPage" style="display: none;">
-            <h1>坑位已开</h1>
+            <h1>A 02</h1>
             <div class="countdown" id="countdown">10:00</div>
             <button class="btn" onclick="confirmStop()">不拉了</button>
         </div>
@@ -284,8 +285,7 @@
         <div class="modal-content">
             <div class="loading-spinner"></div>
             <h2>正在支付</h2>
-            <p>请稍候...</p>
-        </div>
+           </div>
     </div>
     
     <!-- 确认停止弹窗 -->

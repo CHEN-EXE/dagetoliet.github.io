@@ -18,29 +18,30 @@
       --mdui-color-primary: #fff;
     }
 
-    body {
-      background-color: var(--mdui-color-surface);
-      color: var(--mdui-color-on-surface);
-      margin: 0;
-      padding-bottom: 0px;
-      /* 底部导航高度 */
-      height: auto;
-      /* 防止 Body 滚动，交由子容器滚动 */
-      display: flex;
-      flex-direction: column;
-    }
+html, body {
+  height: 100vh;
+  height: 100dvh; /* 核心：动态视口高度，完美适配移动端浏览器工具栏的弹起和收回 */
+  margin: 0;
+  overflow: hidden; /* 彻底锁死 body 的外层滚动 */
+}
 
+body {
+  background-color: var(--mdui-color-surface);
+  color: var(--mdui-color-on-surface);
+  display: flex;
+  flex-direction: column;
+}
     /* ----- 通用布局 ----- */
-    .page-container {
-      flex: 1;
-      overflow-y: auto;
-      display: none;
-      /* 默认隐藏所有页面 */
-      height: 100%;
-      position: relative;
-    }
-
-    .page-container.active {
+  /* ----- 找到并修改这一段 ----- */
+.page-container {
+  flex: 1;
+  overflow-y: auto;
+  display: none; /* 默认隐藏所有页面 */
+  
+  height: 0; /* ★ 必须从 100% 改为 0 ★ */
+  
+  position: relative;
+}    .page-container.active {
       display: block;
     }
 
@@ -122,7 +123,8 @@
     /* 视频本体 */
     .video-item video {
       width: 100%;
-      height: 100%;
+      height: auto;
+  
       object-fit: cover;
       /* 填满屏幕 */
       display: block;
@@ -217,10 +219,10 @@
       transition: transform 0.3s;
     }
 
-    /* 在视频页隐藏顶部栏 */
-  
-
-    body.mode-video .page-container {
+ /* 在视频页隐藏顶部栏 */
+body.mode-video mdui-top-app-bar {
+  display: none !important; /* 彻底从渲染树移除，绝不留任何黑色高度块 */
+}   body.mode-video .page-container {
       padding-top: 0;
       /* 视频页不需要顶部留白 */
     }
@@ -235,7 +237,7 @@
 
 <body>
 
-  <mdui-top-app-bar variant="center-aligned">
+  <mdui-top-app-bar style="display:none;" variant="center-aligned">
     <mdui-tooltip placement="bottom-start" content="新增图文">
     
       <mdui-button-icon variant="tonal" id="updates" icon="add"></mdui-button-icon>
@@ -252,8 +254,8 @@
   <main id="home" class="page-container active mdui-container">
 
     <div class="hero-banner">
-      <div class="hero-title">大哥传媒</div>
-      <p style="font-size: 1.2rem; opacity: 0.9;">分区选择</p>
+      <div class="hero-title">DaGE Media</div>
+      <p style="font-size: 1.2rem; opacity: 0.9;">分区</p>
       <mdui-segmented-button-group full-width selects="single" id="segmented-buttons">
       </mdui-segmented-button-group>
     </div>
@@ -267,7 +269,7 @@
       </div>
     </mdui-card>
 
-    <h2 class="section-label">内容列表</h2>
+    <h2 class="section-label">帖子</h2>
 
     <div id="media-content" style="margin: 0 0 24px 0;">
       <mdui-card style="width: 100%; padding: 16px;">加载中...</mdui-card>
@@ -292,7 +294,7 @@
 
   <div id="aboutus" class="page-container mdui-container">
     <div class="hero-banner">
-      <div class="hero-title">关于</div>
+      <div class="hero-title">关于我们</div>
       <mdui-card clickable style="width: 100%;height: auto; background: rgba(255,255,255,0.2);">
         <div style="padding: 16px;">
           此站点仅供娱乐 如有疑问请联系仓库管理者。视频资源来源于用户投稿，如有侵犯隐私，请联系仓库管理者删除

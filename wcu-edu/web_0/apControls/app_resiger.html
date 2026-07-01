@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tech Service</title>
+    <title>THS 设定</title>
     <style>
         body {
             font-family: "Arial", sans-serif;
@@ -65,20 +65,28 @@
     </style>
 </head>
 <body>
+  WiFi Management Ver2.0.1
     <div class="login-container">
-      <h1>Edit Flash bin</h1>
+      <h1>Wifi#0200---Edit Flash bin</h1>
+      <p>介绍：此操作允许用户烧写覆盖配置文件</p>
       <textarea id="w3review" name="w3review" rows="4" cols="20">
 澶у摜浼氭鍟婂ソ鍚ф杩庝娇鐢ㄦ鎴愬ぇ绉戞妧骞冲彴services绉戞妧澶у摜浼氭鍟婂ソ鍚ф杩庝娇鐢ㄦ鎴愬ぇ绉戞妧骞冲彴services绉戞妧澶у摜浼氭鍟婂ソ鍚ф杩庝娇鐢ㄦ鎴愬ぇ绉戞妧骞冲彴services绉戞妧澶у摜浼氭鍟婂ソ鍚ф杩庝娇鐢ㄦ鎴愬ぇ绉戞妧骞冲彴services绉戞妧澶у摜浼氭鍟婂ソ鍚ф杩庝娇鐢ㄦ鎴愬ぇ绉戞妧骞冲彴services绉戞妧
 </textarea>
-<button>鐢熶骇bin骞跺埛鍐欏埌骞冲彴</button>
+<button>覆盖原有配置文件TPS</button>
        <h1>Flash_Installer</h1>
-      <p>Down to flash Ap Server.</p>
+      <p>选择配置件进行配置烧写，会清空校园网系统所有数据，请用户做好备份后再进行</p>
+      <p id="flash">当前状态</p>
       <input type="file" accept=".bin" />
- <br>  <button>Flash</button>
- <button>Clean_bin</button>
+ <br>  <button onclick="flashit()">Flash</button>
+ <button onclick="flashcl()">Clean_bin</button>
  <button>Download</button>
+ 
+    <h1>Backup</h1>
+    <p>介绍：此功能会备份主机所有配置数据。</p>
+<button>Download Backup</button>
+    
         <h1>Reset</h1>
-      <p>Can input reset password</p>
+      <p>介绍：此功能允许用户输入超级密码从而进行超级清空</p>
         <form name="loginForm" action="#" method="post">
             
             <label for="password">Reset Password:</label>
@@ -89,7 +97,19 @@
     </div>
     宸插畬鎴愭敞鍏ユ暟鎹紒宸插畬鎴愭敞鍏ユ暟鎹紒宸插畬鎴愭敞鍏ユ暟鎹紒
     <div class="footer">
-        <p>Tech Helper Service _</p>
+        <p>THS</p>
     </div>
 </body>
+<script>
+  function flashit(){
+    document.getElementById("flash").style.color ="red";
+    
+    document.getElementById("flash").innerHTML ="LOADING FLASH OK!";
+  }
+  function flashcl(){
+    document.getElementById("flash").style.color ="red";
+    
+    document.getElementById("flash").innerHTML ="<p>配置出错</p>CLEAN FLASH.BIN OK!";
+  }
+  </script>
 </html>

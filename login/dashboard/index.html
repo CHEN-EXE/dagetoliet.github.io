@@ -1,30 +1,196 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>大哥国际</title>
+  <title>大哥国际 - 集团效能与控制中心</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="//unpkg.com/layui@2.13.2/dist/css/layui.css" rel="stylesheet">
+  <style>
+    /* 大厂内网经典原子设计变量 */
+    :root {
+      --primary-color: #1677ff;        /* 大厂标准科技蓝 */
+      --primary-hover: #4096ff;
+      --bg-main: #f5f7fa;             /* 清爽的内网浅灰底色 */
+      --text-main: #1f2329;            /* 现代深字色（避开纯黑） */
+      --text-secondary: #646a73;       /* 辅助描述文字 */
+      --border-color: #dee0e3;         /* 细腻的分割线 */
+      --sidebar-width: 240px;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text-main);
+    }
+
+    /* 1. 顶栏重构：改用纯白高亮、无缝阴影设计 */
+    .layui-layout-admin .layui-header {
+      background-color: #ffffff !important;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.04);
+      height: 56px;
+      line-height: 56px;
+    }
+    .layui-layout-admin .layui-logo {
+      width: var(--sidebar-width) !important;
+      height: 56px;
+      line-height: 56px;
+      background-color: #ffffff !important;
+      color: var(--text-main) !important;
+      font-weight: 600;
+      font-size: 16px;
+      border-right: 1px solid var(--border-color);
+      letter-spacing: 0.5px;
+    }
+    .layui-header .layui-nav .layui-nav-item a {
+      color: var(--text-main) !important;
+      font-size: 14px;
+    }
+    .layui-header .layui-nav .layui-nav-item a:hover {
+      color: var(--primary-color) !important;
+    }
+    .layui-header .layui-nav-child {
+      top: 56px !important;
+      border-radius: 6px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    .layui-layout-right {
+      right: 16px !important;
+    }
+
+    /* 2. 左侧侧边栏重构：摒弃传统的纯黑，改用深夜蓝或柔和暗色调 */
+    .layui-side {
+      width: var(--sidebar-width) !important;
+      top: 56px !important;
+      background-color: #001529 !important; /* 阿里 AntD 经典深夜蓝 */
+    }
+    .layui-nav-tree {
+      width: 100% !important;
+      background-color: transparent !important;
+    }
+    .layui-nav-tree .layui-nav-item a {
+      height: 48px;
+      line-height: 48px;
+      color: rgba(255, 255, 255, 0.7) !important;
+      font-size: 14px;
+    }
+    .layui-nav-tree .layui-nav-item a:hover {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      color: #ffffff !important;
+    }
+    .layui-nav-itemed>a, .layui-nav-tree .layui-nav-title a {
+      color: #ffffff !important;
+    }
+    .layui-nav-tree .layui-nav-bar {
+      background-color: var(--primary-color) !important;
+      width: 4px !important;
+    }
+    /* 选中三级/二级子菜单时的高亮状态 */
+    .layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-this>a {
+      background-color: var(--primary-color) !important;
+      color: #ffffff !important;
+    }
+
+    /* 3. 主体内容区域优化 */
+    .layui-body {
+      left: var(--sidebar-width) !important;
+      top: 56px !important;
+      bottom: 44px !important;
+      padding: 24px !important;
+      background-color: var(--bg-main);
+    }
+    .panel-container {
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+      padding: 24px;
+    }
+    .panel-header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel-header-title::before {
+      content: '';
+      width: 4px;
+      height: 16px;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+    }
+
+    /* 4. 重构核心：大厂常用的「网格化功能配置卡片」布局 */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .feature-card:hover {
+      border-color: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(22, 119, 255, 0.05);
+    }
+    .feature-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .feature-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+    .feature-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* 5. 覆盖 Layui 开关颜色为现代品牌蓝 */
+    .layui-form-onswitch {
+      border-color: var(--primary-color) !important;
+      background-color: var(--primary-color) !important;
+    }
+
+    /* 6. 页脚优化 */
+    .layui-footer {
+      left: var(--sidebar-width) !important;
+      height: 44px;
+      line-height: 44px;
+      background-color: #ffffff !important;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-align: center;
+      padding: 0 !important;
+    }
+  </style>
 </head>
 <body>
+
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo layui-hide-xs layui-bg-black">大哥科技</div>
-    <!-- 头部区域（可配合layui 已有的水平导航） -->
-    <ul class="layui-nav layui-layout-left">
-      <!-- 移动端显示 -->
-
-      </li>
-    </ul>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
         <a id="userData" href="javascript:;">
           <img src="//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png" class="layui-nav-img">
-               </a>
+        </a>
         <dl class="layui-nav-child">
-          <dd><a href="javascript:;"用户信息</a></dd>
+          <dd><a href="javascript:;">用户信息</a></dd>
           <dd><a href="javascript:;">设置</a></dd>
           <dd><a href="javascript:;">退出</a></dd>
         </dl>
@@ -36,21 +202,21 @@
       </li>
     </ul>
   </div>
-  <div class="layui-side layui-bg-black">
+
+  <!--<div class="layui-side">
     <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
       <ul class="layui-nav layui-nav-tree" lay-filter="test">
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">厕所营销</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">大哥国际厕所-数据查询</a></dd>
+            <dd class="layui-this"><a href="javascript:;">大哥国际厕所-数据查询</a></dd>
             <dd><a href="javascript:;">大哥国际厕所-统一实施</a></dd>
             <dd><a href="javascript:;">大哥国际厕所-账单明细</a></dd>
             <dd><a href="javascript:;">大屏查看</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
-          <a href="javascript:;">开放</a>
+          <a href="javascript:;">开放平台</a>
           <dl class="layui-nav-child">
             <dd><a href="javascript:;">大哥科技-传媒系统发布</a></dd>
             <dd><a href="javascript:;">大哥国际厕所-控制器</a></dd>
@@ -61,249 +227,105 @@
         <li class="layui-nav-item"><a href="javascript:;">远程协助</a></li>
       </ul>
     </div>
-  </div>
+  </div>-->
   <div class="layui-body">
-    <!-- 内容主体区域 -->
-    <div style="padding: 15px;">
-      <div class="layui-card layui-panel">
-        <div class="layui-card-header">
-          功能开关
+    <div class="panel-container">
+      <div class="panel-header-title">全局功能网关开关</div>
+      
+      <div class="layui-form" lay-filter="form-demo-skin">
+        <div class="feature-grid">
+          
+          <div class="feature-card">
+            <div class="feature-info">
+              <span class="feature-name">大哥国际传媒系统</span>
+              <span class="feature-desc">分发及广告流媒体控制中心</span>
+            </div>
+            <input type="checkbox" name="switch_media" lay-skin="switch">
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-info">
+              <span class="feature-name">大哥国际厕所系统</span>
+              <span class="feature-desc">智能硬件与物联网数据监控</span>
+            </div>
+            <input type="checkbox" name="switch_toilet" lay-skin="switch" checked>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-info">
+              <span class="feature-name">餐饮平台-自主点菜</span>
+              <span class="feature-desc">C端客户自助餐券与点单网关</span>
+            </div>
+            <input type="checkbox" name="switch_catering" lay-skin="switch">
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-info">
+              <span class="feature-name">大哥银行-U盾口令</span>
+              <span class="feature-desc">高危资金交易二次加密验证</span>
+            </div>
+            <input type="checkbox" name="switch_bank" lay-skin="switch">
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-info">
+              <span class="feature-name">大哥游戏-防沉迷实名</span>
+              <span class="feature-desc">合规合规部线上未成年人审查</span>
+            </div>
+            <input type="checkbox" name="switch_game" lay-skin="switch" checked>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-info">
+              <span class="feature-name">大哥酒店-实名登记</span>
+              <span class="feature-desc">公安网络宿主实时身份同步</span>
+            </div>
+            <input type="checkbox" name="switch_hotel" lay-skin="switch">
+          </div>
+
         </div>
-        <div class="layui-card-body">
-   
-   
-   <div class="layui-form" lay-filter="form-demo-skin">
-  <style>
-  /*
-   * 基于复选框和单选框的卡片风格多选组件
-   * 需要具备一些基础的 CSS 技能，以下样式均为外部自主实现。
-   */
-  /* 主体 */
-  .layui-form-checkbox>.lay-skin-checkcard,
-  .layui-form-radio>.lay-skin-checkcard {
-    display: table;
-    display: flex;
-    padding: 12px;
-    white-space: normal;
-    border-radius: 10px;
-    border: 1px solid #e5e5e5;
-    color: #000;
-    background-color: #fff;
-  }
-  .layui-form-checkbox>.lay-skin-checkcard>*,
-  .layui-form-radio>.lay-skin-checkcard>* {
-    /* display: table-cell; */  /* IE */
-    vertical-align: top;
-  }
-  /* 悬停 */
-  .layui-form-checkbox:hover>.lay-skin-checkcard,
-  .layui-form-radio:hover>.lay-skin-checkcard {
-    border-color: #16b777;
-  }
-  /* 选中 */
-  .layui-form-checked>.lay-skin-checkcard,
-  .layui-form-radioed[lay-skin="none"]>.lay-skin-checkcard {
-    color: #000;
-    border-color: #16b777;
-    background-color: rgb(22 183 119 / 10%) !important;
-    /* box-shadow: 0 0 0 3px rgba(22, 183, 119, 0.08); */
-  }
-  /* 禁用 */
-  .layui-checkbox-disabled>.lay-skin-checkcard,
-  .layui-radio-disabled>.lay-skin-checkcard {
-    box-shadow: none;
-    border-color: #e5e5e5 !important;
-    background-color: #eee !important;
-  }
-  /* card 布局 */
-  .lay-skin-checkcard-avatar {
-    padding-right: 8px;
-  }
-  .lay-skin-checkcard-detail {
-    overflow: hidden;
-    width: 100%;
-  }
-  .lay-skin-checkcard-header {
-    font-weight: 500;
-    font-size: 16px;
-    white-space: nowrap;
-    margin-bottom: 4px;
-  }
-  .lay-skin-checkcard-description {
-    font-size: 13px;
-    color: #5f5f5f;
-  }
-  .layui-disabled  .lay-skin-checkcard-description{
-    color: #c2c2c2! important;
-  }
-  /* 选中 dot */
-  .layui-form-checked>.lay-check-dot:after,
-  .layui-form-radioed>.lay-check-dot:after {
-    position: absolute;
-    content: "";
-    top: 2px;
-    right: 2px;
-    width: 0;
-    height: 0;
-    display: inline-block;
-    vertical-align: middle;
-    border-width: 10px;
-    border-style: dashed;
-    border-color: transparent;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 6px;
-    border-top-color: #16b777;
-    border-top-style: solid;
-    border-right-color: #16b777;
-    border-right-style: solid;
-    overflow: hidden;
-  }
-  .layui-checkbox-disabled>.lay-check-dot:after,
-  .layui-radio-disabled>.lay-check-dot:after {
-    border-top-color: #d2d2d2;
-    border-right-color: #d2d2d2;
-  }
-  /* 选中 dot-2 */
-  .layui-form-checked>.lay-check-dot-2:before,
-  .layui-form-radioed>.lay-check-dot-2:before {
-    position: absolute;
-    font-family: "layui-icon";
-    content: "\e605";
-    color: #fff;
-    bottom: 4px;
-    right: 3px;
-    font-size: 9px;
-    z-index: 12;
-  }
-  .layui-form-checked>.lay-check-dot-2:after,
-  .layui-form-radioed>.lay-check-dot-2:after {
-    position: absolute;
-    content: "";
-    bottom: 2px;
-    right: 2px;
-    width: 0;
-    height: 0;
-    display: inline-block;
-    vertical-align: middle;
-    border-width: 10px;
-    border-style: dashed;
-    border-color: transparent;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 0px;
-    border-right-color: #16b777;
-    border-right-style: solid;
-    border-bottom-color: #16b777;
-    border-bottom-style: solid;
-    overflow: hidden;
-  }
-  .layui-checkbox-disabled>.lay-check-dot-2:before,
-  .layui-radio-disabled>.lay-check-dot-2:before {
-    color: #eee !important;
-  }
-  .layui-checkbox-disabled>.lay-check-dot-2:after,
-  .layui-radio-disabled>.lay-check-dot-2:after {
-    border-bottom-color: #d2d2d2;
-    border-right-color: #d2d2d2;
-  }
-  .lay-ellipsis-multi-line {
-    overflow: hidden;
-    word-break: break-all;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-  }
-</style>
-<!-- 标签风格 -->
-<style>
-  .layui-form-radio>.lay-skin-tag,
-  .layui-form-checkbox>.lay-skin-tag {
-    font-size: 13px;
-    border-radius: 100px;
-  }
-  .layui-form-checked>.lay-skin-tag,
-  .layui-form-radioed>.lay-skin-tag {
-    color: #fff !important;
-    background-color: #16b777 !important;
-  }
-</style>
-<!-- 单选框 Color Picker -->
-<style>
-  /* 主体 */
-  .layui-form-radio>.lay-skin-color-picker {
-    border-radius: 50%;
-    border-width: 1px;
-    border-style: solid;
-    width: 20px;
-    height: 20px;
-  }
-  /* 选中 */
-  .layui-form-radioed>.lay-skin-color-picker {
-    box-shadow: 0 0 0 1px #ffffff, 0 0 0 4px currentColor;
-  }
-</style>
- 
-  <div class="layui-form">
-大哥国际传媒  <input type="checkbox" name="AAA" lay-skin="switch">
-<br>
-大哥国际厕所  <input type="checkbox" name="AAA" lay-skin="switch">
-  <br>
-  大哥国际餐馆平台-自主点菜  <input type="checkbox" name="AAA" lay-skin="switch">
-  <br>
-  大哥银行-U盾 <input type="checkbox" name="AAA" lay-skin="switch">
- <br>
- 大哥游戏-实名  <input type="checkbox" name="AAA" lay-skin="switch">
-  <br>
-  大哥酒店-实名  <input type="checkbox" name="AAA" lay-skin="switch">
-  
+      </div> </div>
   </div>
-</div>
-   
-   
-        </div>
-      </div>
-      <br><br>
-    </div>
-  </div>
+
   <div class="layui-footer">
-    <!-- 底部固定区域 -->
-Copyright 2026 大哥国际。仅供娱乐请勿当真
+    Copyright © 2026 大哥国际集团·信息技术与效能部。仅供娱乐请勿当真
   </div>
 </div>
- 
+
 <script src="//unpkg.com/layui@2.13.2/dist/layui.js"></script>
 <script>
-//JS 
- document.getElementById("userData").innerHTML = `      <img src="//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png" class="layui-nav-img">
-    `+localStorage.getItem("userdata");
-layui.use(['element', 'layer', 'util'], function(){
-  var element = layui.element;
-  var layer = layui.layer;
-  var util = layui.util;
-  var $ = layui.$;
-  
-  //头部事件
-  util.event('lay-header-event', {
-    menuLeft: function(othis){ // 左侧菜单事件
-      layer.msg('展开左侧菜单的操作', {icon: 0});
-    },
-    menuRight: function(){  // 右侧菜单事件
-      layer.open({
-        type: 1,
-        title: '更多',
-        content: '<div style="padding: 15px;">处理右侧面板的操作</div>',
-        area: ['260px', '100%'],
-        offset: 'rt', // 右上角
-        anim: 'slideLeft', // 从右侧抽屉滑出
-        shadeClose: true,
-        scrollbar: false
-      });
-    }
+  // 恢复并整合原本的用户数据载入逻辑
+  const username = localStorage.getItem("userdata") || "Guest_User";
+  document.getElementById("userData").innerHTML = `
+    <img src="//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png" class="layui-nav-img">
+    <span>${username}武工</span>
+  `;
+
+  layui.use(['element', 'layer', 'util', 'form'], function(){
+    var element = layui.element;
+    var layer = layui.layer;
+    var util = layui.util;
+    var form = layui.form;
+
+    // 重新渲染表单中的开关组件
+    form.render('checkbox');
+    
+    // 头部事件
+    util.event('lay-header-event', {
+      menuRight: function(){
+        layer.open({
+          type: 1,
+          title: '系统级审计日志',
+          content: '<div style="padding: 20px; font-size:13px; color:#646a73;">暂无当前全局网关的高危配置操作变更。</div>',
+          area: ['280px', '100%'],
+          offset: 'rt',
+          anim: 'slideLeft',
+          shadeClose: true,
+          scrollbar: false
+        });
+      }
+    });
   });
-});
 </script>
 </body>
 </html>
